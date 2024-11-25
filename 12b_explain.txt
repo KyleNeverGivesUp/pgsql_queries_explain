@@ -1,0 +1,70 @@
+                                                                                         QUERY PLAN                                                                                          
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=19236.64..19236.65 rows=1 width=64) (actual time=80.976..84.202 rows=1 loops=1)
+   Buffers: shared hit=10777 read=30
+   ->  Nested Loop  (cost=1004.44..19236.64 rows=1 width=60) (actual time=79.042..84.189 rows=10 loops=1)
+         Buffers: shared hit=10777 read=30
+         ->  Nested Loop  (cost=1004.30..19236.46 rows=1 width=64) (actual time=78.895..83.071 rows=1210 loops=1)
+               Join Filter: (t.id = mi.movie_id)
+               Buffers: shared hit=8357 read=30
+               ->  Nested Loop  (cost=1003.87..19234.54 rows=1 width=29) (actual time=78.848..82.385 rows=10 loops=1)
+                     Buffers: shared hit=8162 read=1
+                     ->  Gather  (cost=1003.45..19234.10 rows=1 width=33) (actual time=78.811..82.040 rows=33 loops=1)
+                           Workers Planned: 2
+                           Workers Launched: 2
+                           Buffers: shared hit=8031
+                           ->  Nested Loop  (cost=3.45..18234.00 rows=1 width=33) (actual time=73.979..74.025 rows=11 loops=3)
+                                 Buffers: shared hit=8031
+                                 ->  Nested Loop  (cost=3.29..18233.53 rows=3 width=37) (actual time=73.971..74.011 rows=11 loops=3)
+                                       Join Filter: (t.id = mc.movie_id)
+                                       Buffers: shared hit=8026
+                                       ->  Nested Loop  (cost=2.86..18232.88 rows=1 width=25) (actual time=73.956..73.976 rows=1 loops=3)
+                                             Buffers: shared hit=8015
+                                             ->  Hash Join  (cost=2.43..15253.60 rows=5089 width=4) (actual time=73.873..73.877 rows=3 loops=3)
+                                                   Hash Cond: (mi_idx.info_type_id = it2.id)
+                                                   Buffers: shared hit=7974
+                                                   ->  Parallel Seq Scan on movie_info_idx mi_idx  (cost=0.00..13685.15 rows=575015 width=8) (actual time=0.024..31.220 rows=460012 loops=3)
+                                                         Buffers: shared hit=7935
+                                                   ->  Hash  (cost=2.41..2.41 rows=1 width=4) (actual time=0.062..0.063 rows=1 loops=3)
+                                                         Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                                                         Buffers: shared hit=3
+                                                         ->  Seq Scan on info_type it2  (cost=0.00..2.41 rows=1 width=4) (actual time=0.049..0.050 rows=1 loops=3)
+                                                               Filter: ((info)::text = 'bottom 10 rank'::text)
+                                                               Rows Removed by Filter: 112
+                                                               Buffers: shared hit=3
+                                             ->  Index Scan using title_pkey on title t  (cost=0.43..0.59 rows=1 width=21) (actual time=0.029..0.029 rows=0 loops=10)
+                                                   Index Cond: (id = mi_idx.movie_id)
+                                                   Filter: ((production_year > 2000) AND (((title)::text ~~ 'Birdemic%'::text) OR ((title)::text ~~ '%Movie%'::text)))
+                                                   Rows Removed by Filter: 1
+                                                   Buffers: shared hit=41
+                                       ->  Index Scan using movie_id_movie_companies on movie_companies mc  (cost=0.43..0.59 rows=5 width=12) (actual time=0.034..0.046 rows=16 loops=2)
+                                             Index Cond: (movie_id = mi_idx.movie_id)
+                                             Buffers: shared hit=11
+                                 ->  Memoize  (cost=0.16..0.18 rows=1 width=4) (actual time=0.001..0.001 rows=1 loops=33)
+                                       Cache Key: mc.company_type_id
+                                       Cache Mode: logical
+                                       Buffers: shared hit=5
+                                       Worker 1:  Hits: 31  Misses: 2  Evictions: 0  Overflows: 0  Memory Usage: 1kB
+                                       ->  Index Scan using company_type_pkey on company_type ct  (cost=0.15..0.17 rows=1 width=4) (actual time=0.010..0.010 rows=1 loops=2)
+                                             Index Cond: (id = mc.company_type_id)
+                                             Filter: ((kind IS NOT NULL) AND (((kind)::text = 'production companies'::text) OR ((kind)::text = 'distributors'::text)))
+                                             Buffers: shared hit=5
+                     ->  Index Scan using company_name_pkey on company_name cn  (cost=0.42..0.45 rows=1 width=4) (actual time=0.010..0.010 rows=0 loops=33)
+                           Index Cond: (id = mc.company_id)
+                           Filter: ((country_code)::text = '[us]'::text)
+                           Rows Removed by Filter: 1
+                           Buffers: shared hit=131 read=1
+               ->  Index Scan using movie_id_movie_info on movie_info mi  (cost=0.43..1.41 rows=40 width=51) (actual time=0.008..0.048 rows=121 loops=10)
+                     Index Cond: (movie_id = mc.movie_id)
+                     Buffers: shared hit=195 read=29
+         ->  Index Scan using info_type_pkey on info_type it1  (cost=0.14..0.16 rows=1 width=4) (actual time=0.001..0.001 rows=0 loops=1210)
+               Index Cond: (id = mi.info_type_id)
+               Filter: ((info)::text = 'budget'::text)
+               Rows Removed by Filter: 1
+               Buffers: shared hit=2420
+ Planning:
+   Buffers: shared hit=666
+ Planning Time: 9.392 ms
+ Execution Time: 84.391 ms
+(66 rows)
+

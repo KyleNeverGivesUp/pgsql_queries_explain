@@ -1,0 +1,66 @@
+                                                                                    QUERY PLAN                                                                                     
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=42986.09..42986.10 rows=1 width=64) (actual time=903.641..1001.954 rows=1 loops=1)
+   Buffers: shared hit=1843018 read=118774
+   ->  Nested Loop  (cost=5775.49..42986.08 rows=1 width=33) (actual time=125.886..1001.872 rows=62 loops=1)
+         Buffers: shared hit=1843018 read=118774
+         ->  Nested Loop  (cost=5775.06..42985.31 rows=1 width=41) (actual time=52.506..968.359 rows=17379 loops=1)
+               Buffers: shared hit=1773506 read=118770
+               ->  Gather  (cost=5774.64..42984.15 rows=1 width=21) (actual time=52.474..941.167 rows=7438 loops=1)
+                     Workers Planned: 2
+                     Workers Launched: 2
+                     Buffers: shared hit=1745580 read=117872
+                     ->  Nested Loop  (cost=4774.64..41984.05 rows=1 width=21) (actual time=39.235..876.640 rows=2479 loops=3)
+                           Buffers: shared hit=1745580 read=117872
+                           ->  Nested Loop  (cost=4774.48..41981.40 rows=27 width=25) (actual time=39.134..874.314 rows=6533 loops=3)
+                                 Buffers: shared hit=1745568 read=117870
+                                 ->  Nested Loop  (cost=4774.04..41437.75 rows=326 width=25) (actual time=17.375..235.237 rows=16109 loops=3)
+                                       Buffers: shared hit=175151 read=39984
+                                       ->  Parallel Hash Join  (cost=4773.61..39899.82 rows=326 width=4) (actual time=17.323..155.762 rows=16109 loops=3)
+                                             Hash Cond: (mc.company_id = cn.id)
+                                             Buffers: shared hit=34 read=21787
+                                             ->  Parallel Seq Scan on movie_companies mc  (cost=0.00..35097.06 rows=11108 width=8) (actual time=0.063..133.631 rows=16299 loops=3)
+                                                   Filter: (((note)::text ~~ '%(Japan)%'::text) AND ((note)::text !~~ '%(USA)%'::text))
+                                                   Rows Removed by Filter: 853411
+                                                   Buffers: shared read=18790
+                                             ->  Parallel Hash  (cost=4722.92..4722.92 rows=4055 width=4) (actual time=17.049..17.052 rows=2251 loops=3)
+                                                   Buckets: 8192  Batches: 1  Memory Usage: 384kB
+                                                   Buffers: shared read=2995
+                                                   ->  Parallel Seq Scan on company_name cn  (cost=0.00..4722.92 rows=4055 width=4) (actual time=0.068..16.516 rows=2251 loops=3)
+                                                         Filter: ((country_code)::text = '[jp]'::text)
+                                                         Rows Removed by Filter: 76082
+                                                         Buffers: shared read=2995
+                                       ->  Index Scan using title_pkey on title t  (cost=0.43..4.72 rows=1 width=21) (actual time=0.005..0.005 rows=1 loops=48328)
+                                             Index Cond: (id = mc.movie_id)
+                                             Buffers: shared hit=175117 read=18197
+                                 ->  Index Scan using movie_id_cast_info on cast_info ci  (cost=0.44..1.66 rows=1 width=12) (actual time=0.038..0.039 rows=0 loops=48328)
+                                       Index Cond: (movie_id = t.id)
+                                       Filter: ((note)::text = '(voice: English version)'::text)
+                                       Rows Removed by Filter: 32
+                                       Buffers: shared hit=1570417 read=77886
+                           ->  Memoize  (cost=0.16..0.18 rows=1 width=4) (actual time=0.000..0.000 rows=0 loops=19600)
+                                 Cache Key: ci.role_id
+                                 Cache Mode: logical
+                                 Hits: 4842  Misses: 2  Evictions: 0  Overflows: 0  Memory Usage: 1kB
+                                 Buffers: shared hit=12 read=2
+                                 Worker 0:  Hits: 8604  Misses: 2  Evictions: 0  Overflows: 0  Memory Usage: 1kB
+                                 Worker 1:  Hits: 6148  Misses: 2  Evictions: 0  Overflows: 0  Memory Usage: 1kB
+                                 ->  Index Scan using role_type_pkey on role_type rt  (cost=0.15..0.17 rows=1 width=4) (actual time=0.015..0.015 rows=0 loops=6)
+                                       Index Cond: (id = ci.role_id)
+                                       Filter: ((role)::text = 'actress'::text)
+                                       Rows Removed by Filter: 0
+                                       Buffers: shared hit=12 read=2
+               ->  Index Scan using person_id_aka_name on aka_name an1  (cost=0.42..1.15 rows=2 width=20) (actual time=0.003..0.003 rows=2 loops=7438)
+                     Index Cond: (person_id = ci.person_id)
+                     Buffers: shared hit=27926 read=898
+         ->  Index Scan using name_pkey on name n1  (cost=0.43..0.77 rows=1 width=4) (actual time=0.002..0.002 rows=0 loops=17379)
+               Index Cond: (id = an1.person_id)
+               Filter: (((name)::text ~~ '%Yo%'::text) AND ((name)::text !~~ '%Yu%'::text))
+               Rows Removed by Filter: 1
+               Buffers: shared hit=69512 read=4
+ Planning:
+   Buffers: shared hit=599 read=28
+ Planning Time: 8.344 ms
+ Execution Time: 1002.177 ms
+(62 rows)
+

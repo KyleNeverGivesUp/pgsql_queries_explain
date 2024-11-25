@@ -1,0 +1,45 @@
+                                                                                QUERY PLAN                                                                                 
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize Aggregate  (cost=36220.64..36220.65 rows=1 width=32) (actual time=153.777..169.513 rows=1 loops=1)
+   Buffers: shared hit=15013 read=3844
+   ->  Gather  (cost=36220.42..36220.63 rows=2 width=32) (actual time=153.687..169.506 rows=3 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         Buffers: shared hit=15013 read=3844
+         ->  Partial Aggregate  (cost=35220.42..35220.43 rows=1 width=32) (actual time=147.276..147.280 rows=1 loops=3)
+               Buffers: shared hit=15013 read=3844
+               ->  Nested Loop  (cost=19.93..35220.42 rows=1 width=17) (actual time=147.273..147.277 rows=0 loops=3)
+                     Buffers: shared hit=15013 read=3844
+                     ->  Nested Loop  (cost=19.79..35220.26 rows=1 width=21) (actual time=147.272..147.276 rows=0 loops=3)
+                           Buffers: shared hit=15013 read=3844
+                           ->  Nested Loop  (cost=19.36..35209.00 rows=5 width=25) (actual time=147.272..147.275 rows=0 loops=3)
+                                 Buffers: shared hit=15013 read=3844
+                                 ->  Hash Join  (cost=18.93..35121.82 rows=12 width=4) (actual time=147.271..147.273 rows=0 loops=3)
+                                       Hash Cond: (mc.company_type_id = ct.id)
+                                       Buffers: shared hit=15013 read=3844
+                                       ->  Parallel Seq Scan on movie_companies mc  (cost=0.00..35097.06 rows=2213 width=8) (actual time=3.244..146.561 rows=8008 loops=3)
+                                             Filter: (((note)::text ~~ '%(theatrical)%'::text) AND ((note)::text ~~ '%(France)%'::text))
+                                             Rows Removed by Filter: 861701
+                                             Buffers: shared hit=14947 read=3843
+                                       ->  Hash  (cost=18.88..18.88 rows=4 width=4) (actual time=0.029..0.031 rows=1 loops=3)
+                                             Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                                             Buffers: shared hit=2 read=1
+                                             ->  Seq Scan on company_type ct  (cost=0.00..18.88 rows=4 width=4) (actual time=0.021..0.022 rows=1 loops=3)
+                                                   Filter: ((kind)::text = 'production companies'::text)
+                                                   Rows Removed by Filter: 3
+                                                   Buffers: shared hit=2 read=1
+                                 ->  Index Scan using title_pkey on title t  (cost=0.43..7.26 rows=1 width=21) (never executed)
+                                       Index Cond: (id = mc.movie_id)
+                                       Filter: (production_year > 2005)
+                           ->  Index Scan using movie_id_movie_info on movie_info mi  (cost=0.43..2.24 rows=1 width=8) (never executed)
+                                 Index Cond: (movie_id = t.id)
+                                 Filter: ((info)::text = ANY ('{Sweden,Norway,Germany,Denmark,Swedish,Denish,Norwegian,German}'::text[]))
+                     ->  Index Only Scan using info_type_pkey on info_type it  (cost=0.14..0.16 rows=1 width=4) (never executed)
+                           Index Cond: (id = mi.info_type_id)
+                           Heap Fetches: 0
+ Planning:
+   Buffers: shared hit=517 read=1
+ Planning Time: 5.210 ms
+ Execution Time: 169.643 ms
+(41 rows)
+

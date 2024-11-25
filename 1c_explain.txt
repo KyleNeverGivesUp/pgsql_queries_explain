@@ -1,0 +1,53 @@
+                                                                                  QUERY PLAN                                                                                  
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=19421.99..19422.00 rows=1 width=68) (actual time=86.352..90.253 rows=1 loops=1)
+   Buffers: shared hit=9417
+   ->  Nested Loop  (cost=1003.44..19421.98 rows=1 width=45) (actual time=83.316..90.241 rows=3 loops=1)
+         Join Filter: (mc.movie_id = t.id)
+         Buffers: shared hit=9417
+         ->  Gather  (cost=1003.01..19421.39 rows=1 width=32) (actual time=81.185..90.049 rows=23 loops=1)
+               Workers Planned: 2
+               Workers Launched: 2
+               Buffers: shared hit=9325
+               ->  Nested Loop  (cost=3.02..18421.29 rows=1 width=32) (actual time=76.670..78.585 rows=8 loops=3)
+                     Buffers: shared hit=9325
+                     ->  Nested Loop  (cost=2.86..18418.25 rows=101 width=36) (actual time=76.657..78.568 rows=8 loops=3)
+                           Buffers: shared hit=9320
+                           ->  Hash Join  (cost=2.43..15253.60 rows=5089 width=4) (actual time=75.886..75.917 rows=83 loops=3)
+                                 Hash Cond: (mi_idx.info_type_id = it.id)
+                                 Buffers: shared hit=7974
+                                 ->  Parallel Seq Scan on movie_info_idx mi_idx  (cost=0.00..13685.15 rows=575015 width=8) (actual time=0.014..34.154 rows=460012 loops=3)
+                                       Buffers: shared hit=7935
+                                 ->  Hash  (cost=2.41..2.41 rows=1 width=4) (actual time=0.054..0.055 rows=1 loops=3)
+                                       Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                                       Buffers: shared hit=3
+                                       ->  Seq Scan on info_type it  (cost=0.00..2.41 rows=1 width=4) (actual time=0.043..0.044 rows=1 loops=3)
+                                             Filter: ((info)::text = 'top 250 rank'::text)
+                                             Rows Removed by Filter: 112
+                                             Buffers: shared hit=3
+                           ->  Index Scan using movie_id_movie_companies on movie_companies mc  (cost=0.43..0.61 rows=1 width=32) (actual time=0.031..0.032 rows=0 loops=250)
+                                 Index Cond: (movie_id = mi_idx.movie_id)
+                                 Filter: (((note)::text !~~ '%(as Metro-Goldwyn-Mayer Pictures)%'::text) AND ((note)::text ~~ '%(co-production)%'::text))
+                                 Rows Removed by Filter: 33
+                                 Buffers: shared hit=1346
+                     ->  Memoize  (cost=0.16..0.18 rows=1 width=4) (actual time=0.002..0.002 rows=1 loops=23)
+                           Cache Key: mc.company_type_id
+                           Cache Mode: logical
+                           Hits: 21  Misses: 1  Evictions: 0  Overflows: 0  Memory Usage: 1kB
+                           Buffers: shared hit=5
+                           Worker 0:  Hits: 0  Misses: 1  Evictions: 0  Overflows: 0  Memory Usage: 1kB
+                           ->  Index Scan using company_type_pkey on company_type ct  (cost=0.15..0.17 rows=1 width=4) (actual time=0.014..0.014 rows=1 loops=2)
+                                 Index Cond: (id = mc.company_type_id)
+                                 Filter: ((kind)::text = 'production companies'::text)
+                                 Buffers: shared hit=5
+         ->  Index Scan using title_pkey on title t  (cost=0.43..0.58 rows=1 width=25) (actual time=0.008..0.008 rows=0 loops=23)
+               Index Cond: (id = mi_idx.movie_id)
+               Filter: (production_year > 2010)
+               Rows Removed by Filter: 1
+               Buffers: shared hit=92
+ Planning:
+   Buffers: shared hit=460
+ Planning Time: 4.186 ms
+ Execution Time: 90.503 ms
+(49 rows)
+

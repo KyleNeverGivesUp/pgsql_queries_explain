@@ -1,0 +1,46 @@
+                                                                                 QUERY PLAN                                                                                 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=16472.79..16472.80 rows=1 width=64) (actual time=142.488..142.491 rows=1 loops=1)
+   Buffers: shared hit=78400 read=45
+   ->  Nested Loop  (cost=7.64..16472.78 rows=2 width=23) (actual time=6.939..142.309 rows=740 loops=1)
+         Join Filter: (mi_idx.movie_id = t.id)
+         Buffers: shared hit=78400 read=45
+         ->  Nested Loop  (cost=7.21..16470.77 rows=4 width=14) (actual time=4.795..103.283 rows=5820 loops=1)
+               Join Filter: (mi_idx.info_type_id = it.id)
+               Rows Removed by Join Filter: 2613
+               Buffers: shared hit=55120 read=45
+               ->  Seq Scan on info_type it  (cost=0.00..2.41 rows=1 width=4) (actual time=0.027..0.029 rows=1 loops=1)
+                     Filter: ((info)::text = 'rating'::text)
+                     Rows Removed by Filter: 112
+                     Buffers: shared hit=1
+               ->  Nested Loop  (cost=7.21..16462.19 rows=493 width=18) (actual time=4.765..102.049 rows=8433 loops=1)
+                     Buffers: shared hit=55119 read=45
+                     ->  Nested Loop  (cost=6.78..16240.14 rows=438 width=4) (actual time=4.726..55.004 rows=12951 loops=1)
+                           Buffers: shared hit=8028
+                           ->  Seq Scan on keyword k  (cost=0.00..2626.12 rows=13 width=4) (actual time=2.593..23.159 rows=30 loops=1)
+                                 Filter: ((keyword)::text ~~ '%sequel%'::text)
+                                 Rows Removed by Filter: 134140
+                                 Buffers: shared hit=949
+                           ->  Bitmap Heap Scan on movie_keyword mk  (cost=6.78..1044.20 rows=303 width=8) (actual time=0.089..1.015 rows=432 loops=30)
+                                 Recheck Cond: (keyword_id = k.id)
+                                 Heap Blocks: exact=6979
+                                 Buffers: shared hit=7079
+                                 ->  Bitmap Index Scan on keyword_id_movie_keyword  (cost=0.00..6.71 rows=303 width=0) (actual time=0.054..0.054 rows=432 loops=30)
+                                       Index Cond: (keyword_id = k.id)
+                                       Buffers: shared hit=100
+                     ->  Index Scan using movie_id_movie_info_idx on movie_info_idx mi_idx  (cost=0.43..0.50 rows=1 width=14) (actual time=0.003..0.003 rows=1 loops=12951)
+                           Index Cond: (movie_id = mk.movie_id)
+                           Filter: ((info)::text > '5.0'::text)
+                           Rows Removed by Filter: 1
+                           Buffers: shared hit=47091 read=45
+         ->  Index Scan using title_pkey on title t  (cost=0.43..0.49 rows=1 width=21) (actual time=0.006..0.006 rows=0 loops=5820)
+               Index Cond: (id = mk.movie_id)
+               Filter: (production_year > 2005)
+               Rows Removed by Filter: 1
+               Buffers: shared hit=23280
+ Planning:
+   Buffers: shared hit=486 read=1
+ Planning Time: 4.515 ms
+ Execution Time: 142.700 ms
+(42 rows)
+

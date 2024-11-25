@@ -1,0 +1,43 @@
+                                                                             QUERY PLAN                                                                             
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=15223.36..15223.37 rows=1 width=96) (actual time=4806.197..4806.201 rows=1 loops=1)
+   Buffers: shared hit=3898055 read=203617
+   ->  Nested Loop  (cost=8.08..15223.35 rows=1 width=48) (actual time=245.226..4806.026 rows=88 loops=1)
+         Buffers: shared hit=3898055 read=203617
+         ->  Nested Loop  (cost=7.65..12640.94 rows=5641 width=37) (actual time=1.264..1709.343 rows=785477 loops=1)
+               Join Filter: (t.id = ci.movie_id)
+               Buffers: shared hit=825611 read=134153
+               ->  Nested Loop  (cost=7.21..12367.41 rows=149 width=41) (actual time=1.197..227.127 rows=14165 loops=1)
+                     Buffers: shared hit=164419 read=2263
+                     ->  Nested Loop  (cost=6.78..12235.17 rows=270 width=20) (actual time=1.154..88.655 rows=35548 loops=1)
+                           Buffers: shared hit=23787 read=703
+                           ->  Seq Scan on keyword k  (cost=0.00..3632.40 rows=8 width=20) (actual time=0.221..26.712 rows=8 loops=1)
+                                 Filter: ((keyword)::text = ANY ('{superhero,sequel,second-part,marvel-comics,based-on-comic,tv-special,fight,violence}'::text[]))
+                                 Rows Removed by Filter: 134162
+                                 Buffers: shared hit=857 read=92
+                           ->  Bitmap Heap Scan on movie_keyword mk  (cost=6.78..1072.32 rows=303 width=8) (actual time=1.012..7.090 rows=4444 loops=8)
+                                 Recheck Cond: (keyword_id = k.id)
+                                 Heap Blocks: exact=23488
+                                 Buffers: shared hit=22930 read=611
+                                 ->  Bitmap Index Scan on keyword_id_movie_keyword  (cost=0.00..6.71 rows=303 width=0) (actual time=0.544..0.544 rows=4444 loops=8)
+                                       Index Cond: (keyword_id = k.id)
+                                       Buffers: shared hit=42 read=11
+                     ->  Index Scan using title_pkey on title t  (cost=0.43..0.49 rows=1 width=21) (actual time=0.004..0.004 rows=0 loops=35548)
+                           Index Cond: (id = mk.movie_id)
+                           Filter: (production_year > 2000)
+                           Rows Removed by Filter: 1
+                           Buffers: shared hit=140632 read=1560
+               ->  Index Scan using movie_id_cast_info on cast_info ci  (cost=0.44..1.36 rows=38 width=8) (actual time=0.006..0.095 rows=55 loops=14165)
+                     Index Cond: (movie_id = mk.movie_id)
+                     Buffers: shared hit=661192 read=131890
+         ->  Index Scan using name_pkey on name n  (cost=0.43..0.46 rows=1 width=19) (actual time=0.004..0.004 rows=0 loops=785477)
+               Index Cond: (id = ci.person_id)
+               Filter: ((name)::text ~~ '%Downey%Robert%'::text)
+               Rows Removed by Filter: 1
+               Buffers: shared hit=3072444 read=69464
+ Planning:
+   Buffers: shared hit=565
+ Planning Time: 4.489 ms
+ Execution Time: 4806.383 ms
+(39 rows)
+

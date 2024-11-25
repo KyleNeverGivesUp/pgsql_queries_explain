@@ -1,0 +1,63 @@
+                                                                                QUERY PLAN                                                                                
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=1494.79..1494.80 rows=1 width=64) (actual time=259.535..259.540 rows=1 loops=1)
+   Buffers: shared hit=192649
+   ->  Nested Loop  (cost=21.22..1494.78 rows=1 width=32) (actual time=15.245..259.518 rows=16 loops=1)
+         Buffers: shared hit=192649
+         ->  Nested Loop  (cost=21.08..1493.80 rows=1 width=36) (actual time=15.235..259.477 rows=16 loops=1)
+               Join Filter: (n.id = an.person_id)
+               Buffers: shared hit=192617
+               ->  Nested Loop  (cost=20.66..1493.31 rows=1 width=48) (actual time=15.218..259.406 rows=8 loops=1)
+                     Join Filter: (n.id = pi.person_id)
+                     Buffers: shared hit=192577
+                     ->  Nested Loop  (cost=20.23..1489.44 rows=4 width=40) (actual time=0.408..252.215 rows=1076 loops=1)
+                           Buffers: shared hit=188092
+                           ->  Nested Loop  (cost=19.80..1405.20 rows=183 width=21) (actual time=0.117..97.052 rows=33415 loops=1)
+                                 Buffers: shared hit=54432
+                                 ->  Nested Loop  (cost=19.36..1317.66 rows=5 width=25) (actual time=0.093..35.710 rows=435 loops=1)
+                                       Buffers: shared hit=20908
+                                       ->  Hash Join  (cost=18.93..561.10 rows=169 width=4) (actual time=0.054..5.701 rows=5186 loops=1)
+                                             Hash Cond: (ml.link_type_id = lt.id)
+                                             Buffers: shared hit=164
+                                             ->  Seq Scan on movie_link ml  (cost=0.00..462.97 rows=29997 width=8) (actual time=0.005..2.036 rows=29997 loops=1)
+                                                   Buffers: shared hit=163
+                                             ->  Hash  (cost=18.88..18.88 rows=4 width=4) (actual time=0.023..0.024 rows=1 loops=1)
+                                                   Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                                                   Buffers: shared hit=1
+                                                   ->  Seq Scan on link_type lt  (cost=0.00..18.88 rows=4 width=4) (actual time=0.014..0.015 rows=1 loops=1)
+                                                         Filter: ((link)::text = 'features'::text)
+                                                         Rows Removed by Filter: 17
+                                                         Buffers: shared hit=1
+                                       ->  Index Scan using title_pkey on title t  (cost=0.43..4.48 rows=1 width=21) (actual time=0.006..0.006 rows=0 loops=5186)
+                                             Index Cond: (id = ml.linked_movie_id)
+                                             Filter: ((production_year >= 1980) AND (production_year <= 1984))
+                                             Rows Removed by Filter: 1
+                                             Buffers: shared hit=20744
+                                 ->  Index Scan using movie_id_cast_info on cast_info ci  (cost=0.44..17.13 rows=38 width=8) (actual time=0.007..0.132 rows=77 loops=435)
+                                       Index Cond: (movie_id = t.id)
+                                       Buffers: shared hit=33524
+                           ->  Index Scan using name_pkey on name n  (cost=0.43..0.46 rows=1 width=19) (actual time=0.004..0.004 rows=0 loops=33415)
+                                 Index Cond: (id = ci.person_id)
+                                 Filter: (((name_pcode_cf)::text ~~ 'D%'::text) AND ((gender)::text = 'm'::text))
+                                 Rows Removed by Filter: 1
+                                 Buffers: shared hit=133660
+                     ->  Index Scan using person_id_person_info on person_info pi  (cost=0.43..0.96 rows=1 width=8) (actual time=0.006..0.006 rows=0 loops=1076)
+                           Index Cond: (person_id = ci.person_id)
+                           Filter: ((note)::text = 'Volker Boehm'::text)
+                           Rows Removed by Filter: 16
+                           Buffers: shared hit=4485
+               ->  Index Scan using person_id_aka_name on aka_name an  (cost=0.42..0.47 rows=2 width=4) (actual time=0.005..0.007 rows=2 loops=8)
+                     Index Cond: (person_id = ci.person_id)
+                     Filter: ((name)::text ~~ '%a%'::text)
+                     Rows Removed by Filter: 1
+                     Buffers: shared hit=40
+         ->  Index Scan using info_type_pkey on info_type it  (cost=0.14..0.56 rows=1 width=4) (actual time=0.002..0.002 rows=1 loops=16)
+               Index Cond: (id = pi.info_type_id)
+               Filter: ((info)::text = 'mini biography'::text)
+               Buffers: shared hit=32
+ Planning:
+   Buffers: shared hit=760
+ Planning Time: 9.128 ms
+ Execution Time: 259.718 ms
+(59 rows)
+

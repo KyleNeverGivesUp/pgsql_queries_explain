@@ -1,0 +1,101 @@
+                                                                                                  QUERY PLAN                                                                                                   
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=303.69..303.70 rows=1 width=96) (actual time=38.611..38.614 rows=1 loops=1)
+   Buffers: shared hit=71479 read=43
+   ->  Nested Loop  (cost=26.30..303.68 rows=1 width=118) (actual time=4.759..38.416 rows=743 loops=1)
+         Buffers: shared hit=71479 read=43
+         ->  Nested Loop  (cost=25.88..302.77 rows=2 width=103) (actual time=0.598..35.233 rows=1808 loops=1)
+               Join Filter: (ml.movie_id = t.id)
+               Buffers: shared hit=64261 read=29
+               ->  Nested Loop  (cost=25.45..301.25 rows=3 width=106) (actual time=0.576..32.037 rows=1808 loops=1)
+                     Join Filter: (ml.movie_id = mi.movie_id)
+                     Buffers: shared hit=57029 read=29
+                     ->  Nested Loop  (cost=24.99..299.70 rows=1 width=102) (actual time=0.528..28.035 rows=399 loops=1)
+                           Buffers: shared hit=50951 read=29
+                           ->  Nested Loop  (cost=24.57..278.94 rows=47 width=106) (actual time=0.441..12.004 rows=9471 loops=1)
+                                 Join Filter: (ml.movie_id = mk.movie_id)
+                                 Buffers: shared hit=13067 read=29
+                                 ->  Nested Loop  (cost=24.14..277.00 rows=1 width=98) (actual time=0.419..7.260 rows=763 loops=1)
+                                       Buffers: shared hit=10028
+                                       ->  Nested Loop  (cost=23.99..276.82 rows=1 width=102) (actual time=0.414..6.434 rows=763 loops=1)
+                                             Buffers: shared hit=8502
+                                             ->  Nested Loop  (cost=23.83..276.36 rows=3 width=106) (actual time=0.396..6.001 rows=864 loops=1)
+                                                   Join Filter: (ml.movie_id = mc.movie_id)
+                                                   Buffers: shared hit=8498
+                                                   ->  Nested Loop  (cost=23.40..275.09 rows=1 width=94) (actual time=0.372..4.491 rows=228 loops=1)
+                                                         Buffers: shared hit=7402
+                                                         ->  Nested Loop  (cost=23.24..272.89 rows=68 width=98) (actual time=0.346..4.340 rows=257 loops=1)
+                                                               Buffers: shared hit=7398
+                                                               ->  Nested Loop  (cost=22.82..246.88 rows=42 width=86) (actual time=0.075..1.173 rows=2315 loops=1)
+                                                                     Buffers: shared hit=196
+                                                                     ->  Seq Scan on link_type lt  (cost=0.00..18.88 rows=1 width=86) (actual time=0.006..0.011 rows=2 loops=1)
+                                                                           Filter: ((link)::text ~~ '%follow%'::text)
+                                                                           Rows Removed by Filter: 16
+                                                                           Buffers: shared hit=1
+                                                                     ->  Bitmap Heap Scan on movie_link ml  (cost=22.82..209.26 rows=1875 width=8) (actual time=0.056..0.446 rows=1158 loops=2)
+                                                                           Recheck Cond: (link_type_id = lt.id)
+                                                                           Heap Blocks: exact=191
+                                                                           Buffers: shared hit=195
+                                                                           ->  Bitmap Index Scan on link_type_id_movie_link  (cost=0.00..22.35 rows=1875 width=0) (actual time=0.041..0.041 rows=1158 loops=2)
+                                                                                 Index Cond: (link_type_id = lt.id)
+                                                                                 Buffers: shared hit=4
+                                                               ->  Index Scan using movie_id_complete_cast on complete_cast cc  (cost=0.42..0.60 rows=2 width=12) (actual time=0.001..0.001 rows=0 loops=2315)
+                                                                     Index Cond: (movie_id = ml.movie_id)
+                                                                     Buffers: shared hit=7202
+                                                         ->  Memoize  (cost=0.16..0.18 rows=1 width=4) (actual time=0.000..0.000 rows=1 loops=257)
+                                                               Cache Key: cc.subject_id
+                                                               Cache Mode: logical
+                                                               Hits: 255  Misses: 2  Evictions: 0  Overflows: 0  Memory Usage: 1kB
+                                                               Buffers: shared hit=4
+                                                               ->  Index Scan using comp_cast_type_pkey on comp_cast_type cct1  (cost=0.15..0.17 rows=1 width=4) (actual time=0.009..0.009 rows=0 loops=2)
+                                                                     Index Cond: (id = cc.subject_id)
+                                                                     Filter: ((kind)::text = 'cast'::text)
+                                                                     Rows Removed by Filter: 0
+                                                                     Buffers: shared hit=4
+                                                   ->  Index Scan using movie_id_movie_companies on movie_companies mc  (cost=0.43..1.23 rows=3 width=12) (actual time=0.004..0.006 rows=4 loops=228)
+                                                         Index Cond: (movie_id = cc.movie_id)
+                                                         Filter: (note IS NULL)
+                                                         Rows Removed by Filter: 3
+                                                         Buffers: shared hit=1096
+                                             ->  Memoize  (cost=0.16..0.18 rows=1 width=4) (actual time=0.000..0.000 rows=1 loops=864)
+                                                   Cache Key: mc.company_type_id
+                                                   Cache Mode: logical
+                                                   Hits: 862  Misses: 2  Evictions: 0  Overflows: 0  Memory Usage: 1kB
+                                                   Buffers: shared hit=4
+                                                   ->  Index Scan using company_type_pkey on company_type ct  (cost=0.15..0.17 rows=1 width=4) (actual time=0.009..0.009 rows=0 loops=2)
+                                                         Index Cond: (id = mc.company_type_id)
+                                                         Filter: ((kind)::text = 'production companies'::text)
+                                                         Rows Removed by Filter: 0
+                                                         Buffers: shared hit=4
+                                       ->  Index Scan using comp_cast_type_pkey on comp_cast_type cct2  (cost=0.15..0.17 rows=1 width=4) (actual time=0.001..0.001 rows=1 loops=763)
+                                             Index Cond: (id = cc.status_id)
+                                             Filter: ((kind)::text ~~ 'complete%'::text)
+                                             Buffers: shared hit=1526
+                                 ->  Index Scan using movie_id_movie_keyword on movie_keyword mk  (cost=0.43..1.35 rows=47 width=8) (actual time=0.002..0.004 rows=12 loops=763)
+                                       Index Cond: (movie_id = mc.movie_id)
+                                       Buffers: shared hit=3039 read=29
+                           ->  Index Scan using keyword_pkey on keyword k  (cost=0.42..0.44 rows=1 width=4) (actual time=0.002..0.002 rows=0 loops=9471)
+                                 Index Cond: (id = mk.keyword_id)
+                                 Filter: ((keyword)::text = 'sequel'::text)
+                                 Rows Removed by Filter: 1
+                                 Buffers: shared hit=37884
+                     ->  Index Scan using movie_id_movie_info on movie_info mi  (cost=0.46..1.52 rows=3 width=4) (actual time=0.007..0.009 rows=5 loops=399)
+                           Index Cond: (movie_id = mk.movie_id)
+                           Filter: ((info)::text = ANY ('{Sweden,Norway,Germany,Denmark,Swedish,Denish,Norwegian,German,English}'::text[]))
+                           Rows Removed by Filter: 17
+                           Buffers: shared hit=6078
+               ->  Index Scan using title_pkey on title t  (cost=0.43..0.49 rows=1 width=21) (actual time=0.001..0.001 rows=1 loops=1808)
+                     Index Cond: (id = mk.movie_id)
+                     Filter: ((production_year >= 1950) AND (production_year <= 2010))
+                     Buffers: shared hit=7232
+         ->  Index Scan using company_name_pkey on company_name cn  (cost=0.42..0.46 rows=1 width=23) (actual time=0.001..0.001 rows=0 loops=1808)
+               Index Cond: (id = mc.company_id)
+               Filter: (((country_code)::text <> '[pl]'::text) AND (((name)::text ~~ '%Film%'::text) OR ((name)::text ~~ '%Warner%'::text)))
+               Rows Removed by Filter: 1
+               Buffers: shared hit=7218 read=14
+ Planning:
+   Buffers: shared hit=1101
+ Planning Time: 72.346 ms
+ Execution Time: 38.821 ms
+(97 rows)
+

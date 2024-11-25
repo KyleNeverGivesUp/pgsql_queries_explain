@@ -1,0 +1,61 @@
+                                                                                      QUERY PLAN                                                                                       
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=4300.02..4300.03 rows=1 width=64) (actual time=1535.686..1535.692 rows=1 loops=1)
+   Buffers: shared hit=2071247 read=15455
+   ->  Nested Loop  (cost=9.36..4294.56 rows=1093 width=33) (actual time=5.967..1487.873 rows=319932 loops=1)
+         Join Filter: (n.id = an.person_id)
+         Buffers: shared hit=2071247 read=15455
+         ->  Nested Loop  (cost=8.93..4061.04 rows=480 width=25) (actual time=5.947..954.571 rows=221609 loops=1)
+               Buffers: shared hit=1203509 read=15455
+               ->  Nested Loop  (cost=8.50..3845.44 rows=480 width=21) (actual time=5.929..513.098 rows=221609 loops=1)
+                     Join Filter: (t.id = ci.movie_id)
+                     Buffers: shared hit=479712 read=15455
+                     ->  Nested Loop  (cost=8.06..3801.39 rows=24 width=29) (actual time=5.909..286.393 rows=8538 loops=1)
+                           Buffers: shared hit=241176 read=12900
+                           ->  Nested Loop  (cost=7.64..3771.51 rows=67 width=33) (actual time=5.478..261.914 rows=11406 loops=1)
+                                 Join Filter: (t.id = mc.movie_id)
+                                 Buffers: shared hit=195552 read=12900
+                                 ->  Nested Loop  (cost=7.21..3763.69 rows=13 width=25) (actual time=5.379..236.048 rows=6926 loops=1)
+                                       Buffers: shared hit=167634 read=12254
+                                       ->  Nested Loop  (cost=6.78..3747.04 rows=34 width=4) (actual time=5.358..75.742 rows=41840 loops=1)
+                                             Buffers: shared hit=7230 read=5298
+                                             ->  Seq Scan on keyword k  (cost=0.00..2626.12 rows=1 width=4) (actual time=0.670..11.774 rows=1 loops=1)
+                                                   Filter: ((keyword)::text = 'character-name-in-title'::text)
+                                                   Rows Removed by Filter: 134169
+                                                   Buffers: shared hit=949
+                                             ->  Bitmap Heap Scan on movie_keyword mk  (cost=6.78..1117.89 rows=303 width=8) (actual time=4.684..59.271 rows=41840 loops=1)
+                                                   Recheck Cond: (keyword_id = k.id)
+                                                   Heap Blocks: exact=11541
+                                                   Buffers: shared hit=6281 read=5298
+                                                   ->  Bitmap Index Scan on keyword_id_movie_keyword  (cost=0.00..6.71 rows=303 width=0) (actual time=2.861..2.861 rows=41840 loops=1)
+                                                         Index Cond: (keyword_id = k.id)
+                                                         Buffers: shared hit=2 read=36
+                                       ->  Index Scan using title_pkey on title t  (cost=0.43..0.49 rows=1 width=21) (actual time=0.004..0.004 rows=0 loops=41840)
+                                             Index Cond: (id = mk.movie_id)
+                                             Filter: (episode_nr < 100)
+                                             Rows Removed by Filter: 1
+                                             Buffers: shared hit=160404 read=6956
+                                 ->  Index Scan using movie_id_movie_companies on movie_companies mc  (cost=0.43..0.54 rows=5 width=8) (actual time=0.002..0.003 rows=2 loops=6926)
+                                       Index Cond: (movie_id = mk.movie_id)
+                                       Buffers: shared hit=27918 read=646
+                           ->  Index Scan using company_name_pkey on company_name cn  (cost=0.42..0.45 rows=1 width=4) (actual time=0.002..0.002 rows=1 loops=11406)
+                                 Index Cond: (id = mc.company_id)
+                                 Filter: ((country_code)::text = '[us]'::text)
+                                 Rows Removed by Filter: 0
+                                 Buffers: shared hit=45624
+                     ->  Index Scan using movie_id_cast_info on cast_info ci  (cost=0.44..1.36 rows=38 width=8) (actual time=0.003..0.022 rows=26 loops=8538)
+                           Index Cond: (movie_id = mk.movie_id)
+                           Buffers: shared hit=238536 read=2555
+               ->  Index Only Scan using name_pkey on name n  (cost=0.43..0.45 rows=1 width=4) (actual time=0.002..0.002 rows=1 loops=221609)
+                     Index Cond: (id = ci.person_id)
+                     Heap Fetches: 0
+                     Buffers: shared hit=723797
+         ->  Index Scan using person_id_aka_name on aka_name an  (cost=0.42..0.46 rows=2 width=20) (actual time=0.002..0.002 rows=1 loops=221609)
+               Index Cond: (person_id = ci.person_id)
+               Buffers: shared hit=867738
+ Planning:
+   Buffers: shared hit=793 read=11
+ Planning Time: 10.841 ms
+ Execution Time: 1535.936 ms
+(57 rows)
+
