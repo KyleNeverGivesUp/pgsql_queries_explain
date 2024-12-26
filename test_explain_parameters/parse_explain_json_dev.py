@@ -1,44 +1,27 @@
 import json
 import re
 from pathlib import Path
+from dataclasses import dataclass, field, asdict
+from typing import Final
 
+
+@dataclass
 class join_info_class:
-    def __init__(self, ID, Left, Right, Left_Alias, Right_Alias, Pred, ProbeKeys, BuildKeys, NumTuplesLeft, NumTuplesRight, NumTuplesOutput, Projection, NumDimLeft, NumDimRight, NumDimOutput ):
-        self.id = ID
-        self.left_table = Left
-        self.right_table = Right
-        self.pred_cond = Pred
-        self.left_alias = Left_Alias
-        self.right_alias = Right_Alias
-        self.probe_keys = ProbeKeys
-        self.build_keys = BuildKeys
-        self.num_tuples_left = NumTuplesLeft
-        self.num_tuples_right = NumTuplesRight
-        self.num_tuples_output = NumTuplesOutput
-        self.projection_cols = Projection
-        self.num_dim_left = NumDimLeft
-        self.num_dim_right = NumDimRight
-        self.num_dim_output = NumDimOutput
-
-
-    def to_dict(self):
-        return {
-            "ID": self.id,
-            "Left": self.left_table,
-            "Left_Alias": self.left_alias,
-            "Right": self.right_table,
-            "Right_Alias": self.right_alias,
-            "Pred": self.pred_cond,
-            "ProbeKeys": self.probe_keys,
-            "BuildKeys": self.build_keys,
-            "NumTuplesLeft": self.num_tuples_left,
-            "NumTuplesRight": self.num_tuples_right,
-            "NumTuplesOutput": self.num_tuples_output,
-            "Projection": self.projection_cols,
-            "NumDimLeft": self.num_dim_left,
-            "NumDimRight": self.num_dim_right,
-            "NumDimOutput": self.num_dim_output
-        }
+     ID: str
+     Left: str
+     Right: str
+     Pred: str
+     Left_Alias: str
+     Right_Alias: str
+     ProbeKeys: str
+     BuildKeys: str
+     NumTuplesLeft: str
+     NumTuplesRight: str
+     NumTuplesOutput: str
+     Projection: str
+     NumDimLeft: str
+     NumDimRight: str
+     NumDimOutput: str
 
 # Function to read and parse JSON from the file
 def load_json_from_file(file_path):
@@ -255,21 +238,21 @@ def main_func(node, joins, backup, join_id_counter, table):
                 projection_cols = get_proj_cols(node)
                 if left_table_node and right_table_node:
                     join_info = join_info_class(
-                        ID=str(len(joins)),
-                        Left=left_table_name,
-                        Left_Alias=left_table_alias,
-                        Right=right_table_name,
-                        Right_Alias=right_table_alias,
-                        Pred=pred,
-                        ProbeKeys=probKey,
-                        BuildKeys=buildKey,
-                        NumTuplesLeft=left_num_tuples,
-                        NumTuplesRight=right_num_tuples,
-                        NumTuplesOutput=num_tuples_output,
-                        Projection=projection_cols,
-                        NumDimLeft=left_proj_cols,
-                        NumDimRight=right_proj_cols,
-                        NumDimOutput=left_proj_cols + right_proj_cols
+                        ID  = str(len(joins)),
+                        Left = left_table_name,
+                        Left_Alias = left_table_alias,
+                        Right = right_table_name,
+                        Right_Alias = right_table_alias,
+                        Pred = pred,
+                        ProbeKeys = probKey,
+                        BuildKeys = buildKey,
+                        NumTuplesLeft = left_num_tuples,
+                        NumTuplesRight = right_num_tuples,
+                        NumTuplesOutput = num_tuples_output,
+                        Projection = projection_cols,
+                        NumDimLeft = str(left_proj_cols),
+                        NumDimRight = str(right_proj_cols),
+                        NumDimOutput = str(left_proj_cols + right_proj_cols)
                     )
                     joins.append(join_info)
 
@@ -278,15 +261,16 @@ if __name__ == "__main__":
     script_dir = Path(__file__).parent
     file_name = "29a_explain_verbose_analyze_format_json.txt"
     file_path = script_dir / file_name
-    explain_json = load_json_from_file(file_path)
-    # print("file_path", file_path)
-
     res = []
     backup = []
     table = {}
-    main_func(explain_json[0], res, backup,0, table)
+    try:
+        explain_json = load_json_from_file(file_path)
+    except FileNotFoundError:
+        print("File not found")
+    else:
+        main_func(explain_json[0], res, backup, 0, table)
 
     print(f"Totally {len(res)} times join:")
-    joins_dict = [join.to_dict() for join in res]
+    joins_dict = [asdict(join) for join in res]
     print(json.dumps(joins_dict, indent=4))
-
