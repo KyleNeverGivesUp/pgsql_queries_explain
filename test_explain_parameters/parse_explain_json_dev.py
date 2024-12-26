@@ -243,18 +243,11 @@ def main_func(node, joins, backup, join_id_counter, table):
             table.update({left_table_alias: left_table_name})
             table.update({right_table_alias: right_table_name})
             predicate = get_pred_cond(node,None)
-            # print("predicate:", predicate)
             filter_alias = filter_alias_func(predicate, table)
-            # print("predicate:", predicate)
             predicate_filter = filter_predicates_func(predicate, filter_alias, backup)
-            # print("predicate:", predicate)
             predicate_filter = restore_backup_pred(predicate_filter, backup, table)
-            # print("predicate:", predicate)
-            # print("predicate_filter:", predicate_filter)
-            # print("backup:", backup)
             for pred in predicate_filter:
                 print("predicate:", pred)
-                # print(left_table_alias, right_table_alias)
                 probKey, buildKey, = get_join_keys(left_table_alias, right_table_alias, pred)
                 print("probKey", probKey)
                 print("buildKey", buildKey)
@@ -280,6 +273,7 @@ def main_func(node, joins, backup, join_id_counter, table):
                     )
                     joins.append(join_info)
             print("=============================")
+
 if __name__ == "__main__":
 
     explain_json = load_json_from_file('./29a_explain_verbose_analyze_format_json.txt')
