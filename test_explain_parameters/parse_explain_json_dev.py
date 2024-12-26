@@ -1,6 +1,6 @@
 import json
 import re
-
+from pathlib import Path
 
 class join_info_class:
     def __init__(self, ID, Left, Right, Left_Alias, Right_Alias, Pred, ProbeKeys, BuildKeys, NumTuplesLeft, NumTuplesRight, NumTuplesOutput, Projection, NumDimLeft, NumDimRight, NumDimOutput ):
@@ -247,10 +247,10 @@ def main_func(node, joins, backup, join_id_counter, table):
             predicate_filter = filter_predicates_func(predicate, filter_alias, backup)
             predicate_filter = restore_backup_pred(predicate_filter, backup, table)
             for pred in predicate_filter:
-                print("predicate:", pred)
+                # print("predicate:", pred)
                 probKey, buildKey, = get_join_keys(left_table_alias, right_table_alias, pred)
-                print("probKey", probKey)
-                print("buildKey", buildKey)
+                # print("probKey", probKey)
+                # print("buildKey", buildKey)
                 num_tuples_output = node.get("Actual Rows", 0)
                 projection_cols = get_proj_cols(node)
                 if left_table_node and right_table_node:
@@ -272,12 +272,14 @@ def main_func(node, joins, backup, join_id_counter, table):
                         NumDimOutput=left_proj_cols + right_proj_cols
                     )
                     joins.append(join_info)
-            print("=============================")
 
 if __name__ == "__main__":
 
-    explain_json = load_json_from_file('./29a_explain_verbose_analyze_format_json.txt')
-    # print(explain_json)
+    script_dir = Path(__file__).parent
+    file_name = "29a_explain_verbose_analyze_format_json.txt"
+    file_path = script_dir / file_name
+    explain_json = load_json_from_file(file_path)
+    # print("file_path", file_path)
 
     res = []
     backup = []
