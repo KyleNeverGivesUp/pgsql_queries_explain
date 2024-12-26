@@ -78,14 +78,12 @@ def get_pred_alias(predicate):
     return list(set(alias_group))
 
 def get_table_info(table_node,table_type):
-    parent_relationship = table_node.get("Parent Relationship")
-    if parent_relationship == table_type:
+    # parent_relationship = table_node.get("Parent Relationship")
+    # if parent_relationship == table_type:
         if "Relation Name" in table_node and table_node.get("Parent Relationship")==table_type:
             table_name = table_node.get("Relation Name")
             table_alias = table_node.get("Alias")
-            table_rows = table_node.get("Actual Rows")
-            table_output = table_node.get("Output")
-            return table_name.strip(), table_alias.strip(), table_rows, len(table_output)
+            return table_name.strip(), table_alias.strip()
         elif "Plans" in table_node:
             if len(table_node["Plans"]) == 1:
                 for subnode in table_node["Plans"]:
@@ -236,8 +234,12 @@ def main_func(node, joins, backup, join_id_counter, table):
             else:
                 left_table_node = plans[1]
                 right_table_node = plans[0]
-            left_table_name, left_table_alias, left_num_tuples, left_proj_cols = get_table_info(left_table_node, "Outer")
-            right_table_name, right_table_alias, right_num_tuples, right_proj_cols = get_table_info(right_table_node,"Inner")
+            left_num_tuples = left_table_node.get("Actual Rows")
+            left_proj_cols = len(left_table_node.get("Output"))
+            right_num_tuples = right_table_node.get("Actual Rows")
+            right_proj_cols = len(right_table_node.get("Output"))
+            left_table_name, left_table_alias = get_table_info(left_table_node, "Outer")
+            right_table_name, right_table_alias = get_table_info(right_table_node,"Inner")
             table.update({left_table_alias: left_table_name})
             table.update({right_table_alias: right_table_name})
             predicate = get_pred_cond(node,None)
@@ -269,192 +271,26 @@ def main_func(node, joins, backup, join_id_counter, table):
                         ProbeKeys=probKey,
                         BuildKeys=buildKey,
                         NumTuplesLeft=left_num_tuples,
-                        NumDimRight=right_num_tuples,
+                        NumTuplesRight=right_num_tuples,
                         NumTuplesOutput=num_tuples_output,
                         Projection=projection_cols,
                         NumDimLeft=left_proj_cols,
-                        NumTuplesRight=right_proj_cols,
+                        NumDimRight=right_proj_cols,
                         NumDimOutput=left_proj_cols + right_proj_cols
                     )
                     joins.append(join_info)
             print("=============================")
 if __name__ == "__main__":
 
-    explain_json = load_json_from_file(
-        '/Users/kyle/PycharmProjects/24SFSE100Kyle/test_explain_parameters/1a_explain_format_json.txt')
-
-
-#     explain_json = {
-#    "Plans":[
-#       {
-#          "level":"a",
-#          "Node Type":"Aggregate",
-#          "Strategy":"Plain",
-#          "Partial Mode":"Partial",
-#          "Parent Relationship":"Outer",
-#          "Actual Rows":1,
-#          "Output":[
-#             "PARTIAL min((mc.note)::text)",
-#             "PARTIAL min((t.title)::text)",
-#             "PARTIAL min(t.production_year)"
-#          ],
-#          "Plans":[
-#             {
-#                "level":"b",
-#                "Node Type":"Nested Loop",
-#                "Parent Relationship":"Outer",
-#                "Output":[
-#                   "mc.note",
-#                   "t.title",
-#                   "t.production_year"
-#                ],
-#                "Join Filter":"(mc.movie_id = t.id)",
-#                "Plans":[
-#                   {
-#                      "level":"c",
-#                      "Node Type":"Nested Loop",
-#                      "Parent Relationship":"Outer",
-#                      "Join Type":"Inner",
-#                      "Actual Rows":49,
-#                      "Output":[
-#                         "mi_idx.movie_id",
-#                         "mc.note",
-#                         "mc.company_type_id",
-#                         "mc.movie_id"
-#                      ],
-#                      "Plans":[
-#                         {
-#                            "level":"d",
-#                            "Node Type":"Hash Join",
-#                            "Parent Relationship":"Outer",
-#                            "Output":[
-#                               "mi_idx.movie_id"
-#                            ],
-#                            "Hash Cond":"(mi_idx.info_type_id = it.id)",
-#                            "Actual Rows":83,
-#                            "Plans":[
-#                               {
-#                                  "level":"e",
-#                                  "Node Type":"Seq Scan",
-#                                  "Parent Relationship":"Outer",
-#                                  "Relation Name":"movie_info_idx",
-#                                  "Schema":"public",
-#                                  "Actual Rows":460012,
-#                                  "Alias":"mi_idx",
-#                                  "Output":[
-#                                     "mi_idx.id",
-#                                     "mi_idx.movie_id",
-#                                     "mi_idx.info_type_id",
-#                                     "mi_idx.info",
-#                                     "mi_idx.note"
-#                                  ]
-#                               },
-#                               {
-#                                  "Node Type":"Hash",
-#                                  "Parent Relationship":"Inner",
-#                                  "Output":[
-#                                     "it.id"
-#                                  ],
-#                                  "Plans":[
-#                                     {
-#                                        "Node Type":"Seq Scan",
-#                                        "Parent Relationship":"Outer",
-#                                        "Relation Name":"info_type",
-#                                        "Actual Rows":1,
-#                                        "Schema":"public",
-#                                        "level":"e",
-#                                        "Alias":"it",
-#                                        "Output":[
-#                                           "it.id"
-#                                        ]
-#                                     }
-#                                  ]
-#                               }
-#                            ]
-#                         },
-#                         {
-#                            "Node Type":"Index Scan",
-#                            "Parent Relationship":"Inner",
-#                            "Index Name":"movie_id_movie_companies",
-#                            "Relation Name":"movie_companies",
-#                            "Actual Rows":1,
-#                            "Alias":"mc",
-#                            "Output":[
-#                               "mc.id",
-#                               "mc.movie_id",
-#                               "mc.company_id",
-#                               "mc.company_type_id",
-#                               "mc.note"
-#                            ],
-#                            "Index Cond":"(mc.movie_id = mi_idx.movie_id)"
-#                         }
-#                      ]
-#                   },
-#                   {
-#                      "Node Type":"Memoize",
-#                      "Parent Relationship":"Inner",
-#                      "Output":[
-#                         "ct.id"
-#                      ],
-#                      "Cache Key":"mc.company_type_id",
-#                      "Cache Mode":"logical",
-#                      "Plans":[
-#                         {
-#                            "Node Type":"Index Scan",
-#                            "Parent Relationship":"Outer",
-#                            "Index Name":"company_type_pkey",
-#                            "Relation Name":"company_type",
-#                            "Actual Rows":1,
-#                            "Alias":"ct",
-#                            "Output":[
-#                               "ct.id"
-#                            ],
-#                            "Index Cond":"(ct.id = mc.company_type_id)"
-#                         }
-#                      ]
-#                   }
-#                ]
-#             },
-#             {
-#                "Node Type":"Index Scan",
-#                "Parent Relationship":"Inner",
-#                "Index Name":"title_pkey",
-#                "Relation Name":"title",
-#                "Alias":"t",
-#                "Actual Rows":1,
-#                "Output":[
-#                   "t.id",
-#                   "t.title",
-#                   "t.imdb_index",
-#                   "t.kind_id",
-#                   "t.production_year",
-#                   "t.imdb_id",
-#                   "t.phonetic_code",
-#                   "t.episode_of_id",
-#                   "t.season_nr",
-#                   "t.episode_nr",
-#                   "t.series_years",
-#                   "t.md5sum"
-#                ],
-#                "Index Cond":"(t.id = mi_idx.movie_id)"
-#             }
-#          ]
-#       }
-#    ]
-# }
+    explain_json = load_json_from_file('./29a_explain_verbose_analyze_format_json.txt')
+    # print(explain_json)
 
     res = []
     backup = []
     table = {}
-    main_func(explain_json, res, backup,0, table)
-    # print(res)
-    # for join_info in res:
-    #     print(join_info.to_dict())
+    main_func(explain_json[0], res, backup,0, table)
+
+    print(f"Totally {len(res)} times join:")
     joins_dict = [join.to_dict() for join in res]
     print(json.dumps(joins_dict, indent=4))
 
-    # print(explain_json.get("Plans")[1])
-    # print("Join Execution Details:")
-    # print(f"Totally {len(results)} times join:")
-    # for idx, join in enumerate(results):
-    #     print(f"{join.to_dict()}")
