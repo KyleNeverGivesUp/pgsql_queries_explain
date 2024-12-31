@@ -1,10 +1,11 @@
+
 import json
 import re
 from pathlib import Path
 from dataclasses import dataclass, field, asdict
 from typing import Final
 
-
+# Define class for join_info
 @dataclass
 class join_info_class:
      ID: str
@@ -35,11 +36,13 @@ def load_json_from_file(file_path):
     data=json.loads(json_cleaned)
     return data
 
+# Retrieve projection_cols from Json Node
 def get_proj_cols(node):
     if "Output" in node:
         return node.get("Output")
     return None
 
+# Filter out which tables are not register in the "tables", tables used to identify if the join order isn't correct retrieving from json node
 def filter_alias_func(predicate, table_info):
     filter_alias = []
     alias_group = get_pred_alias(predicate)
@@ -49,6 +52,7 @@ def filter_alias_func(predicate, table_info):
             filter_alias.append(item)
     return filter_alias
 
+# Retrieve table alias from predicate
 def get_pred_alias(predicate):
     alias_group = []
     # print(table_info)
@@ -60,9 +64,8 @@ def get_pred_alias(predicate):
             alias_group.append(pred_alias)
     return list(set(alias_group))
 
+# Recursion for retrieve
 def get_table_info(table_node,table_type):
-    # parent_relationship = table_node.get("Parent Relationship")
-    # if parent_relationship == table_type:
         if "Relation Name" in table_node and table_node.get("Parent Relationship")==table_type:
             table_name = table_node.get("Relation Name")
             table_alias = table_node.get("Alias")
