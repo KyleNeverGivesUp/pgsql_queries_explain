@@ -3,6 +3,7 @@ import json
 import re
 from pathlib import Path
 from dataclasses import dataclass, field, asdict
+import sys
 from typing import Final
 
 # Define class for join_info
@@ -11,9 +12,11 @@ class join_info_class:
      ID: str
      Left: str
      Right: str
-     Pred: str
+     Left_Table_Name: str
+     Right_Table_Name: str
      Left_Alias: str
      Right_Alias: str
+     Pred: str
      ProbeKeys: str
      BuildKeys: str
      NumTuplesLeft: str
@@ -242,9 +245,11 @@ def main_func(node, joins, backup, join_id_counter, table):
                 if left_table_node and right_table_node:
                     join_info = join_info_class(
                         ID  = str(len(joins)),
-                        Left = left_table_name,
+                        Left = str(len(joins)-1) if len(joins) != 0 else left_table_alias,
+                        Right = right_table_alias,
+                        Left_Table_Name = left_table_name,
                         Left_Alias = left_table_alias,
-                        Right = right_table_name,
+                        Right_Table_Name = right_table_name,
                         Right_Alias = right_table_alias,
                         Pred = pred,
                         ProbeKeys = probKey,
@@ -261,8 +266,10 @@ def main_func(node, joins, backup, join_id_counter, table):
 
 if __name__ == "__main__":
 
+    args = sys.argv
+    file_name = args[0]
     script_dir = Path(__file__).parent
-    file_name = "29a_explain_verbose_analyze_format_json.txt"
+    # file_name = "29a_explain_verbose_analyze_format_json.txt"
     file_path = script_dir / file_name
     res = []
     backup = []
