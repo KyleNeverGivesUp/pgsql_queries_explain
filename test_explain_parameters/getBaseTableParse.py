@@ -1,6 +1,7 @@
 import json
 from collections import defaultdict
 
+
 input_data = '''
 [
     {
