@@ -22,7 +22,7 @@ class join_info_class:
      NumTuplesLeft: str
      NumTuplesRight: str
      NumTuplesOutput: str
-     Projection: str
+     Projection: list
      NumDimLeft: str
      NumDimRight: str
      NumDimOutput: str
@@ -242,6 +242,8 @@ def main_func(node, joins, backup, join_id_counter, table):
                 # print("buildKey", buildKey)
                 num_tuples_output = node.get("Actual Rows", 0)
                 projection_cols = get_proj_cols(node)
+                projection_cols.extend(item.strip() for item in pred.split("="))
+                projection_cols = list(set(projection_cols))
                 if left_table_node and right_table_node:
                     join_info = join_info_class(
                         ID  = str(len(joins)),
@@ -267,9 +269,9 @@ def main_func(node, joins, backup, join_id_counter, table):
 if __name__ == "__main__":
 
     args = sys.argv
-    file_name = args[0]
+    # file_name = args[0]
     script_dir = Path(__file__).parent
-    # file_name = "29a_explain_verbose_analyze_format_json.txt"
+    file_name = "29a_explain_verbose_analyze_format_json.txt"
     file_path = script_dir / file_name
     res = []
     backup = []
