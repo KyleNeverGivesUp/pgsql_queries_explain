@@ -1,7 +1,6 @@
 import json
 from collections import defaultdict
 
-# 输入数据（将你的 JSON 字符串赋值给 input_data）
 input_data = '''
 [
     {
