@@ -242,6 +242,7 @@ def main_func(node, joins, backup, join_id_counter, table):
                 # print("buildKey", buildKey)
                 num_tuples_output = node.get("Actual Rows", 0)
                 projection_cols = get_proj_cols(node)
+                # Update for adding pred cols to projection
                 projection_cols.extend(item.strip() for item in pred.split("="))
                 projection_cols = list(set(projection_cols))
                 if left_table_node and right_table_node:
