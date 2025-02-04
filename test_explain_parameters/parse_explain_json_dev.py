@@ -1,3 +1,10 @@
+"""
+Update Logs:
+Feb 3: Update code for transform filter clause from special format to generic
+       Update NumTuplesOutput from actual rows to plan rows
+"""
+
+
 
 import json
 import re
@@ -5,6 +12,7 @@ from pathlib import Path
 from dataclasses import dataclass, field, asdict
 import sys
 from typing import Final
+
 
 # Define class for join_info
 @dataclass
@@ -26,6 +34,73 @@ class join_info_class:
      NumDimLeft: str
      NumDimRight: str
      NumDimOutput: str
+     Filter: list
+
+
+def transform_sql_fragment(sql: str) -> str:
+    """
+    Transform PostgresSQL particular syntax format into generic SQL expression：
+    1. Cope with BETWEEN and format，
+         e.g. "((t.production_year >= 2000) AND (t.production_year <= 2010) AND (...))"
+         change into "t.production_year BETWEEN 2000 AND 2010"
+    2.	Remove ::text or ::text[].
+    3.	Replace ~~ with LIKE.
+    4.	Convert = ANY ('{...}'::text[]) into IN (...), while keeping the original parentheses around the array elements.
+    5.	For example 3, if there is also a condition on n.gender, discard the part related to n.gender and only keep the part related to n.name.
+    6.	Remove any redundant outer parentheses.
+    """
+    #  Check whether the production year range is judged (priority processing), ignoring other conditions
+    prod_year_pattern = re.compile(
+        r'\(\(\s*t\.production_year\s*>=\s*(\d+)\s*\)\s*AND\s*\(\s*t\.production_year\s*<=\s*(\d+)\s*\)(?:\s*AND.*)?\)'
+    )
+    m = prod_year_pattern.search(sql)
+    if m:
+        low = m.group(1)
+        high = m.group(2)
+        return f"t.production_year BETWEEN {low} AND {high}"
+
+    # Remove all "::text" or "::text[]"
+    sql = re.sub(r"::text(\[\])?", "", sql)
+
+    # Change "~~" into "LIKE"
+    sql = sql.replace("~~", "LIKE")
+
+    # Replace "= ANY ('{...}' ...)" with "IN (...)"
+    any_pattern = re.compile(r"=\s*ANY\s*\(\s*'(\{[^']*\})'\s*(::[^\)]*)?\)")
+    def any_repl(match: re.Match) -> str:
+        # Get the content of '{(voice),"(voice) (uncredited)","(voice: English version)"}'
+        array_str = match.group(1).strip("{}")
+        # Separate by comma
+        elems = [elem.strip() for elem in array_str.split(",")]
+        new_elems = []
+        for e in elems:
+            # Remove the outside double quote
+            if e.startswith('"') and e.endswith('"'):
+                e = e[1:-1]
+            new_elems.append(f"'{e}'")
+        return "IN (" + ", ".join(new_elems) + ")"
+    sql = any_pattern.sub(any_repl, sql)
+
+    sql = re.sub(r"\s*AND\s*\(\([^)]*n\.gender[^)]*\)\)", "", sql)
+
+    # Remove brackets
+    def remove_outer_parentheses(s: str) -> str:
+        s = s.strip()
+        if s.startswith("(") and s.endswith(")"):
+            count = 0
+            for i, ch in enumerate(s):
+                if ch == "(":
+                    count += 1
+                elif ch == ")":
+                    count -= 1
+                # If it is closed in the middle of the string, the outermost parentheses do not wrap the entire content
+                if count == 0 and i < len(s) - 1:
+                    return s
+            return s[1:-1].strip()
+        return s
+
+    sql = remove_outer_parentheses(sql)
+    return sql.strip()
 
 # Function to read and parse JSON from the file
 def load_json_from_file(file_path):
@@ -72,7 +147,8 @@ def get_table_info(table_node,table_type):
         if "Relation Name" in table_node and table_node.get("Parent Relationship")==table_type:
             table_name = table_node.get("Relation Name")
             table_alias = table_node.get("Alias")
-            return table_name.strip(), table_alias.strip()
+            table_filter = table_node.get("Filter")
+            return table_name.strip(), table_alias.strip(), table_filter
         elif "Plans" in table_node:
             if len(table_node["Plans"]) == 1:
                 for subnode in table_node["Plans"]:
@@ -191,7 +267,6 @@ def get_join_keys(left_table_alias, right_table_alias, pred):
     if right_table_alias in pred_dict:
         right_join_key = pred_dict[right_table_alias]
         pred_dict[right_table_alias] = pred_dict[right_table_alias] + "(taken)"
-        # print("right_join_key", right_join_key)
     # handle occurrence of conflict  between pred and parent relationship
     if not left_join_key:
         for key in pred_dict.keys():
@@ -199,9 +274,8 @@ def get_join_keys(left_table_alias, right_table_alias, pred):
                 # print(pred_dict[key])
                 left_join_key = pred_dict[key]
                 pred_dict[key] = pred_dict[key] + "(taken)"
-    # print("left_join_key", left_join_key)
-    # print("right_join_key", right_join_key)
-    return left_join_key, right_join_key
+    # Jan/31 added table_alias
+    return left_table_alias+"."+left_join_key, right_table_alias+"."+right_join_key
 
 def main_func(node, joins, backup, join_id_counter, table):
     # join_node_types = ["Hash Join", "Nested Loop", "Merge Join", "Memoize"]
@@ -223,28 +297,34 @@ def main_func(node, joins, backup, join_id_counter, table):
             else:
                 left_table_node = plans[1]
                 right_table_node = plans[0]
-            left_num_tuples = left_table_node.get("Actual Rows")
+            left_num_tuples = left_table_node.get("Plan Rows")
             left_proj_cols = len(left_table_node.get("Output"))
-            right_num_tuples = right_table_node.get("Actual Rows")
+            right_num_tuples = right_table_node.get("Plan Rows")
             right_proj_cols = len(right_table_node.get("Output"))
-            left_table_name, left_table_alias = get_table_info(left_table_node, "Outer")
-            right_table_name, right_table_alias = get_table_info(right_table_node,"Inner")
+            left_table_name, left_table_alias, left_table_filter = get_table_info(left_table_node, "Outer")
+            right_table_name, right_table_alias, right_table_filter = get_table_info(right_table_node,"Inner")
             table.update({left_table_alias: left_table_name})
             table.update({right_table_alias: right_table_name})
             predicate = get_pred_cond(node,None)
             filter_alias = filter_alias_func(predicate, table)
             predicate_filter = filter_predicates_func(predicate, filter_alias, backup)
             predicate_filter = restore_backup_pred(predicate_filter, backup, table)
+            # filter_clause = [ item for item in [left_table_filter, right_table_filter] if item is not None]
+            filter_clause = [ transform_sql_fragment(item) for item in [left_table_filter, right_table_filter] if item is not None]
+
+            # print(filter_clause)
             for pred in predicate_filter:
                 # print("predicate:", pred)
                 probKey, buildKey, = get_join_keys(left_table_alias, right_table_alias, pred)
                 # print("probKey", probKey)
                 # print("buildKey", buildKey)
-                num_tuples_output = node.get("Actual Rows", 0)
+                num_tuples_output = node.get("Plan Rows", 0)
                 projection_cols = get_proj_cols(node)
                 # Update for adding pred cols to projection
                 projection_cols.extend(item.strip() for item in pred.split("="))
                 projection_cols = list(set(col.replace(".","_") for col in projection_cols))
+                # Add xx_features into projections
+                projection_cols.extend([left_table_alias+"_features", right_table_alias+"_features"])
                 if left_table_node and right_table_node:
                     join_info = join_info_class(
                         ID  = str(len(joins)),
@@ -263,7 +343,8 @@ def main_func(node, joins, backup, join_id_counter, table):
                         Projection = projection_cols,
                         NumDimLeft = str(left_proj_cols),
                         NumDimRight = str(right_proj_cols),
-                        NumDimOutput = str(left_proj_cols + right_proj_cols)
+                        NumDimOutput = str(left_proj_cols + right_proj_cols),
+                        Filter = filter_clause
                     )
                     joins.append(join_info)
 
