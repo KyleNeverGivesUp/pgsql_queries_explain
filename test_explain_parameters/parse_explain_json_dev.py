@@ -4,13 +4,11 @@ Feb 3: Update code for transform filter clause from special format to generic
        Update NumTuplesOutput from actual rows to plan rows
 """
 
-
-
+import sys
 import json
 import re
 from pathlib import Path
 from dataclasses import dataclass, field, asdict
-import sys
 from typing import Final
 
 
