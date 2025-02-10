@@ -23,6 +23,8 @@ for sql_file in "$SQL_DIR"/*.sql; do
         continue
     fi
 
+    echo "Processing: $sql_file -> $output_file"
+
     # Execute EXPLAIN and save the JSON result to a file (Suppress all output)
     PGPASSWORD="$DB_PASSWORD" psql -U "$DB_USER" -d "$DB_NAME" -q <<EOF > /dev/null
 \pset format unaligned
