@@ -51,6 +51,7 @@ def transform_sql_fragment(sql: str) -> str:
     prod_year_pattern = re.compile(
         r'\(\(\s*t\.production_year\s*>=\s*(\d+)\s*\)\s*AND\s*\(\s*t\.production_year\s*<=\s*(\d+)\s*\)(?:\s*AND.*)?\)'
     )
+
     m = prod_year_pattern.search(sql)
     if m:
         low = m.group(1)
@@ -98,19 +99,29 @@ def transform_sql_fragment(sql: str) -> str:
         return s
 
     sql = remove_outer_parentheses(sql)
-    return sql.strip()
+    return sql.replace(".","_").strip()
 
 # Function to read and parse JSON from the file
 def load_json_from_file(file_path):
-    with open(file_path, 'r') as file:
-        lines = file.readlines()
-
-    # Remove the first line and combine the rest
-    json_lines = ''.join(lines[2:-2]).strip()
-    json_cleaned = json_lines.replace('+', '').strip()
-    #Convert to JSON
-    data=json.loads(json_cleaned)
-    return data
+    try:
+        with open(file_path, 'r', encoding='utf-8') as file:
+            return json.load(file)
+    except FileNotFoundError:
+        print(f"File is unfound: {file_path}")
+    except json.JSONDecodeError:
+        print(f"JSON decode failed: {file_path}")
+    except Exception as e:
+        print(f"Exception: {e}")
+        # lines = file.readlines()
+        # print(lines)
+    # # Remove the first line and combine the rest
+    # json_lines = ''.join(lines[2:-2]).strip()
+    # # print(json_lines)
+    # json_cleaned = json_lines.replace("+", "").strip()
+    # #Convert to JSON
+    # data=json.loads(json_cleaned)
+    # data = json.loads(json_lines)
+    # return data
 
 # Retrieve projection_cols from Json Node
 def get_proj_cols(node):
@@ -308,13 +319,15 @@ def main_func(node, joins, backup, join_id_counter, table):
             predicate_filter = filter_predicates_func(predicate, filter_alias, backup)
             predicate_filter = restore_backup_pred(predicate_filter, backup, table)
             # filter_clause = [ item for item in [left_table_filter, right_table_filter] if item is not None]
+            # print(right_table_filter)
             filter_clause = [ transform_sql_fragment(item) for item in [left_table_filter, right_table_filter] if item is not None]
 
             # print(filter_clause)
             for pred in predicate_filter:
                 # print("predicate:", pred)
                 probKey, buildKey, = get_join_keys(left_table_alias, right_table_alias, pred)
-                # print("probKey", probKey)
+
+
                 # print("buildKey", buildKey)
                 num_tuples_output = node.get("Plan Rows", 0)
                 projection_cols = get_proj_cols(node)
@@ -333,8 +346,8 @@ def main_func(node, joins, backup, join_id_counter, table):
                         Right_Table_Name = right_table_name,
                         Right_Alias = right_table_alias,
                         Pred = pred,
-                        ProbeKeys = probKey,
-                        BuildKeys = buildKey,
+                        ProbeKeys = probKey.replace(".", "_"),
+                        BuildKeys = buildKey.replace(".", "_"),
                         NumTuplesLeft = left_num_tuples,
                         NumTuplesRight = right_num_tuples,
                         NumTuplesOutput = num_tuples_output,
@@ -351,7 +364,7 @@ if __name__ == "__main__":
     args = sys.argv
     # file_name = args[0]
     script_dir = Path(__file__).parent
-    file_name = "29a_explain_verbose_analyze_format_json.txt"
+    file_name = "29a_explain_verbose_analyze_format_json_clean.txt"
     file_path = script_dir / file_name
     res = []
     backup = []
