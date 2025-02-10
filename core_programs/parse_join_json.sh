@@ -22,7 +22,7 @@ for json_file in "$SQL_DIR"/*format_json_cleansed; do
     echo "Processing: $json_file -> $output_file"
 
     # Execute Python script and save output to the correct file
-    python "$SCRIPT_DIR"/parse_explain_json_dev.py "$json_file" > "$output_file"
+    python "$SCRIPT_DIR/parse_explain_json_dev.py" "$json_file" > "$output_file"
 
 done
 
