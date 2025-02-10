@@ -365,9 +365,9 @@ def main_func(node, joins, backup, join_id_counter, table):
 if __name__ == "__main__":
 
     args = sys.argv
-    # file_name = args[0]
+    file_name = args[0]
     script_dir = Path(__file__).parent
-    file_name = "29a_explain_verbose_analyze_format_json_clean.txt"
+    # file_name = "29a_explain_verbose_analyze_format_json_clean.txt"
     file_path = script_dir / file_name
     res = []
     backup = []
