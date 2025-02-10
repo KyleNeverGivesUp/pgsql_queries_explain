@@ -365,7 +365,7 @@ def main_func(node, joins, backup, join_id_counter, table):
 if __name__ == "__main__":
 
     args = sys.argv
-    file_name = args[0]
+    file_name = args[1]
     # script_dir =
     # print(script_dir)
     # file_name = "21c_explain_verbose_analyze_format_json_cleansed"
@@ -375,6 +375,7 @@ if __name__ == "__main__":
     backup = []
     table = {}
     try:
+
         explain_json = load_json_from_file(file_name)
 
     except FileNotFoundError:
@@ -382,6 +383,6 @@ if __name__ == "__main__":
     else:
         main_func(explain_json[0], res, backup, 0, table)
 
-    print(f"Totally {len(res)} times join:")
+    # print(f"Totally {len(res)} times join:")
     joins_dict = [asdict(join) for join in res]
     print(json.dumps(joins_dict, indent=4))
