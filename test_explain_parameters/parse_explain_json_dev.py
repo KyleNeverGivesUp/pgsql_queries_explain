@@ -1,7 +1,10 @@
 """
 Update Logs:
-Feb 3: Update code for transform filter clause from special format to generic
-       Update NumTuplesOutput from actual rows to plan rows
+Feb 3: Update code for transform filter clause from special format to generic.
+       Update NumTuplesOutput from actual rows to plan rows.
+
+Feb 9: Update with probKey, buildKey, Filter "." -> "_".
+       Fixed "+" json carriage return character.
 """
 
 import sys
