@@ -12,19 +12,29 @@ OUTPUT_DIR="/home/pgsql_explain/sql_files/output/pgsql_queries_explain/cleansed_
 # Ensure the output directory exists
 mkdir -p "$OUTPUT_DIR"
 
+# Ensure the output directory exists
+mkdir -p "$OUTPUT_DIR"
+
 # Loop through all .sql files in the SQL directory
 for sql_file in "$SQL_DIR"/*.sql; do
     # Extract the base filename without path and extension
     base_name=$(basename "$sql_file" .sql)
     output_file="$OUTPUT_DIR/${base_name}_explain_verbose_analyze_format_json_cleansed"
 
+    # Check if the SQL file is empty
+    if [[ ! -s "$sql_file" ]]; then
+        echo "Skipping empty file: $sql_file"
+        continue
+    fi
+
     echo "Processing: $sql_file -> $output_file"
 
-    # Execute EXPLAIN and save the JSON result to a file
+    # Read SQL content safely and execute EXPLAIN
     PGPASSWORD="$DB_PASSWORD" psql -U "$DB_USER" -d "$DB_NAME" <<EOF
 \pset format unaligned
 \pset tuples_only on
-EXPLAIN (VERBOSE, ANALYZE, FORMAT JSON) \g $output_file
+EXPLAIN (VERBOSE, ANALYZE, FORMAT JSON) $(cat "$sql_file");
+\g $output_file
 EOF
 
 done
