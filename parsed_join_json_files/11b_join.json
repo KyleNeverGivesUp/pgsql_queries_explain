@@ -1,0 +1,284 @@
+[
+    {
+        "ID": "0",
+        "Left": "lt",
+        "Right": "ml",
+        "Left_Table_Name": "link_type",
+        "Right_Table_Name": "movie_link",
+        "Left_Alias": "lt",
+        "Right_Alias": "ml",
+        "Pred": "ml.link_type_id = lt.id",
+        "ProbeKeys": "lt_id",
+        "BuildKeys": "ml_link_type_id",
+        "NumTuplesLeft": 1,
+        "NumTuplesRight": 1875,
+        "NumTuplesOutput": 42,
+        "Projection": [
+            "ml_movie_id",
+            "ml_link_type_id",
+            "lt_id",
+            "lt_link",
+            "lt_features",
+            "ml_features"
+        ],
+        "NumDimLeft": "2",
+        "NumDimRight": "4",
+        "NumDimOutput": "6",
+        "Filter": [
+            "(lt_link) LIKE '%follows%'"
+        ]
+    },
+    {
+        "ID": "1",
+        "Left": "0",
+        "Right": "mc",
+        "Left_Table_Name": "link_type",
+        "Right_Table_Name": "movie_companies",
+        "Left_Alias": "lt",
+        "Right_Alias": "mc",
+        "Pred": "mc.movie_id = ml.movie_id",
+        "ProbeKeys": "lt_movie_id",
+        "BuildKeys": "mc_movie_id",
+        "NumTuplesLeft": 42,
+        "NumTuplesRight": 3,
+        "NumTuplesOutput": 106,
+        "Projection": [
+            "mc_company_type_id",
+            "ml_movie_id",
+            "mc_company_id",
+            "mc_movie_id",
+            "lt_link",
+            "lt_features",
+            "mc_features"
+        ],
+        "NumDimLeft": "4",
+        "NumDimRight": "5",
+        "NumDimOutput": "9",
+        "Filter": [
+            "(lt_link) LIKE '%follows%'",
+            "mc_note IS NULL"
+        ]
+    },
+    {
+        "ID": "2",
+        "Left": "1",
+        "Right": "ct",
+        "Left_Table_Name": "link_type",
+        "Right_Table_Name": "company_type",
+        "Left_Alias": "lt",
+        "Right_Alias": "ct",
+        "Pred": "ct.id = mc.company_type_id",
+        "ProbeKeys": "lt_company_type_id",
+        "BuildKeys": "ct_id",
+        "NumTuplesLeft": 106,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "mc_company_type_id",
+            "ml_movie_id",
+            "mc_company_id",
+            "mc_movie_id",
+            "ct_id",
+            "lt_link",
+            "lt_features",
+            "ct_features"
+        ],
+        "NumDimLeft": "7",
+        "NumDimRight": "1",
+        "NumDimOutput": "8",
+        "Filter": [
+            "(lt_link) LIKE '%follows%'",
+            "(ct_kind) = 'production companies'"
+        ]
+    },
+    {
+        "ID": "3",
+        "Left": "2",
+        "Right": "cn",
+        "Left_Table_Name": "link_type",
+        "Right_Table_Name": "company_name",
+        "Left_Alias": "lt",
+        "Right_Alias": "cn",
+        "Pred": "cn.id = mc.company_id",
+        "ProbeKeys": "lt_company_id",
+        "BuildKeys": "cn_id",
+        "NumTuplesLeft": 1,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "ml_movie_id",
+            "mc_company_id",
+            "mc_movie_id",
+            "cn_name",
+            "cn_id",
+            "lt_link",
+            "lt_features",
+            "cn_features"
+        ],
+        "NumDimLeft": "6",
+        "NumDimRight": "7",
+        "NumDimOutput": "13",
+        "Filter": [
+            "(lt_link) LIKE '%follows%'",
+            "((cn_country_code) <> '[pl]') AND (((cn_name) LIKE '%Film%') OR ((cn_name) LIKE '%Warner%'))"
+        ]
+    },
+    {
+        "ID": "4",
+        "Left": "3",
+        "Right": "t",
+        "Left_Table_Name": "link_type",
+        "Right_Table_Name": "title",
+        "Left_Alias": "lt",
+        "Right_Alias": "t",
+        "Pred": "t.id = mc.movie_id",
+        "ProbeKeys": "lt_movie_id",
+        "BuildKeys": "t_id",
+        "NumTuplesLeft": 1,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "t_id",
+            "ml_movie_id",
+            "t_title",
+            "mc_movie_id",
+            "cn_name",
+            "lt_link",
+            "lt_features",
+            "t_features"
+        ],
+        "NumDimLeft": "6",
+        "NumDimRight": "12",
+        "NumDimOutput": "18",
+        "Filter": [
+            "(lt_link) LIKE '%follows%'",
+            "((t_title) LIKE '%Money%') AND (t_production_year = 1998)"
+        ]
+    },
+    {
+        "ID": "5",
+        "Left": "4",
+        "Right": "t",
+        "Left_Table_Name": "link_type",
+        "Right_Table_Name": "title",
+        "Left_Alias": "lt",
+        "Right_Alias": "t",
+        "Pred": "ml.movie_id = t.id",
+        "ProbeKeys": "lt_movie_id",
+        "BuildKeys": "t_id",
+        "NumTuplesLeft": 1,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "t_id",
+            "ml_movie_id",
+            "t_title",
+            "mc_movie_id",
+            "cn_name",
+            "lt_link",
+            "lt_features",
+            "t_features"
+        ],
+        "NumDimLeft": "6",
+        "NumDimRight": "12",
+        "NumDimOutput": "18",
+        "Filter": [
+            "(lt_link) LIKE '%follows%'",
+            "((t_title) LIKE '%Money%') AND (t_production_year = 1998)"
+        ]
+    },
+    {
+        "ID": "6",
+        "Left": "5",
+        "Right": "mk",
+        "Left_Table_Name": "link_type",
+        "Right_Table_Name": "movie_keyword",
+        "Left_Alias": "lt",
+        "Right_Alias": "mk",
+        "Pred": "mk.movie_id = mc.movie_id",
+        "ProbeKeys": "lt_movie_id",
+        "BuildKeys": "mk_movie_id",
+        "NumTuplesLeft": 1,
+        "NumTuplesRight": 47,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "mk_movie_id",
+            "t_title",
+            "mk_keyword_id",
+            "cn_name",
+            "mc_movie_id",
+            "lt_link",
+            "lt_features",
+            "mk_features"
+        ],
+        "NumDimLeft": "10",
+        "NumDimRight": "3",
+        "NumDimOutput": "13",
+        "Filter": [
+            "(lt_link) LIKE '%follows%'"
+        ]
+    },
+    {
+        "ID": "7",
+        "Left": "6",
+        "Right": "mk",
+        "Left_Table_Name": "link_type",
+        "Right_Table_Name": "movie_keyword",
+        "Left_Alias": "lt",
+        "Right_Alias": "mk",
+        "Pred": "ml.movie_id = mk.movie_id",
+        "ProbeKeys": "lt_movie_id",
+        "BuildKeys": "mk_movie_id",
+        "NumTuplesLeft": 1,
+        "NumTuplesRight": 47,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "mk_movie_id",
+            "ml_movie_id",
+            "t_title",
+            "mk_keyword_id",
+            "cn_name",
+            "mc_movie_id",
+            "lt_link",
+            "lt_features",
+            "mk_features"
+        ],
+        "NumDimLeft": "10",
+        "NumDimRight": "3",
+        "NumDimOutput": "13",
+        "Filter": [
+            "(lt_link) LIKE '%follows%'"
+        ]
+    },
+    {
+        "ID": "8",
+        "Left": "7",
+        "Right": "k",
+        "Left_Table_Name": "link_type",
+        "Right_Table_Name": "keyword",
+        "Left_Alias": "lt",
+        "Right_Alias": "k",
+        "Pred": "k.id = mk.keyword_id",
+        "ProbeKeys": "lt_keyword_id",
+        "BuildKeys": "k_id",
+        "NumTuplesLeft": 1,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "k_id",
+            "t_title",
+            "mk_keyword_id",
+            "cn_name",
+            "lt_link",
+            "lt_features",
+            "k_features"
+        ],
+        "NumDimLeft": "8",
+        "NumDimRight": "3",
+        "NumDimOutput": "11",
+        "Filter": [
+            "(lt_link) LIKE '%follows%'",
+            "(k_keyword) = 'sequel'"
+        ]
+    }
+]

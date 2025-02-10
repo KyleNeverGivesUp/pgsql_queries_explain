@@ -1,0 +1,297 @@
+[
+    {
+        "ID": "0",
+        "Left": "k",
+        "Right": "mk",
+        "Left_Table_Name": "keyword",
+        "Right_Table_Name": "movie_keyword",
+        "Left_Alias": "k",
+        "Right_Alias": "mk",
+        "Pred": "mk.keyword_id = k.id",
+        "ProbeKeys": "k_id",
+        "BuildKeys": "mk_keyword_id",
+        "NumTuplesLeft": 1,
+        "NumTuplesRight": 303,
+        "NumTuplesOutput": 34,
+        "Projection": [
+            "mk_movie_id",
+            "mk_keyword_id",
+            "k_id",
+            "k_features",
+            "mk_features"
+        ],
+        "NumDimLeft": "3",
+        "NumDimRight": "3",
+        "NumDimOutput": "6",
+        "Filter": [
+            "(k_keyword) = 'character-name-in-title'"
+        ]
+    },
+    {
+        "ID": "1",
+        "Left": "0",
+        "Right": "t",
+        "Left_Table_Name": "keyword",
+        "Right_Table_Name": "title",
+        "Left_Alias": "k",
+        "Right_Alias": "t",
+        "Pred": "t.id = mk.movie_id",
+        "ProbeKeys": "k_movie_id",
+        "BuildKeys": "t_id",
+        "NumTuplesLeft": 34,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 9,
+        "Projection": [
+            "mk_movie_id",
+            "t_id",
+            "t_title",
+            "k_features",
+            "t_features"
+        ],
+        "NumDimLeft": "3",
+        "NumDimRight": "12",
+        "NumDimOutput": "15",
+        "Filter": [
+            "(k_keyword) = 'character-name-in-title'",
+            "(t_episode_nr >= 5) AND (t_episode_nr < 100)"
+        ]
+    },
+    {
+        "ID": "2",
+        "Left": "1",
+        "Right": "mc",
+        "Left_Table_Name": "keyword",
+        "Right_Table_Name": "movie_companies",
+        "Left_Alias": "k",
+        "Right_Alias": "mc",
+        "Pred": "mc.movie_id = mk.movie_id",
+        "ProbeKeys": "k_movie_id",
+        "BuildKeys": "mc_movie_id",
+        "NumTuplesLeft": 9,
+        "NumTuplesRight": 5,
+        "NumTuplesOutput": 49,
+        "Projection": [
+            "t_id",
+            "mc_movie_id",
+            "mc_company_id",
+            "t_title",
+            "mk_movie_id",
+            "k_features",
+            "mc_features"
+        ],
+        "NumDimLeft": "5",
+        "NumDimRight": "5",
+        "NumDimOutput": "10",
+        "Filter": [
+            "(k_keyword) = 'character-name-in-title'"
+        ]
+    },
+    {
+        "ID": "3",
+        "Left": "2",
+        "Right": "mc",
+        "Left_Table_Name": "keyword",
+        "Right_Table_Name": "movie_companies",
+        "Left_Alias": "k",
+        "Right_Alias": "mc",
+        "Pred": "t.id = mc.movie_id",
+        "ProbeKeys": "k_id",
+        "BuildKeys": "mc_movie_id",
+        "NumTuplesLeft": 9,
+        "NumTuplesRight": 5,
+        "NumTuplesOutput": 49,
+        "Projection": [
+            "t_id",
+            "mc_movie_id",
+            "mc_company_id",
+            "t_title",
+            "mk_movie_id",
+            "k_features",
+            "mc_features"
+        ],
+        "NumDimLeft": "5",
+        "NumDimRight": "5",
+        "NumDimOutput": "10",
+        "Filter": [
+            "(k_keyword) = 'character-name-in-title'"
+        ]
+    },
+    {
+        "ID": "4",
+        "Left": "3",
+        "Right": "cn",
+        "Left_Table_Name": "keyword",
+        "Right_Table_Name": "company_name",
+        "Left_Alias": "k",
+        "Right_Alias": "cn",
+        "Pred": "cn.id = mc.company_id",
+        "ProbeKeys": "k_company_id",
+        "BuildKeys": "cn_id",
+        "NumTuplesLeft": 49,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 18,
+        "Projection": [
+            "t_id",
+            "cn_id",
+            "mc_movie_id",
+            "mc_company_id",
+            "t_title",
+            "mk_movie_id",
+            "k_features",
+            "cn_features"
+        ],
+        "NumDimLeft": "9",
+        "NumDimRight": "7",
+        "NumDimOutput": "16",
+        "Filter": [
+            "(k_keyword) = 'character-name-in-title'",
+            "(cn_country_code) = '[us]'"
+        ]
+    },
+    {
+        "ID": "5",
+        "Left": "4",
+        "Right": "ci",
+        "Left_Table_Name": "keyword",
+        "Right_Table_Name": "cast_info",
+        "Left_Alias": "k",
+        "Right_Alias": "ci",
+        "Pred": "ci.movie_id = mk.movie_id",
+        "ProbeKeys": "k_movie_id",
+        "BuildKeys": "ci_movie_id",
+        "NumTuplesLeft": 18,
+        "NumTuplesRight": 38,
+        "NumTuplesOutput": 353,
+        "Projection": [
+            "mk_movie_id",
+            "ci_person_id",
+            "ci_movie_id",
+            "t_title",
+            "k_features",
+            "ci_features"
+        ],
+        "NumDimLeft": "6",
+        "NumDimRight": "7",
+        "NumDimOutput": "13",
+        "Filter": [
+            "(k_keyword) = 'character-name-in-title'"
+        ]
+    },
+    {
+        "ID": "6",
+        "Left": "5",
+        "Right": "ci",
+        "Left_Table_Name": "keyword",
+        "Right_Table_Name": "cast_info",
+        "Left_Alias": "k",
+        "Right_Alias": "ci",
+        "Pred": "t.id = ci.movie_id",
+        "ProbeKeys": "k_id",
+        "BuildKeys": "ci_movie_id",
+        "NumTuplesLeft": 18,
+        "NumTuplesRight": 38,
+        "NumTuplesOutput": 353,
+        "Projection": [
+            "t_id",
+            "ci_person_id",
+            "t_title",
+            "mk_movie_id",
+            "ci_movie_id",
+            "k_features",
+            "ci_features"
+        ],
+        "NumDimLeft": "6",
+        "NumDimRight": "7",
+        "NumDimOutput": "13",
+        "Filter": [
+            "(k_keyword) = 'character-name-in-title'"
+        ]
+    },
+    {
+        "ID": "7",
+        "Left": "6",
+        "Right": "n",
+        "Left_Table_Name": "keyword",
+        "Right_Table_Name": "name",
+        "Left_Alias": "k",
+        "Right_Alias": "n",
+        "Pred": "n.id = ci.person_id",
+        "ProbeKeys": "k_person_id",
+        "BuildKeys": "n_id",
+        "NumTuplesLeft": 353,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 353,
+        "Projection": [
+            "ci_person_id",
+            "t_title",
+            "n_id",
+            "k_features",
+            "n_features"
+        ],
+        "NumDimLeft": "6",
+        "NumDimRight": "1",
+        "NumDimOutput": "7",
+        "Filter": [
+            "(k_keyword) = 'character-name-in-title'"
+        ]
+    },
+    {
+        "ID": "8",
+        "Left": "7",
+        "Right": "an",
+        "Left_Table_Name": "keyword",
+        "Right_Table_Name": "aka_name",
+        "Left_Alias": "k",
+        "Right_Alias": "an",
+        "Pred": "an.person_id = ci.person_id",
+        "ProbeKeys": "k_person_id",
+        "BuildKeys": "an_person_id",
+        "NumTuplesLeft": 353,
+        "NumTuplesRight": 2,
+        "NumTuplesOutput": 804,
+        "Projection": [
+            "an_name",
+            "ci_person_id",
+            "t_title",
+            "an_person_id",
+            "k_features",
+            "an_features"
+        ],
+        "NumDimLeft": "5",
+        "NumDimRight": "8",
+        "NumDimOutput": "13",
+        "Filter": [
+            "(k_keyword) = 'character-name-in-title'"
+        ]
+    },
+    {
+        "ID": "9",
+        "Left": "8",
+        "Right": "an",
+        "Left_Table_Name": "keyword",
+        "Right_Table_Name": "aka_name",
+        "Left_Alias": "k",
+        "Right_Alias": "an",
+        "Pred": "n.id = an.person_id",
+        "ProbeKeys": "k_id",
+        "BuildKeys": "an_person_id",
+        "NumTuplesLeft": 353,
+        "NumTuplesRight": 2,
+        "NumTuplesOutput": 804,
+        "Projection": [
+            "ci_person_id",
+            "an_name",
+            "an_person_id",
+            "t_title",
+            "n_id",
+            "k_features",
+            "an_features"
+        ],
+        "NumDimLeft": "5",
+        "NumDimRight": "8",
+        "NumDimOutput": "13",
+        "Filter": [
+            "(k_keyword) = 'character-name-in-title'"
+        ]
+    }
+]

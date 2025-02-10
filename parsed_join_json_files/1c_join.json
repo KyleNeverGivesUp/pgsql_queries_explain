@@ -1,0 +1,150 @@
+[
+    {
+        "ID": "0",
+        "Left": "mi_idx",
+        "Right": "it",
+        "Left_Table_Name": "movie_info_idx",
+        "Right_Table_Name": "info_type",
+        "Left_Alias": "mi_idx",
+        "Right_Alias": "it",
+        "Pred": "mi_idx.info_type_id = it.id",
+        "ProbeKeys": "mi_idx_info_type_id",
+        "BuildKeys": "it_id",
+        "NumTuplesLeft": 575015,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 5089,
+        "Projection": [
+            "mi_idx_movie_id",
+            "mi_idx_info_type_id",
+            "it_id",
+            "mi_idx_features",
+            "it_features"
+        ],
+        "NumDimLeft": "5",
+        "NumDimRight": "1",
+        "NumDimOutput": "6",
+        "Filter": [
+            "(it_info) = 'top 250 rank'"
+        ]
+    },
+    {
+        "ID": "1",
+        "Left": "0",
+        "Right": "mc",
+        "Left_Table_Name": "movie_info_idx",
+        "Right_Table_Name": "movie_companies",
+        "Left_Alias": "mi_idx",
+        "Right_Alias": "mc",
+        "Pred": "mc.movie_id = mi_idx.movie_id",
+        "ProbeKeys": "mi_idx_movie_id",
+        "BuildKeys": "mc_movie_id",
+        "NumTuplesLeft": 5089,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 101,
+        "Projection": [
+            "mi_idx_movie_id",
+            "mc_company_type_id",
+            "mc_movie_id",
+            "mc_note",
+            "mi_idx_features",
+            "mc_features"
+        ],
+        "NumDimLeft": "3",
+        "NumDimRight": "5",
+        "NumDimOutput": "8",
+        "Filter": [
+            "((mc_note) !LIKE '%(as Metro-Goldwyn-Mayer Pictures)%') AND ((mc_note) LIKE '%(co-production)%')"
+        ]
+    },
+    {
+        "ID": "2",
+        "Left": "1",
+        "Right": "ct",
+        "Left_Table_Name": "movie_info_idx",
+        "Right_Table_Name": "company_type",
+        "Left_Alias": "mi_idx",
+        "Right_Alias": "ct",
+        "Pred": "ct.id = mc.company_type_id",
+        "ProbeKeys": "mi_idx_company_type_id",
+        "BuildKeys": "ct_id",
+        "NumTuplesLeft": 101,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "mi_idx_movie_id",
+            "mc_company_type_id",
+            "mc_movie_id",
+            "ct_id",
+            "mc_note",
+            "mi_idx_features",
+            "ct_features"
+        ],
+        "NumDimLeft": "6",
+        "NumDimRight": "1",
+        "NumDimOutput": "7",
+        "Filter": [
+            "(ct_kind) = 'production companies'"
+        ]
+    },
+    {
+        "ID": "3",
+        "Left": "2",
+        "Right": "t",
+        "Left_Table_Name": "movie_info_idx",
+        "Right_Table_Name": "title",
+        "Left_Alias": "mi_idx",
+        "Right_Alias": "t",
+        "Pred": "t.id = mi_idx.movie_id",
+        "ProbeKeys": "mi_idx_movie_id",
+        "BuildKeys": "t_id",
+        "NumTuplesLeft": 1,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "t_production_year",
+            "t_id",
+            "mi_idx_movie_id",
+            "t_title",
+            "mc_note",
+            "mi_idx_features",
+            "t_features"
+        ],
+        "NumDimLeft": "3",
+        "NumDimRight": "12",
+        "NumDimOutput": "15",
+        "Filter": [
+            "t_production_year > 2010"
+        ]
+    },
+    {
+        "ID": "4",
+        "Left": "3",
+        "Right": "t",
+        "Left_Table_Name": "movie_info_idx",
+        "Right_Table_Name": "title",
+        "Left_Alias": "mi_idx",
+        "Right_Alias": "t",
+        "Pred": "mc.movie_id = t.id",
+        "ProbeKeys": "mi_idx_movie_id",
+        "BuildKeys": "t_id",
+        "NumTuplesLeft": 1,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "t_production_year",
+            "t_id",
+            "mi_idx_movie_id",
+            "t_title",
+            "mc_movie_id",
+            "mc_note",
+            "mi_idx_features",
+            "t_features"
+        ],
+        "NumDimLeft": "3",
+        "NumDimRight": "12",
+        "NumDimOutput": "15",
+        "Filter": [
+            "t_production_year > 2010"
+        ]
+    }
+]

@@ -1,0 +1,214 @@
+[
+    {
+        "ID": "0",
+        "Left": "mc",
+        "Right": "cn",
+        "Left_Table_Name": "movie_companies",
+        "Right_Table_Name": "company_name",
+        "Left_Alias": "mc",
+        "Right_Alias": "cn",
+        "Pred": "cn.id = mc.company_id",
+        "ProbeKeys": "mc_company_id",
+        "BuildKeys": "cn_id",
+        "NumTuplesLeft": 484,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 14,
+        "Projection": [
+            "mc_company_id",
+            "cn_id",
+            "mc_movie_id",
+            "mc_features",
+            "cn_features"
+        ],
+        "NumDimLeft": "5",
+        "NumDimRight": "7",
+        "NumDimOutput": "12",
+        "Filter": [
+            "((mc_note) LIKE '%(Japan)%') AND ((mc_note) !LIKE '%(USA)%') AND (((mc_note) LIKE '%(2006)%') OR ((mc_note) LIKE '%(2007)%'))",
+            "(cn_country_code) = '[jp]'"
+        ]
+    },
+    {
+        "ID": "1",
+        "Left": "0",
+        "Right": "t",
+        "Left_Table_Name": "movie_companies",
+        "Right_Table_Name": "title",
+        "Left_Alias": "mc",
+        "Right_Alias": "t",
+        "Pred": "t.id = mc.movie_id",
+        "ProbeKeys": "mc_movie_id",
+        "BuildKeys": "t_id",
+        "NumTuplesLeft": 14,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "t_id",
+            "t_title",
+            "mc_movie_id",
+            "mc_features",
+            "t_features"
+        ],
+        "NumDimLeft": "3",
+        "NumDimRight": "2",
+        "NumDimOutput": "5",
+        "Filter": [
+            "((mc_note) LIKE '%(Japan)%') AND ((mc_note) !LIKE '%(USA)%') AND (((mc_note) LIKE '%(2006)%') OR ((mc_note) LIKE '%(2007)%'))",
+            "t.production_year BETWEEN 2006 AND 2007"
+        ]
+    },
+    {
+        "ID": "2",
+        "Left": "1",
+        "Right": "ci",
+        "Left_Table_Name": "movie_companies",
+        "Right_Table_Name": "cast_info",
+        "Left_Alias": "mc",
+        "Right_Alias": "ci",
+        "Pred": "ci.movie_id = mc.movie_id",
+        "ProbeKeys": "mc_movie_id",
+        "BuildKeys": "ci_movie_id",
+        "NumTuplesLeft": 1,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "ci_role_id",
+            "t_title",
+            "mc_movie_id",
+            "ci_person_id",
+            "ci_movie_id",
+            "mc_features",
+            "ci_features"
+        ],
+        "NumDimLeft": "3",
+        "NumDimRight": "7",
+        "NumDimOutput": "10",
+        "Filter": [
+            "((mc_note) LIKE '%(Japan)%') AND ((mc_note) !LIKE '%(USA)%') AND (((mc_note) LIKE '%(2006)%') OR ((mc_note) LIKE '%(2007)%'))",
+            "(ci_note) = '(voice: English version)'"
+        ]
+    },
+    {
+        "ID": "3",
+        "Left": "2",
+        "Right": "ci",
+        "Left_Table_Name": "movie_companies",
+        "Right_Table_Name": "cast_info",
+        "Left_Alias": "mc",
+        "Right_Alias": "ci",
+        "Pred": "t.id = ci.movie_id",
+        "ProbeKeys": "mc_id",
+        "BuildKeys": "ci_movie_id",
+        "NumTuplesLeft": 1,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "ci_role_id",
+            "t_title",
+            "mc_movie_id",
+            "t_id",
+            "ci_person_id",
+            "ci_movie_id",
+            "mc_features",
+            "ci_features"
+        ],
+        "NumDimLeft": "3",
+        "NumDimRight": "7",
+        "NumDimOutput": "10",
+        "Filter": [
+            "((mc_note) LIKE '%(Japan)%') AND ((mc_note) !LIKE '%(USA)%') AND (((mc_note) LIKE '%(2006)%') OR ((mc_note) LIKE '%(2007)%'))",
+            "(ci_note) = '(voice: English version)'"
+        ]
+    },
+    {
+        "ID": "4",
+        "Left": "3",
+        "Right": "an",
+        "Left_Table_Name": "movie_companies",
+        "Right_Table_Name": "aka_name",
+        "Left_Alias": "mc",
+        "Right_Alias": "an",
+        "Pred": "an.person_id = ci.person_id",
+        "ProbeKeys": "mc_person_id",
+        "BuildKeys": "an_person_id",
+        "NumTuplesLeft": 1,
+        "NumTuplesRight": 2,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "ci_role_id",
+            "an_person_id",
+            "t_title",
+            "ci_person_id",
+            "an_name",
+            "mc_features",
+            "an_features"
+        ],
+        "NumDimLeft": "7",
+        "NumDimRight": "8",
+        "NumDimOutput": "15",
+        "Filter": [
+            "((mc_note) LIKE '%(Japan)%') AND ((mc_note) !LIKE '%(USA)%') AND (((mc_note) LIKE '%(2006)%') OR ((mc_note) LIKE '%(2007)%'))"
+        ]
+    },
+    {
+        "ID": "5",
+        "Left": "4",
+        "Right": "n",
+        "Left_Table_Name": "movie_companies",
+        "Right_Table_Name": "name",
+        "Left_Alias": "mc",
+        "Right_Alias": "n",
+        "Pred": "n.id = an.person_id",
+        "ProbeKeys": "mc_person_id",
+        "BuildKeys": "n_id",
+        "NumTuplesLeft": 1,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "n_id",
+            "ci_role_id",
+            "an_person_id",
+            "t_title",
+            "an_name",
+            "mc_features",
+            "n_features"
+        ],
+        "NumDimLeft": "7",
+        "NumDimRight": "9",
+        "NumDimOutput": "16",
+        "Filter": [
+            "((mc_note) LIKE '%(Japan)%') AND ((mc_note) !LIKE '%(USA)%') AND (((mc_note) LIKE '%(2006)%') OR ((mc_note) LIKE '%(2007)%'))",
+            "((n_name) LIKE '%Yo%') AND ((n_name) !LIKE '%Yu%')"
+        ]
+    },
+    {
+        "ID": "6",
+        "Left": "5",
+        "Right": "rt",
+        "Left_Table_Name": "movie_companies",
+        "Right_Table_Name": "role_type",
+        "Left_Alias": "mc",
+        "Right_Alias": "rt",
+        "Pred": "rt.id = ci.role_id",
+        "ProbeKeys": "mc_role_id",
+        "BuildKeys": "rt_id",
+        "NumTuplesLeft": 1,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "rt_id",
+            "ci_role_id",
+            "t_title",
+            "an_name",
+            "mc_features",
+            "rt_features"
+        ],
+        "NumDimLeft": "5",
+        "NumDimRight": "2",
+        "NumDimOutput": "7",
+        "Filter": [
+            "((mc_note) LIKE '%(Japan)%') AND ((mc_note) !LIKE '%(USA)%') AND (((mc_note) LIKE '%(2006)%') OR ((mc_note) LIKE '%(2007)%'))",
+            "(rt_role) = 'actress'"
+        ]
+    }
+]

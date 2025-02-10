@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "/Users/kyle/PycharmProjects/24SFSE100Kyle/core_programs/parse_explain_json_dev.py", line 384, in <module>
+    main_func(explain_json[0], res, backup, 0, table)
+  File "/Users/kyle/PycharmProjects/24SFSE100Kyle/core_programs/parse_explain_json_dev.py", line 296, in main_func
+    main_func(value, joins, backup, join_id_counter, table)
+  File "/Users/kyle/PycharmProjects/24SFSE100Kyle/core_programs/parse_explain_json_dev.py", line 300, in main_func
+    main_func(item, joins, backup, join_id_counter, table)
+  File "/Users/kyle/PycharmProjects/24SFSE100Kyle/core_programs/parse_explain_json_dev.py", line 300, in main_func
+    main_func(item, joins, backup, join_id_counter, table)
+  File "/Users/kyle/PycharmProjects/24SFSE100Kyle/core_programs/parse_explain_json_dev.py", line 300, in main_func
+    main_func(item, joins, backup, join_id_counter, table)
+  [Previous line repeated 9 more times]
+  File "/Users/kyle/PycharmProjects/24SFSE100Kyle/core_programs/parse_explain_json_dev.py", line 317, in main_func
+    right_table_name, right_table_alias, right_table_filter = get_table_info(right_table_node,"Inner")
+TypeError: cannot unpack non-iterable NoneType object

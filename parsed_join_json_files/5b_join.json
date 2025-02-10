@@ -1,0 +1,118 @@
+[
+    {
+        "ID": "0",
+        "Left": "mc",
+        "Right": "ct",
+        "Left_Table_Name": "movie_companies",
+        "Right_Table_Name": "company_type",
+        "Left_Alias": "mc",
+        "Right_Alias": "ct",
+        "Pred": "ct.id = mc.company_type_id",
+        "ProbeKeys": "mc_company_type_id",
+        "BuildKeys": "ct_id",
+        "NumTuplesLeft": 14,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "ct_id",
+            "mc_company_type_id",
+            "mc_movie_id",
+            "mc_features",
+            "ct_features"
+        ],
+        "NumDimLeft": "5",
+        "NumDimRight": "1",
+        "NumDimOutput": "6",
+        "Filter": [
+            "((mc_note) LIKE '%(VHS)%') AND ((mc_note) LIKE '%(USA)%') AND ((mc_note) LIKE '%(1994)%')",
+            "(ct_kind) = 'production companies'"
+        ]
+    },
+    {
+        "ID": "1",
+        "Left": "0",
+        "Right": "t",
+        "Left_Table_Name": "movie_companies",
+        "Right_Table_Name": "title",
+        "Left_Alias": "mc",
+        "Right_Alias": "t",
+        "Pred": "t.id = mc.movie_id",
+        "ProbeKeys": "mc_movie_id",
+        "BuildKeys": "t_id",
+        "NumTuplesLeft": 1,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "t_title",
+            "mc_movie_id",
+            "t_id",
+            "mc_features",
+            "t_features"
+        ],
+        "NumDimLeft": "1",
+        "NumDimRight": "12",
+        "NumDimOutput": "13",
+        "Filter": [
+            "((mc_note) LIKE '%(VHS)%') AND ((mc_note) LIKE '%(USA)%') AND ((mc_note) LIKE '%(1994)%')",
+            "t_production_year > 2010"
+        ]
+    },
+    {
+        "ID": "2",
+        "Left": "1",
+        "Right": "mi",
+        "Left_Table_Name": "movie_companies",
+        "Right_Table_Name": "movie_info",
+        "Left_Alias": "mc",
+        "Right_Alias": "mi",
+        "Pred": "mi.movie_id = t.id",
+        "ProbeKeys": "mc_id",
+        "BuildKeys": "mi_movie_id",
+        "NumTuplesLeft": 1,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "t_title",
+            "t_id",
+            "mi_movie_id",
+            "mi_info_type_id",
+            "mc_features",
+            "mi_features"
+        ],
+        "NumDimLeft": "5",
+        "NumDimRight": "5",
+        "NumDimOutput": "10",
+        "Filter": [
+            "((mc_note) LIKE '%(VHS)%') AND ((mc_note) LIKE '%(USA)%') AND ((mc_note) LIKE '%(1994)%')",
+            "(mi_info) IN ('USA', 'America')"
+        ]
+    },
+    {
+        "ID": "3",
+        "Left": "2",
+        "Right": "it",
+        "Left_Table_Name": "movie_companies",
+        "Right_Table_Name": "info_type",
+        "Left_Alias": "mc",
+        "Right_Alias": "it",
+        "Pred": "it.id = mi.info_type_id",
+        "ProbeKeys": "mc_info_type_id",
+        "BuildKeys": "it_id",
+        "NumTuplesLeft": 1,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "t_title",
+            "it_id",
+            "mi_info_type_id",
+            "mc_features",
+            "it_features"
+        ],
+        "NumDimLeft": "4",
+        "NumDimRight": "1",
+        "NumDimOutput": "5",
+        "Filter": [
+            "((mc_note) LIKE '%(VHS)%') AND ((mc_note) LIKE '%(USA)%') AND ((mc_note) LIKE '%(1994)%')"
+        ]
+    }
+]

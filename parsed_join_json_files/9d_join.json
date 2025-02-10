@@ -1,0 +1,258 @@
+[
+    {
+        "ID": "0",
+        "Left": "ci",
+        "Right": "rt",
+        "Left_Table_Name": "cast_info",
+        "Right_Table_Name": "role_type",
+        "Left_Alias": "ci",
+        "Right_Alias": "rt",
+        "Pred": "ci.role_id = rt.id",
+        "ProbeKeys": "ci_role_id",
+        "BuildKeys": "rt_id",
+        "NumTuplesLeft": 350865,
+        "NumTuplesRight": 4,
+        "NumTuplesOutput": 1977,
+        "Projection": [
+            "ci_movie_id",
+            "ci_role_id",
+            "ci_person_id",
+            "rt_id",
+            "ci_person_role_id",
+            "ci_features",
+            "rt_features"
+        ],
+        "NumDimLeft": "7",
+        "NumDimRight": "1",
+        "NumDimOutput": "8",
+        "Filter": [
+            "(ci_note) IN ('(voice)', '(voice: Japanese version)', '(voice) (uncredited)', '(voice: English version)')",
+            "(rt_role) = 'actress'"
+        ]
+    },
+    {
+        "ID": "1",
+        "Left": "0",
+        "Right": "n",
+        "Left_Table_Name": "cast_info",
+        "Right_Table_Name": "name",
+        "Left_Alias": "ci",
+        "Right_Alias": "n",
+        "Pred": "n.id = ci.person_id",
+        "ProbeKeys": "ci_person_id",
+        "BuildKeys": "n_id",
+        "NumTuplesLeft": 1977,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 456,
+        "Projection": [
+            "ci_movie_id",
+            "n_name",
+            "ci_person_id",
+            "ci_person_role_id",
+            "n_id",
+            "ci_features",
+            "n_features"
+        ],
+        "NumDimLeft": "5",
+        "NumDimRight": "9",
+        "NumDimOutput": "14",
+        "Filter": [
+            "(ci_note) IN ('(voice)', '(voice: Japanese version)', '(voice) (uncredited)', '(voice: English version)')",
+            "(n_gender) = 'f'"
+        ]
+    },
+    {
+        "ID": "2",
+        "Left": "1",
+        "Right": "chn",
+        "Left_Table_Name": "cast_info",
+        "Right_Table_Name": "char_name",
+        "Left_Alias": "ci",
+        "Right_Alias": "chn",
+        "Pred": "chn.id = ci.person_role_id",
+        "ProbeKeys": "ci_person_role_id",
+        "BuildKeys": "chn_id",
+        "NumTuplesLeft": 456,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 220,
+        "Projection": [
+            "ci_movie_id",
+            "n_name",
+            "ci_person_id",
+            "ci_person_role_id",
+            "chn_id",
+            "chn_name",
+            "n_id",
+            "ci_features",
+            "chn_features"
+        ],
+        "NumDimLeft": "7",
+        "NumDimRight": "7",
+        "NumDimOutput": "14",
+        "Filter": [
+            "(ci_note) IN ('(voice)', '(voice: Japanese version)', '(voice) (uncredited)', '(voice: English version)')"
+        ]
+    },
+    {
+        "ID": "3",
+        "Left": "2",
+        "Right": "mc",
+        "Left_Table_Name": "cast_info",
+        "Right_Table_Name": "movie_companies",
+        "Left_Alias": "ci",
+        "Right_Alias": "mc",
+        "Pred": "mc.movie_id = ci.movie_id",
+        "ProbeKeys": "ci_movie_id",
+        "BuildKeys": "mc_movie_id",
+        "NumTuplesLeft": 220,
+        "NumTuplesRight": 5,
+        "NumTuplesOutput": 600,
+        "Projection": [
+            "ci_movie_id",
+            "chn_name",
+            "n_name",
+            "mc_company_id",
+            "ci_person_id",
+            "mc_movie_id",
+            "n_id",
+            "ci_features",
+            "mc_features"
+        ],
+        "NumDimLeft": "7",
+        "NumDimRight": "5",
+        "NumDimOutput": "12",
+        "Filter": [
+            "(ci_note) IN ('(voice)', '(voice: Japanese version)', '(voice) (uncredited)', '(voice: English version)')"
+        ]
+    },
+    {
+        "ID": "4",
+        "Left": "3",
+        "Right": "cn",
+        "Left_Table_Name": "cast_info",
+        "Right_Table_Name": "company_name",
+        "Left_Alias": "ci",
+        "Right_Alias": "cn",
+        "Pred": "cn.id = mc.company_id",
+        "ProbeKeys": "ci_company_id",
+        "BuildKeys": "cn_id",
+        "NumTuplesLeft": 600,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 218,
+        "Projection": [
+            "ci_movie_id",
+            "chn_name",
+            "n_name",
+            "mc_company_id",
+            "ci_person_id",
+            "cn_id",
+            "mc_movie_id",
+            "n_id",
+            "ci_features",
+            "cn_features"
+        ],
+        "NumDimLeft": "9",
+        "NumDimRight": "7",
+        "NumDimOutput": "16",
+        "Filter": [
+            "(ci_note) IN ('(voice)', '(voice: Japanese version)', '(voice) (uncredited)', '(voice: English version)')",
+            "(cn_country_code) = '[us]'"
+        ]
+    },
+    {
+        "ID": "5",
+        "Left": "4",
+        "Right": "t",
+        "Left_Table_Name": "cast_info",
+        "Right_Table_Name": "title",
+        "Left_Alias": "ci",
+        "Right_Alias": "t",
+        "Pred": "t.id = mc.movie_id",
+        "ProbeKeys": "ci_movie_id",
+        "BuildKeys": "t_id",
+        "NumTuplesLeft": 218,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 218,
+        "Projection": [
+            "mc_movie_id",
+            "n_name",
+            "ci_person_id",
+            "chn_name",
+            "t_title",
+            "n_id",
+            "t_id",
+            "ci_features",
+            "t_features"
+        ],
+        "NumDimLeft": "8",
+        "NumDimRight": "12",
+        "NumDimOutput": "20",
+        "Filter": [
+            "(ci_note) IN ('(voice)', '(voice: Japanese version)', '(voice) (uncredited)', '(voice: English version)')"
+        ]
+    },
+    {
+        "ID": "6",
+        "Left": "5",
+        "Right": "t",
+        "Left_Table_Name": "cast_info",
+        "Right_Table_Name": "title",
+        "Left_Alias": "ci",
+        "Right_Alias": "t",
+        "Pred": "ci.movie_id = t.id",
+        "ProbeKeys": "ci_movie_id",
+        "BuildKeys": "t_id",
+        "NumTuplesLeft": 218,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 218,
+        "Projection": [
+            "ci_movie_id",
+            "mc_movie_id",
+            "n_name",
+            "ci_person_id",
+            "chn_name",
+            "t_title",
+            "n_id",
+            "t_id",
+            "ci_features",
+            "t_features"
+        ],
+        "NumDimLeft": "8",
+        "NumDimRight": "12",
+        "NumDimOutput": "20",
+        "Filter": [
+            "(ci_note) IN ('(voice)', '(voice: Japanese version)', '(voice) (uncredited)', '(voice: English version)')"
+        ]
+    },
+    {
+        "ID": "7",
+        "Left": "6",
+        "Right": "an",
+        "Left_Table_Name": "cast_info",
+        "Right_Table_Name": "aka_name",
+        "Left_Alias": "ci",
+        "Right_Alias": "an",
+        "Pred": "an.person_id = n.id",
+        "ProbeKeys": "ci_id",
+        "BuildKeys": "an_person_id",
+        "NumTuplesLeft": 218,
+        "NumTuplesRight": 2,
+        "NumTuplesOutput": 497,
+        "Projection": [
+            "n_name",
+            "an_name",
+            "an_person_id",
+            "chn_name",
+            "t_title",
+            "n_id",
+            "ci_features",
+            "an_features"
+        ],
+        "NumDimLeft": "9",
+        "NumDimRight": "8",
+        "NumDimOutput": "17",
+        "Filter": [
+            "(ci_note) IN ('(voice)', '(voice: Japanese version)', '(voice) (uncredited)', '(voice: English version)')"
+        ]
+    }
+]

@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/Users/kyle/PycharmProjects/24SFSE100Kyle/core_programs/parse_explain_json_dev.py", line 384, in <module>
+    main_func(explain_json[0], res, backup, 0, table)
+  File "/Users/kyle/PycharmProjects/24SFSE100Kyle/core_programs/parse_explain_json_dev.py", line 296, in main_func
+    main_func(value, joins, backup, join_id_counter, table)
+  File "/Users/kyle/PycharmProjects/24SFSE100Kyle/core_programs/parse_explain_json_dev.py", line 300, in main_func
+    main_func(item, joins, backup, join_id_counter, table)
+  File "/Users/kyle/PycharmProjects/24SFSE100Kyle/core_programs/parse_explain_json_dev.py", line 331, in main_func
+    probKey, buildKey, = get_join_keys(left_table_alias, right_table_alias, pred)
+  File "/Users/kyle/PycharmProjects/24SFSE100Kyle/core_programs/parse_explain_json_dev.py", line 274, in get_join_keys
+    pred_dict = { i:j for i, j in [pattern.split(item.strip()) for item in pred.split("=")] }
+  File "/Users/kyle/PycharmProjects/24SFSE100Kyle/core_programs/parse_explain_json_dev.py", line 274, in <dictcomp>
+    pred_dict = { i:j for i, j in [pattern.split(item.strip()) for item in pred.split("=")] }
+ValueError: too many values to unpack (expected 2)

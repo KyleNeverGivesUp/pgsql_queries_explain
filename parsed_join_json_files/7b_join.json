@@ -1,0 +1,266 @@
+[
+    {
+        "ID": "0",
+        "Left": "ml",
+        "Right": "lt",
+        "Left_Table_Name": "movie_link",
+        "Right_Table_Name": "link_type",
+        "Left_Alias": "ml",
+        "Right_Alias": "lt",
+        "Pred": "ml.link_type_id = lt.id",
+        "ProbeKeys": "ml_link_type_id",
+        "BuildKeys": "lt_id",
+        "NumTuplesLeft": 29997,
+        "NumTuplesRight": 4,
+        "NumTuplesOutput": 169,
+        "Projection": [
+            "lt_id",
+            "ml_linked_movie_id",
+            "ml_link_type_id",
+            "ml_features",
+            "lt_features"
+        ],
+        "NumDimLeft": "4",
+        "NumDimRight": "1",
+        "NumDimOutput": "5",
+        "Filter": [
+            "(lt_link) = 'features'"
+        ]
+    },
+    {
+        "ID": "1",
+        "Left": "0",
+        "Right": "t",
+        "Left_Table_Name": "movie_link",
+        "Right_Table_Name": "title",
+        "Left_Alias": "ml",
+        "Right_Alias": "t",
+        "Pred": "t.id = ml.linked_movie_id",
+        "ProbeKeys": "ml_linked_movie_id",
+        "BuildKeys": "t_id",
+        "NumTuplesLeft": 169,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 5,
+        "Projection": [
+            "t_title",
+            "ml_linked_movie_id",
+            "t_id",
+            "ml_features",
+            "t_features"
+        ],
+        "NumDimLeft": "3",
+        "NumDimRight": "12",
+        "NumDimOutput": "15",
+        "Filter": [
+            "t.production_year BETWEEN 1980 AND 1984"
+        ]
+    },
+    {
+        "ID": "2",
+        "Left": "1",
+        "Right": "ci",
+        "Left_Table_Name": "movie_link",
+        "Right_Table_Name": "cast_info",
+        "Left_Alias": "ml",
+        "Right_Alias": "ci",
+        "Pred": "ci.movie_id = t.id",
+        "ProbeKeys": "ml_id",
+        "BuildKeys": "ci_movie_id",
+        "NumTuplesLeft": 5,
+        "NumTuplesRight": 38,
+        "NumTuplesOutput": 183,
+        "Projection": [
+            "ci_movie_id",
+            "ci_person_id",
+            "t_title",
+            "t_id",
+            "ml_features",
+            "ci_features"
+        ],
+        "NumDimLeft": "5",
+        "NumDimRight": "7",
+        "NumDimOutput": "12",
+        "Filter": []
+    },
+    {
+        "ID": "3",
+        "Left": "2",
+        "Right": "n",
+        "Left_Table_Name": "movie_link",
+        "Right_Table_Name": "name",
+        "Left_Alias": "ml",
+        "Right_Alias": "n",
+        "Pred": "n.id = ci.person_id",
+        "ProbeKeys": "ml_person_id",
+        "BuildKeys": "n_id",
+        "NumTuplesLeft": 183,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 4,
+        "Projection": [
+            "n_id",
+            "ci_person_id",
+            "t_title",
+            "n_name",
+            "ml_features",
+            "n_features"
+        ],
+        "NumDimLeft": "4",
+        "NumDimRight": "9",
+        "NumDimOutput": "13",
+        "Filter": [
+            "((n_name_pcode_cf) LIKE 'D%') AND ((n_gender) = 'm')"
+        ]
+    },
+    {
+        "ID": "4",
+        "Left": "3",
+        "Right": "pi",
+        "Left_Table_Name": "movie_link",
+        "Right_Table_Name": "person_info",
+        "Left_Alias": "ml",
+        "Right_Alias": "pi",
+        "Pred": "pi.person_id = ci.person_id",
+        "ProbeKeys": "ml_person_id",
+        "BuildKeys": "pi_person_id",
+        "NumTuplesLeft": 4,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "pi_person_id",
+            "pi_info_type_id",
+            "n_id",
+            "ci_person_id",
+            "t_title",
+            "n_name",
+            "ml_features",
+            "pi_features"
+        ],
+        "NumDimLeft": "6",
+        "NumDimRight": "5",
+        "NumDimOutput": "11",
+        "Filter": [
+            "(pi_note) = 'Volker Boehm'"
+        ]
+    },
+    {
+        "ID": "5",
+        "Left": "4",
+        "Right": "pi",
+        "Left_Table_Name": "movie_link",
+        "Right_Table_Name": "person_info",
+        "Left_Alias": "ml",
+        "Right_Alias": "pi",
+        "Pred": "n.id = pi.person_id",
+        "ProbeKeys": "ml_id",
+        "BuildKeys": "pi_person_id",
+        "NumTuplesLeft": 4,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "pi_person_id",
+            "pi_info_type_id",
+            "n_id",
+            "ci_person_id",
+            "t_title",
+            "n_name",
+            "ml_features",
+            "pi_features"
+        ],
+        "NumDimLeft": "6",
+        "NumDimRight": "5",
+        "NumDimOutput": "11",
+        "Filter": [
+            "(pi_note) = 'Volker Boehm'"
+        ]
+    },
+    {
+        "ID": "6",
+        "Left": "5",
+        "Right": "an",
+        "Left_Table_Name": "movie_link",
+        "Right_Table_Name": "aka_name",
+        "Left_Alias": "ml",
+        "Right_Alias": "an",
+        "Pred": "an.person_id = ci.person_id",
+        "ProbeKeys": "ml_person_id",
+        "BuildKeys": "an_person_id",
+        "NumTuplesLeft": 1,
+        "NumTuplesRight": 2,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "an_person_id",
+            "pi_info_type_id",
+            "ci_person_id",
+            "t_title",
+            "n_name",
+            "ml_features",
+            "an_features"
+        ],
+        "NumDimLeft": "10",
+        "NumDimRight": "8",
+        "NumDimOutput": "18",
+        "Filter": [
+            "(an_name) LIKE '%a%'"
+        ]
+    },
+    {
+        "ID": "7",
+        "Left": "6",
+        "Right": "an",
+        "Left_Table_Name": "movie_link",
+        "Right_Table_Name": "aka_name",
+        "Left_Alias": "ml",
+        "Right_Alias": "an",
+        "Pred": "n.id = an.person_id",
+        "ProbeKeys": "ml_id",
+        "BuildKeys": "an_person_id",
+        "NumTuplesLeft": 1,
+        "NumTuplesRight": 2,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "an_person_id",
+            "pi_info_type_id",
+            "n_id",
+            "ci_person_id",
+            "t_title",
+            "n_name",
+            "ml_features",
+            "an_features"
+        ],
+        "NumDimLeft": "10",
+        "NumDimRight": "8",
+        "NumDimOutput": "18",
+        "Filter": [
+            "(an_name) LIKE '%a%'"
+        ]
+    },
+    {
+        "ID": "8",
+        "Left": "7",
+        "Right": "it",
+        "Left_Table_Name": "movie_link",
+        "Right_Table_Name": "info_type",
+        "Left_Alias": "ml",
+        "Right_Alias": "it",
+        "Pred": "it.id = pi.info_type_id",
+        "ProbeKeys": "ml_info_type_id",
+        "BuildKeys": "it_id",
+        "NumTuplesLeft": 1,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "it_id",
+            "pi_info_type_id",
+            "t_title",
+            "n_name",
+            "ml_features",
+            "it_features"
+        ],
+        "NumDimLeft": "7",
+        "NumDimRight": "2",
+        "NumDimOutput": "9",
+        "Filter": [
+            "(it_info) = 'mini biography'"
+        ]
+    }
+]

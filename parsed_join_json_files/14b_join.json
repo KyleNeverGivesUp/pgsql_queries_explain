@@ -1,0 +1,379 @@
+[
+    {
+        "ID": "0",
+        "Left": "k",
+        "Right": "mk",
+        "Left_Table_Name": "keyword",
+        "Right_Table_Name": "movie_keyword",
+        "Left_Alias": "k",
+        "Right_Alias": "mk",
+        "Pred": "mk.keyword_id = k.id",
+        "ProbeKeys": "k_id",
+        "BuildKeys": "mk_keyword_id",
+        "NumTuplesLeft": 2,
+        "NumTuplesRight": 303,
+        "NumTuplesOutput": 67,
+        "Projection": [
+            "mk_keyword_id",
+            "mk_movie_id",
+            "k_id",
+            "k_features",
+            "mk_features"
+        ],
+        "NumDimLeft": "3",
+        "NumDimRight": "3",
+        "NumDimOutput": "6",
+        "Filter": [
+            "(k_keyword) IN ('murder', 'murder-in-title')"
+        ]
+    },
+    {
+        "ID": "1",
+        "Left": "0",
+        "Right": "t",
+        "Left_Table_Name": "keyword",
+        "Right_Table_Name": "title",
+        "Left_Alias": "k",
+        "Right_Alias": "t",
+        "Pred": "t.id = mk.movie_id",
+        "ProbeKeys": "k_movie_id",
+        "BuildKeys": "t_id",
+        "NumTuplesLeft": 67,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "t_id",
+            "t_title",
+            "mk_movie_id",
+            "t_kind_id",
+            "k_features",
+            "t_features"
+        ],
+        "NumDimLeft": "3",
+        "NumDimRight": "12",
+        "NumDimOutput": "15",
+        "Filter": [
+            "(k_keyword) IN ('murder', 'murder-in-title')",
+            "(t_production_year > 2010) AND (((t_title) LIKE '%murder%') OR ((t_title) LIKE '%Murder%') OR ((t_title) LIKE '%Mord%'))"
+        ]
+    },
+    {
+        "ID": "2",
+        "Left": "1",
+        "Right": "mi",
+        "Left_Table_Name": "keyword",
+        "Right_Table_Name": "movie_info",
+        "Left_Alias": "k",
+        "Right_Alias": "mi",
+        "Pred": "mi.movie_id = mk.movie_id",
+        "ProbeKeys": "k_movie_id",
+        "BuildKeys": "mi_movie_id",
+        "NumTuplesLeft": 1,
+        "NumTuplesRight": 2,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "t_title",
+            "mi_movie_id",
+            "t_kind_id",
+            "t_id",
+            "mi_info_type_id",
+            "mk_movie_id",
+            "k_features",
+            "mi_features"
+        ],
+        "NumDimLeft": "6",
+        "NumDimRight": "5",
+        "NumDimOutput": "11",
+        "Filter": [
+            "(k_keyword) IN ('murder', 'murder-in-title')",
+            "(mi_info) IN ('Sweden', 'Norway', 'Germany', 'Denmark', 'Swedish', 'Denish', 'Norwegian', 'German', 'USA', 'American')"
+        ]
+    },
+    {
+        "ID": "3",
+        "Left": "2",
+        "Right": "mi",
+        "Left_Table_Name": "keyword",
+        "Right_Table_Name": "movie_info",
+        "Left_Alias": "k",
+        "Right_Alias": "mi",
+        "Pred": "t.id = mi.movie_id",
+        "ProbeKeys": "k_id",
+        "BuildKeys": "mi_movie_id",
+        "NumTuplesLeft": 1,
+        "NumTuplesRight": 2,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "t_title",
+            "mi_movie_id",
+            "t_kind_id",
+            "t_id",
+            "mi_info_type_id",
+            "mk_movie_id",
+            "k_features",
+            "mi_features"
+        ],
+        "NumDimLeft": "6",
+        "NumDimRight": "5",
+        "NumDimOutput": "11",
+        "Filter": [
+            "(k_keyword) IN ('murder', 'murder-in-title')",
+            "(mi_info) IN ('Sweden', 'Norway', 'Germany', 'Denmark', 'Swedish', 'Denish', 'Norwegian', 'German', 'USA', 'American')"
+        ]
+    },
+    {
+        "ID": "4",
+        "Left": "3",
+        "Right": "it1",
+        "Left_Table_Name": "keyword",
+        "Right_Table_Name": "info_type",
+        "Left_Alias": "k",
+        "Right_Alias": "it1",
+        "Pred": "t.id = mi.movie_id",
+        "ProbeKeys": "k_movie_id",
+        "BuildKeys": "it1_",
+        "NumTuplesLeft": 1,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "t_title",
+            "t_kind_id",
+            "t_id",
+            "mi_movie_id",
+            "mk_movie_id",
+            "k_features",
+            "it1_features"
+        ],
+        "NumDimLeft": "10",
+        "NumDimRight": "2",
+        "NumDimOutput": "12",
+        "Filter": [
+            "(k_keyword) IN ('murder', 'murder-in-title')",
+            "(it1_info) = 'countries'"
+        ]
+    },
+    {
+        "ID": "5",
+        "Left": "4",
+        "Right": "it1",
+        "Left_Table_Name": "keyword",
+        "Right_Table_Name": "info_type",
+        "Left_Alias": "k",
+        "Right_Alias": "it1",
+        "Pred": "mi.info_type_id = it1.id",
+        "ProbeKeys": "k_info_type_id",
+        "BuildKeys": "it1_id",
+        "NumTuplesLeft": 1,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "it1_id",
+            "t_title",
+            "t_kind_id",
+            "t_id",
+            "mi_info_type_id",
+            "mi_movie_id",
+            "mk_movie_id",
+            "k_features",
+            "it1_features"
+        ],
+        "NumDimLeft": "10",
+        "NumDimRight": "2",
+        "NumDimOutput": "12",
+        "Filter": [
+            "(k_keyword) IN ('murder', 'murder-in-title')",
+            "(it1_info) = 'countries'"
+        ]
+    },
+    {
+        "ID": "6",
+        "Left": "5",
+        "Right": "mi_idx",
+        "Left_Table_Name": "keyword",
+        "Right_Table_Name": "movie_info_idx",
+        "Left_Alias": "k",
+        "Right_Alias": "mi_idx",
+        "Pred": "mi_idx.movie_id = mk.movie_id",
+        "ProbeKeys": "k_movie_id",
+        "BuildKeys": "mi_idx_movie_id",
+        "NumTuplesLeft": 1,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "mi_idx_info_type_id",
+            "mi_idx_info",
+            "t_title",
+            "mi_idx_movie_id",
+            "t_kind_id",
+            "mk_movie_id",
+            "k_features",
+            "mi_idx_features"
+        ],
+        "NumDimLeft": "9",
+        "NumDimRight": "5",
+        "NumDimOutput": "14",
+        "Filter": [
+            "(k_keyword) IN ('murder', 'murder-in-title')",
+            "(mi_idx_info) > '6_0'"
+        ]
+    },
+    {
+        "ID": "7",
+        "Left": "6",
+        "Right": "mi_idx",
+        "Left_Table_Name": "keyword",
+        "Right_Table_Name": "movie_info_idx",
+        "Left_Alias": "k",
+        "Right_Alias": "mi_idx",
+        "Pred": "t.id = mi_idx.movie_id",
+        "ProbeKeys": "k_id",
+        "BuildKeys": "mi_idx_movie_id",
+        "NumTuplesLeft": 1,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "mi_idx_info_type_id",
+            "mi_idx_info",
+            "t_title",
+            "mi_idx_movie_id",
+            "t_kind_id",
+            "t_id",
+            "mk_movie_id",
+            "k_features",
+            "mi_idx_features"
+        ],
+        "NumDimLeft": "9",
+        "NumDimRight": "5",
+        "NumDimOutput": "14",
+        "Filter": [
+            "(k_keyword) IN ('murder', 'murder-in-title')",
+            "(mi_idx_info) > '6_0'"
+        ]
+    },
+    {
+        "ID": "8",
+        "Left": "7",
+        "Right": "it2",
+        "Left_Table_Name": "keyword",
+        "Right_Table_Name": "info_type",
+        "Left_Alias": "k",
+        "Right_Alias": "it2",
+        "Pred": "t.id = mi_idx.movie_id",
+        "ProbeKeys": "k_movie_id",
+        "BuildKeys": "it2_",
+        "NumTuplesLeft": 1,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "mi_idx_info",
+            "t_title",
+            "mi_idx_movie_id",
+            "t_kind_id",
+            "t_id",
+            "k_features",
+            "it2_features"
+        ],
+        "NumDimLeft": "8",
+        "NumDimRight": "2",
+        "NumDimOutput": "10",
+        "Filter": [
+            "(k_keyword) IN ('murder', 'murder-in-title')",
+            "(it2_info) = 'rating'"
+        ]
+    },
+    {
+        "ID": "9",
+        "Left": "8",
+        "Right": "it2",
+        "Left_Table_Name": "keyword",
+        "Right_Table_Name": "info_type",
+        "Left_Alias": "k",
+        "Right_Alias": "it2",
+        "Pred": "mi_idx.info_type_id = it2.id",
+        "ProbeKeys": "k_info_type_id",
+        "BuildKeys": "it2_id",
+        "NumTuplesLeft": 1,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "mi_idx_info_type_id",
+            "mi_idx_info",
+            "it2_id",
+            "t_title",
+            "mi_idx_movie_id",
+            "t_kind_id",
+            "t_id",
+            "k_features",
+            "it2_features"
+        ],
+        "NumDimLeft": "8",
+        "NumDimRight": "2",
+        "NumDimOutput": "10",
+        "Filter": [
+            "(k_keyword) IN ('murder', 'murder-in-title')",
+            "(it2_info) = 'rating'"
+        ]
+    },
+    {
+        "ID": "10",
+        "Left": "9",
+        "Right": "kt",
+        "Left_Table_Name": "keyword",
+        "Right_Table_Name": "kind_type",
+        "Left_Alias": "k",
+        "Right_Alias": "kt",
+        "Pred": "mi_idx.info_type_id = it2.id",
+        "ProbeKeys": "k_id",
+        "BuildKeys": "kt_",
+        "NumTuplesLeft": 1,
+        "NumTuplesRight": 5,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "mi_idx_info",
+            "mi_idx_info_type_id",
+            "t_title",
+            "it2_id",
+            "k_features",
+            "kt_features"
+        ],
+        "NumDimLeft": "7",
+        "NumDimRight": "2",
+        "NumDimOutput": "9",
+        "Filter": [
+            "(k_keyword) IN ('murder', 'murder-in-title')",
+            "(kt_kind) = 'movie'"
+        ]
+    },
+    {
+        "ID": "11",
+        "Left": "10",
+        "Right": "kt",
+        "Left_Table_Name": "keyword",
+        "Right_Table_Name": "kind_type",
+        "Left_Alias": "k",
+        "Right_Alias": "kt",
+        "Pred": "t.kind_id = kt.id",
+        "ProbeKeys": "k_kind_id",
+        "BuildKeys": "kt_id",
+        "NumTuplesLeft": 1,
+        "NumTuplesRight": 5,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "mi_idx_info_type_id",
+            "mi_idx_info",
+            "it2_id",
+            "t_title",
+            "kt_id",
+            "t_kind_id",
+            "k_features",
+            "kt_features"
+        ],
+        "NumDimLeft": "7",
+        "NumDimRight": "2",
+        "NumDimOutput": "9",
+        "Filter": [
+            "(k_keyword) IN ('murder', 'murder-in-title')",
+            "(kt_kind) = 'movie'"
+        ]
+    }
+]

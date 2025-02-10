@@ -1,0 +1,252 @@
+[
+    {
+        "ID": "0",
+        "Left": "mc",
+        "Right": "cn",
+        "Left_Table_Name": "movie_companies",
+        "Right_Table_Name": "company_name",
+        "Left_Alias": "mc",
+        "Right_Alias": "cn",
+        "Pred": "mc.company_id = cn.id",
+        "ProbeKeys": "mc_company_id",
+        "BuildKeys": "cn_id",
+        "NumTuplesLeft": 9852,
+        "NumTuplesRight": 50280,
+        "NumTuplesOutput": 3584,
+        "Projection": [
+            "mc_company_type_id",
+            "mc_movie_id",
+            "cn_id",
+            "mc_company_id",
+            "mc_features",
+            "cn_features"
+        ],
+        "NumDimLeft": "5",
+        "NumDimRight": "1",
+        "NumDimOutput": "6",
+        "Filter": [
+            "((mc_note) LIKE '%(200%)%') AND ((mc_note) LIKE '%(worldwide)%')",
+            "(cn_country_code) = '[us]'"
+        ]
+    },
+    {
+        "ID": "1",
+        "Left": "0",
+        "Right": "at",
+        "Left_Table_Name": "movie_companies",
+        "Right_Table_Name": "aka_title",
+        "Left_Alias": "mc",
+        "Right_Alias": "at",
+        "Pred": "at.movie_id = mc.movie_id",
+        "ProbeKeys": "mc_movie_id",
+        "BuildKeys": "at_movie_id",
+        "NumTuplesLeft": 3584,
+        "NumTuplesRight": 3,
+        "NumTuplesOutput": 2586,
+        "Projection": [
+            "mc_company_type_id",
+            "mc_movie_id",
+            "at_movie_id",
+            "mc_features",
+            "at_features"
+        ],
+        "NumDimLeft": "4",
+        "NumDimRight": "1",
+        "NumDimOutput": "5",
+        "Filter": [
+            "((mc_note) LIKE '%(200%)%') AND ((mc_note) LIKE '%(worldwide)%')"
+        ]
+    },
+    {
+        "ID": "2",
+        "Left": "1",
+        "Right": "t",
+        "Left_Table_Name": "movie_companies",
+        "Right_Table_Name": "title",
+        "Left_Alias": "mc",
+        "Right_Alias": "t",
+        "Pred": "t.id = at.movie_id",
+        "ProbeKeys": "mc_movie_id",
+        "BuildKeys": "t_id",
+        "NumTuplesLeft": 2586,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 1425,
+        "Projection": [
+            "mc_company_type_id",
+            "mc_movie_id",
+            "t_id",
+            "at_movie_id",
+            "t_title",
+            "mc_features",
+            "t_features"
+        ],
+        "NumDimLeft": "5",
+        "NumDimRight": "12",
+        "NumDimOutput": "17",
+        "Filter": [
+            "((mc_note) LIKE '%(200%)%') AND ((mc_note) LIKE '%(worldwide)%')",
+            "t_production_year > 2000"
+        ]
+    },
+    {
+        "ID": "3",
+        "Left": "2",
+        "Right": "mi",
+        "Left_Table_Name": "movie_companies",
+        "Right_Table_Name": "movie_info",
+        "Left_Alias": "mc",
+        "Right_Alias": "mi",
+        "Pred": "mi.movie_id = t.id",
+        "ProbeKeys": "mc_id",
+        "BuildKeys": "mi_movie_id",
+        "NumTuplesLeft": 1425,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "mc_company_type_id",
+            "mi_info_type_id",
+            "mc_movie_id",
+            "mi_info",
+            "t_id",
+            "at_movie_id",
+            "t_title",
+            "mi_movie_id",
+            "mc_features",
+            "mi_features"
+        ],
+        "NumDimLeft": "7",
+        "NumDimRight": "5",
+        "NumDimOutput": "12",
+        "Filter": [
+            "((mc_note) LIKE '%(200%)%') AND ((mc_note) LIKE '%(worldwide)%')",
+            "((mi_note) LIKE '%internet%') AND ((mi_info) LIKE 'USA:% 200%')"
+        ]
+    },
+    {
+        "ID": "4",
+        "Left": "3",
+        "Right": "ct",
+        "Left_Table_Name": "movie_companies",
+        "Right_Table_Name": "company_type",
+        "Left_Alias": "mc",
+        "Right_Alias": "ct",
+        "Pred": "ct.id = mc.company_type_id",
+        "ProbeKeys": "mc_company_type_id",
+        "BuildKeys": "ct_id",
+        "NumTuplesLeft": 1,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "mi_info_type_id",
+            "mc_company_type_id",
+            "ct_id",
+            "mc_movie_id",
+            "mi_info",
+            "t_id",
+            "at_movie_id",
+            "t_title",
+            "mi_movie_id",
+            "mc_features",
+            "ct_features"
+        ],
+        "NumDimLeft": "10",
+        "NumDimRight": "1",
+        "NumDimOutput": "11",
+        "Filter": [
+            "((mc_note) LIKE '%(200%)%') AND ((mc_note) LIKE '%(worldwide)%')"
+        ]
+    },
+    {
+        "ID": "5",
+        "Left": "4",
+        "Right": "it1",
+        "Left_Table_Name": "movie_companies",
+        "Right_Table_Name": "info_type",
+        "Left_Alias": "mc",
+        "Right_Alias": "it1",
+        "Pred": "it1.id = mi.info_type_id",
+        "ProbeKeys": "mc_info_type_id",
+        "BuildKeys": "it1_id",
+        "NumTuplesLeft": 1,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "mi_info_type_id",
+            "it1_id",
+            "mc_movie_id",
+            "mi_info",
+            "t_id",
+            "at_movie_id",
+            "t_title",
+            "mi_movie_id",
+            "mc_features",
+            "it1_features"
+        ],
+        "NumDimLeft": "9",
+        "NumDimRight": "1",
+        "NumDimOutput": "10",
+        "Filter": [
+            "((mc_note) LIKE '%(200%)%') AND ((mc_note) LIKE '%(worldwide)%')",
+            "(it1_info) = 'release dates'"
+        ]
+    },
+    {
+        "ID": "6",
+        "Left": "5",
+        "Right": "mk",
+        "Left_Table_Name": "movie_companies",
+        "Right_Table_Name": "movie_keyword",
+        "Left_Alias": "mc",
+        "Right_Alias": "mk",
+        "Pred": "mk.movie_id = t.id",
+        "ProbeKeys": "mc_id",
+        "BuildKeys": "mk_movie_id",
+        "NumTuplesLeft": 1,
+        "NumTuplesRight": 47,
+        "NumTuplesOutput": 8,
+        "Projection": [
+            "mk_keyword_id",
+            "mi_info",
+            "t_id",
+            "mk_movie_id",
+            "t_title",
+            "mc_features",
+            "mk_features"
+        ],
+        "NumDimLeft": "8",
+        "NumDimRight": "3",
+        "NumDimOutput": "11",
+        "Filter": [
+            "((mc_note) LIKE '%(200%)%') AND ((mc_note) LIKE '%(worldwide)%')"
+        ]
+    },
+    {
+        "ID": "7",
+        "Left": "6",
+        "Right": "k",
+        "Left_Table_Name": "movie_companies",
+        "Right_Table_Name": "keyword",
+        "Left_Alias": "mc",
+        "Right_Alias": "k",
+        "Pred": "k.id = mk.keyword_id",
+        "ProbeKeys": "mc_keyword_id",
+        "BuildKeys": "k_id",
+        "NumTuplesLeft": 8,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 8,
+        "Projection": [
+            "mk_keyword_id",
+            "mi_info",
+            "k_id",
+            "t_title",
+            "mc_features",
+            "k_features"
+        ],
+        "NumDimLeft": "5",
+        "NumDimRight": "1",
+        "NumDimOutput": "6",
+        "Filter": [
+            "((mc_note) LIKE '%(200%)%') AND ((mc_note) LIKE '%(worldwide)%')"
+        ]
+    }
+]

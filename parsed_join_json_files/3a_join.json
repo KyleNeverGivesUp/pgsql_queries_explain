@@ -1,0 +1,118 @@
+[
+    {
+        "ID": "0",
+        "Left": "k",
+        "Right": "mk",
+        "Left_Table_Name": "keyword",
+        "Right_Table_Name": "movie_keyword",
+        "Left_Alias": "k",
+        "Right_Alias": "mk",
+        "Pred": "mk.keyword_id = k.id",
+        "ProbeKeys": "k_id",
+        "BuildKeys": "mk_keyword_id",
+        "NumTuplesLeft": 13,
+        "NumTuplesRight": 303,
+        "NumTuplesOutput": 438,
+        "Projection": [
+            "mk_movie_id",
+            "k_id",
+            "mk_keyword_id",
+            "k_features",
+            "mk_features"
+        ],
+        "NumDimLeft": "3",
+        "NumDimRight": "3",
+        "NumDimOutput": "6",
+        "Filter": [
+            "(k_keyword) LIKE '%sequel%'"
+        ]
+    },
+    {
+        "ID": "1",
+        "Left": "0",
+        "Right": "t",
+        "Left_Table_Name": "keyword",
+        "Right_Table_Name": "title",
+        "Left_Alias": "k",
+        "Right_Alias": "t",
+        "Pred": "t.id = mk.movie_id",
+        "ProbeKeys": "k_movie_id",
+        "BuildKeys": "t_id",
+        "NumTuplesLeft": 438,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 177,
+        "Projection": [
+            "mk_movie_id",
+            "t_title",
+            "t_id",
+            "k_features",
+            "t_features"
+        ],
+        "NumDimLeft": "3",
+        "NumDimRight": "12",
+        "NumDimOutput": "15",
+        "Filter": [
+            "(k_keyword) LIKE '%sequel%'",
+            "t_production_year > 2005"
+        ]
+    },
+    {
+        "ID": "2",
+        "Left": "1",
+        "Right": "mi",
+        "Left_Table_Name": "keyword",
+        "Right_Table_Name": "movie_info",
+        "Left_Alias": "k",
+        "Right_Alias": "mi",
+        "Pred": "mi.movie_id = mk.movie_id",
+        "ProbeKeys": "k_movie_id",
+        "BuildKeys": "mi_movie_id",
+        "NumTuplesLeft": 177,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 67,
+        "Projection": [
+            "mk_movie_id",
+            "t_title",
+            "mi_movie_id",
+            "k_features",
+            "mi_features"
+        ],
+        "NumDimLeft": "5",
+        "NumDimRight": "5",
+        "NumDimOutput": "10",
+        "Filter": [
+            "(k_keyword) LIKE '%sequel%'",
+            "(mi_info) IN ('Sweden', 'Norway', 'Germany', 'Denmark', 'Swedish', 'Denish', 'Norwegian', 'German')"
+        ]
+    },
+    {
+        "ID": "3",
+        "Left": "2",
+        "Right": "mi",
+        "Left_Table_Name": "keyword",
+        "Right_Table_Name": "movie_info",
+        "Left_Alias": "k",
+        "Right_Alias": "mi",
+        "Pred": "t.id = mi.movie_id",
+        "ProbeKeys": "k_id",
+        "BuildKeys": "mi_movie_id",
+        "NumTuplesLeft": 177,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 67,
+        "Projection": [
+            "mk_movie_id",
+            "t_title",
+            "t_id",
+            "mi_movie_id",
+            "k_features",
+            "mi_features"
+        ],
+        "NumDimLeft": "5",
+        "NumDimRight": "5",
+        "NumDimOutput": "10",
+        "Filter": [
+            "(k_keyword) LIKE '%sequel%'",
+            "(mi_info) IN ('Sweden', 'Norway', 'Germany', 'Denmark', 'Swedish', 'Denish', 'Norwegian', 'German')"
+        ]
+    }
+]

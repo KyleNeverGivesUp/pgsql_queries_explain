@@ -1,0 +1,245 @@
+[
+    {
+        "ID": "0",
+        "Left": "cn",
+        "Right": "mc",
+        "Left_Table_Name": "company_name",
+        "Right_Table_Name": "movie_companies",
+        "Left_Alias": "cn",
+        "Right_Alias": "mc",
+        "Pred": "mc.company_id = cn.id",
+        "ProbeKeys": "cn_id",
+        "BuildKeys": "mc_company_id",
+        "NumTuplesLeft": 1,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "cn_id",
+            "mc_company_type_id",
+            "mc_company_id",
+            "mc_movie_id",
+            "cn_features",
+            "mc_features"
+        ],
+        "NumDimLeft": "7",
+        "NumDimRight": "5",
+        "NumDimOutput": "12",
+        "Filter": [
+            "((cn_country_code) = '[us]') AND ((cn_name) = 'YouTube')",
+            "((mc_note) LIKE '%(200%)%') AND ((mc_note) LIKE '%(worldwide)%')"
+        ]
+    },
+    {
+        "ID": "1",
+        "Left": "0",
+        "Right": "at",
+        "Left_Table_Name": "company_name",
+        "Right_Table_Name": "aka_title",
+        "Left_Alias": "cn",
+        "Right_Alias": "at",
+        "Pred": "at.movie_id = mc.movie_id",
+        "ProbeKeys": "cn_movie_id",
+        "BuildKeys": "at_movie_id",
+        "NumTuplesLeft": 1,
+        "NumTuplesRight": 3,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "at_movie_id",
+            "mc_company_type_id",
+            "mc_movie_id",
+            "cn_features",
+            "at_features"
+        ],
+        "NumDimLeft": "4",
+        "NumDimRight": "1",
+        "NumDimOutput": "5",
+        "Filter": [
+            "((cn_country_code) = '[us]') AND ((cn_name) = 'YouTube')"
+        ]
+    },
+    {
+        "ID": "2",
+        "Left": "1",
+        "Right": "ct",
+        "Left_Table_Name": "company_name",
+        "Right_Table_Name": "company_type",
+        "Left_Alias": "cn",
+        "Right_Alias": "ct",
+        "Pred": "ct.id = mc.company_type_id",
+        "ProbeKeys": "cn_company_type_id",
+        "BuildKeys": "ct_id",
+        "NumTuplesLeft": 1,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "at_movie_id",
+            "mc_company_type_id",
+            "ct_id",
+            "mc_movie_id",
+            "cn_features",
+            "ct_features"
+        ],
+        "NumDimLeft": "5",
+        "NumDimRight": "1",
+        "NumDimOutput": "6",
+        "Filter": [
+            "((cn_country_code) = '[us]') AND ((cn_name) = 'YouTube')"
+        ]
+    },
+    {
+        "ID": "3",
+        "Left": "2",
+        "Right": "t",
+        "Left_Table_Name": "company_name",
+        "Right_Table_Name": "title",
+        "Left_Alias": "cn",
+        "Right_Alias": "t",
+        "Pred": "t.id = at.movie_id",
+        "ProbeKeys": "cn_movie_id",
+        "BuildKeys": "t_id",
+        "NumTuplesLeft": 1,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "at_movie_id",
+            "t_title",
+            "t_id",
+            "mc_movie_id",
+            "cn_features",
+            "t_features"
+        ],
+        "NumDimLeft": "4",
+        "NumDimRight": "12",
+        "NumDimOutput": "16",
+        "Filter": [
+            "((cn_country_code) = '[us]') AND ((cn_name) = 'YouTube')",
+            "t.production_year BETWEEN 2005 AND 2010"
+        ]
+    },
+    {
+        "ID": "4",
+        "Left": "3",
+        "Right": "mi",
+        "Left_Table_Name": "company_name",
+        "Right_Table_Name": "movie_info",
+        "Left_Alias": "cn",
+        "Right_Alias": "mi",
+        "Pred": "mi.movie_id = t.id",
+        "ProbeKeys": "cn_id",
+        "BuildKeys": "mi_movie_id",
+        "NumTuplesLeft": 1,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "mi_info_type_id",
+            "t_title",
+            "mi_movie_id",
+            "t_id",
+            "at_movie_id",
+            "mi_info",
+            "mc_movie_id",
+            "cn_features",
+            "mi_features"
+        ],
+        "NumDimLeft": "6",
+        "NumDimRight": "5",
+        "NumDimOutput": "11",
+        "Filter": [
+            "((cn_country_code) = '[us]') AND ((cn_name) = 'YouTube')",
+            "((mi_note) LIKE '%internet%') AND ((mi_info) LIKE 'USA:% 200%')"
+        ]
+    },
+    {
+        "ID": "5",
+        "Left": "4",
+        "Right": "it1",
+        "Left_Table_Name": "company_name",
+        "Right_Table_Name": "info_type",
+        "Left_Alias": "cn",
+        "Right_Alias": "it1",
+        "Pred": "it1.id = mi.info_type_id",
+        "ProbeKeys": "cn_info_type_id",
+        "BuildKeys": "it1_id",
+        "NumTuplesLeft": 1,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "mi_info_type_id",
+            "t_title",
+            "it1_id",
+            "mi_movie_id",
+            "t_id",
+            "at_movie_id",
+            "mi_info",
+            "mc_movie_id",
+            "cn_features",
+            "it1_features"
+        ],
+        "NumDimLeft": "9",
+        "NumDimRight": "2",
+        "NumDimOutput": "11",
+        "Filter": [
+            "((cn_country_code) = '[us]') AND ((cn_name) = 'YouTube')",
+            "(it1_info) = 'release dates'"
+        ]
+    },
+    {
+        "ID": "6",
+        "Left": "5",
+        "Right": "mk",
+        "Left_Table_Name": "company_name",
+        "Right_Table_Name": "movie_keyword",
+        "Left_Alias": "cn",
+        "Right_Alias": "mk",
+        "Pred": "mk.movie_id = t.id",
+        "ProbeKeys": "cn_id",
+        "BuildKeys": "mk_movie_id",
+        "NumTuplesLeft": 1,
+        "NumTuplesRight": 47,
+        "NumTuplesOutput": 5,
+        "Projection": [
+            "mk_movie_id",
+            "t_title",
+            "t_id",
+            "mi_info",
+            "mk_keyword_id",
+            "cn_features",
+            "mk_features"
+        ],
+        "NumDimLeft": "8",
+        "NumDimRight": "3",
+        "NumDimOutput": "11",
+        "Filter": [
+            "((cn_country_code) = '[us]') AND ((cn_name) = 'YouTube')"
+        ]
+    },
+    {
+        "ID": "7",
+        "Left": "6",
+        "Right": "k",
+        "Left_Table_Name": "company_name",
+        "Right_Table_Name": "keyword",
+        "Left_Alias": "cn",
+        "Right_Alias": "k",
+        "Pred": "k.id = mk.keyword_id",
+        "ProbeKeys": "cn_keyword_id",
+        "BuildKeys": "k_id",
+        "NumTuplesLeft": 5,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 5,
+        "Projection": [
+            "mi_info",
+            "k_id",
+            "t_title",
+            "mk_keyword_id",
+            "cn_features",
+            "k_features"
+        ],
+        "NumDimLeft": "5",
+        "NumDimRight": "1",
+        "NumDimOutput": "6",
+        "Filter": [
+            "((cn_country_code) = '[us]') AND ((cn_name) = 'YouTube')"
+        ]
+    }
+]

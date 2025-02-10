@@ -1,0 +1,320 @@
+[
+    {
+        "ID": "0",
+        "Left": "it",
+        "Right": "mi",
+        "Left_Table_Name": "info_type",
+        "Right_Table_Name": "movie_info",
+        "Left_Alias": "it",
+        "Right_Alias": "mi",
+        "Pred": "mi.info_type_id = it.id",
+        "ProbeKeys": "it_id",
+        "BuildKeys": "mi_info_type_id",
+        "NumTuplesLeft": 1,
+        "NumTuplesRight": 6695,
+        "NumTuplesOutput": 4088,
+        "Projection": [
+            "it_id",
+            "mi_movie_id",
+            "mi_info_type_id",
+            "it_features",
+            "mi_features"
+        ],
+        "NumDimLeft": "2",
+        "NumDimRight": "5",
+        "NumDimOutput": "7",
+        "Filter": [
+            "(it_info) = 'release dates'",
+            "(mi_info IS NOT NULL) AND (((mi_info) LIKE 'Japan:%200%') OR ((mi_info) LIKE 'USA:%200%'))"
+        ]
+    },
+    {
+        "ID": "1",
+        "Left": "0",
+        "Right": "t",
+        "Left_Table_Name": "info_type",
+        "Right_Table_Name": "title",
+        "Left_Alias": "it",
+        "Right_Alias": "t",
+        "Pred": "t.id = mi.movie_id",
+        "ProbeKeys": "it_movie_id",
+        "BuildKeys": "t_id",
+        "NumTuplesLeft": 4088,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 2253,
+        "Projection": [
+            "t_title",
+            "mi_movie_id",
+            "t_id",
+            "it_features",
+            "t_features"
+        ],
+        "NumDimLeft": "3",
+        "NumDimRight": "12",
+        "NumDimOutput": "15",
+        "Filter": [
+            "(it_info) = 'release dates'",
+            "t_production_year > 2000"
+        ]
+    },
+    {
+        "ID": "2",
+        "Left": "1",
+        "Right": "ci",
+        "Left_Table_Name": "info_type",
+        "Right_Table_Name": "cast_info",
+        "Left_Alias": "it",
+        "Right_Alias": "ci",
+        "Pred": "ci.movie_id = t.id",
+        "ProbeKeys": "it_id",
+        "BuildKeys": "ci_movie_id",
+        "NumTuplesLeft": 2253,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 1986,
+        "Projection": [
+            "ci_movie_id",
+            "ci_person_id",
+            "t_title",
+            "mi_movie_id",
+            "ci_role_id",
+            "t_id",
+            "ci_person_role_id",
+            "it_features",
+            "ci_features"
+        ],
+        "NumDimLeft": "5",
+        "NumDimRight": "7",
+        "NumDimOutput": "12",
+        "Filter": [
+            "(it_info) = 'release dates'",
+            "(ci_note) IN ('(voice)', '(voice: Japanese version)', '(voice) (uncredited)', '(voice: English version)')"
+        ]
+    },
+    {
+        "ID": "3",
+        "Left": "2",
+        "Right": "rt",
+        "Left_Table_Name": "info_type",
+        "Right_Table_Name": "role_type",
+        "Left_Alias": "it",
+        "Right_Alias": "rt",
+        "Pred": "ci.role_id = rt.id",
+        "ProbeKeys": "it_role_id",
+        "BuildKeys": "rt_id",
+        "NumTuplesLeft": 1986,
+        "NumTuplesRight": 4,
+        "NumTuplesOutput": 11,
+        "Projection": [
+            "ci_movie_id",
+            "ci_person_id",
+            "t_title",
+            "rt_id",
+            "mi_movie_id",
+            "ci_role_id",
+            "t_id",
+            "ci_person_role_id",
+            "it_features",
+            "rt_features"
+        ],
+        "NumDimLeft": "9",
+        "NumDimRight": "1",
+        "NumDimOutput": "10",
+        "Filter": [
+            "(it_info) = 'release dates'",
+            "(rt_role) = 'actress'"
+        ]
+    },
+    {
+        "ID": "4",
+        "Left": "3",
+        "Right": "n",
+        "Left_Table_Name": "info_type",
+        "Right_Table_Name": "name",
+        "Left_Alias": "it",
+        "Right_Alias": "n",
+        "Pred": "n.id = ci.person_id",
+        "ProbeKeys": "it_person_id",
+        "BuildKeys": "n_id",
+        "NumTuplesLeft": 11,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "ci_movie_id",
+            "ci_person_id",
+            "n_name",
+            "t_title",
+            "mi_movie_id",
+            "n_id",
+            "t_id",
+            "ci_person_role_id",
+            "it_features",
+            "n_features"
+        ],
+        "NumDimLeft": "8",
+        "NumDimRight": "9",
+        "NumDimOutput": "17",
+        "Filter": [
+            "(it_info) = 'release dates'",
+            "((n_name) LIKE '%An%') AND ((n_gender) = 'f')"
+        ]
+    },
+    {
+        "ID": "5",
+        "Left": "4",
+        "Right": "an",
+        "Left_Table_Name": "info_type",
+        "Right_Table_Name": "aka_name",
+        "Left_Alias": "it",
+        "Right_Alias": "an",
+        "Pred": "an.person_id = ci.person_id",
+        "ProbeKeys": "it_person_id",
+        "BuildKeys": "an_person_id",
+        "NumTuplesLeft": 1,
+        "NumTuplesRight": 2,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "ci_movie_id",
+            "ci_person_id",
+            "n_name",
+            "t_title",
+            "an_person_id",
+            "mi_movie_id",
+            "t_id",
+            "ci_person_role_id",
+            "it_features",
+            "an_features"
+        ],
+        "NumDimLeft": "10",
+        "NumDimRight": "1",
+        "NumDimOutput": "11",
+        "Filter": [
+            "(it_info) = 'release dates'"
+        ]
+    },
+    {
+        "ID": "6",
+        "Left": "5",
+        "Right": "an",
+        "Left_Table_Name": "info_type",
+        "Right_Table_Name": "aka_name",
+        "Left_Alias": "it",
+        "Right_Alias": "an",
+        "Pred": "n.id = an.person_id",
+        "ProbeKeys": "it_id",
+        "BuildKeys": "an_person_id",
+        "NumTuplesLeft": 1,
+        "NumTuplesRight": 2,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "ci_movie_id",
+            "ci_person_id",
+            "n_name",
+            "t_title",
+            "an_person_id",
+            "mi_movie_id",
+            "n_id",
+            "t_id",
+            "ci_person_role_id",
+            "it_features",
+            "an_features"
+        ],
+        "NumDimLeft": "10",
+        "NumDimRight": "1",
+        "NumDimOutput": "11",
+        "Filter": [
+            "(it_info) = 'release dates'"
+        ]
+    },
+    {
+        "ID": "7",
+        "Left": "6",
+        "Right": "chn",
+        "Left_Table_Name": "info_type",
+        "Right_Table_Name": "char_name",
+        "Left_Alias": "it",
+        "Right_Alias": "chn",
+        "Pred": "chn.id = ci.person_role_id",
+        "ProbeKeys": "it_person_role_id",
+        "BuildKeys": "chn_id",
+        "NumTuplesLeft": 1,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "ci_movie_id",
+            "n_name",
+            "t_title",
+            "mi_movie_id",
+            "ci_person_role_id",
+            "chn_id",
+            "t_id",
+            "it_features",
+            "chn_features"
+        ],
+        "NumDimLeft": "10",
+        "NumDimRight": "1",
+        "NumDimOutput": "11",
+        "Filter": [
+            "(it_info) = 'release dates'"
+        ]
+    },
+    {
+        "ID": "8",
+        "Left": "7",
+        "Right": "mc",
+        "Left_Table_Name": "info_type",
+        "Right_Table_Name": "movie_companies",
+        "Left_Alias": "it",
+        "Right_Alias": "mc",
+        "Pred": "mc.movie_id = t.id",
+        "ProbeKeys": "it_id",
+        "BuildKeys": "mc_movie_id",
+        "NumTuplesLeft": 1,
+        "NumTuplesRight": 5,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "n_name",
+            "t_title",
+            "mc_movie_id",
+            "mc_company_id",
+            "t_id",
+            "it_features",
+            "mc_features"
+        ],
+        "NumDimLeft": "7",
+        "NumDimRight": "5",
+        "NumDimOutput": "12",
+        "Filter": [
+            "(it_info) = 'release dates'"
+        ]
+    },
+    {
+        "ID": "9",
+        "Left": "8",
+        "Right": "cn",
+        "Left_Table_Name": "info_type",
+        "Right_Table_Name": "company_name",
+        "Left_Alias": "it",
+        "Right_Alias": "cn",
+        "Pred": "cn.id = mc.company_id",
+        "ProbeKeys": "it_company_id",
+        "BuildKeys": "cn_id",
+        "NumTuplesLeft": 1,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "t_title",
+            "cn_id",
+            "mc_company_id",
+            "n_name",
+            "it_features",
+            "cn_features"
+        ],
+        "NumDimLeft": "5",
+        "NumDimRight": "7",
+        "NumDimOutput": "12",
+        "Filter": [
+            "(it_info) = 'release dates'",
+            "(cn_country_code) = '[us]'"
+        ]
+    }
+]

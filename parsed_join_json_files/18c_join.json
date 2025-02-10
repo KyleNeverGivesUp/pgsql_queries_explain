@@ -1,0 +1,211 @@
+[
+    {
+        "ID": "0",
+        "Left": "mi_idx",
+        "Right": "it2",
+        "Left_Table_Name": "movie_info_idx",
+        "Right_Table_Name": "info_type",
+        "Left_Alias": "mi_idx",
+        "Right_Alias": "it2",
+        "Pred": "mi_idx.info_type_id = it2.id",
+        "ProbeKeys": "mi_idx_info_type_id",
+        "BuildKeys": "it2_id",
+        "NumTuplesLeft": 575015,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 5089,
+        "Projection": [
+            "mi_idx_movie_id",
+            "mi_idx_info_type_id",
+            "it2_id",
+            "mi_idx_info",
+            "mi_idx_features",
+            "it2_features"
+        ],
+        "NumDimLeft": "5",
+        "NumDimRight": "1",
+        "NumDimOutput": "6",
+        "Filter": [
+            "(it2_info) = 'votes'"
+        ]
+    },
+    {
+        "ID": "1",
+        "Left": "0",
+        "Right": "mi",
+        "Left_Table_Name": "movie_info_idx",
+        "Right_Table_Name": "movie_info",
+        "Left_Alias": "mi_idx",
+        "Right_Alias": "mi",
+        "Pred": "mi.movie_id = mi_idx.movie_id",
+        "ProbeKeys": "mi_idx_movie_id",
+        "BuildKeys": "mi_movie_id",
+        "NumTuplesLeft": 5089,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 1809,
+        "Projection": [
+            "mi_info",
+            "mi_idx_info",
+            "mi_idx_movie_id",
+            "mi_movie_id",
+            "mi_info_type_id",
+            "mi_idx_features",
+            "mi_features"
+        ],
+        "NumDimLeft": "4",
+        "NumDimRight": "5",
+        "NumDimOutput": "9",
+        "Filter": [
+            "(mi_info) IN ('Horror', 'Action', 'Sci-Fi', 'Thriller', 'Crime', 'War')"
+        ]
+    },
+    {
+        "ID": "2",
+        "Left": "1",
+        "Right": "it1",
+        "Left_Table_Name": "movie_info_idx",
+        "Right_Table_Name": "info_type",
+        "Left_Alias": "mi_idx",
+        "Right_Alias": "it1",
+        "Pred": "mi.info_type_id = it1.id",
+        "ProbeKeys": "mi_idx_info_type_id",
+        "BuildKeys": "it1_id",
+        "NumTuplesLeft": 1809,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 16,
+        "Projection": [
+            "mi_info",
+            "it1_id",
+            "mi_idx_info",
+            "mi_idx_movie_id",
+            "mi_movie_id",
+            "mi_info_type_id",
+            "mi_idx_features",
+            "it1_features"
+        ],
+        "NumDimLeft": "7",
+        "NumDimRight": "1",
+        "NumDimOutput": "8",
+        "Filter": [
+            "(it1_info) = 'genres'"
+        ]
+    },
+    {
+        "ID": "3",
+        "Left": "2",
+        "Right": "t",
+        "Left_Table_Name": "movie_info_idx",
+        "Right_Table_Name": "title",
+        "Left_Alias": "mi_idx",
+        "Right_Alias": "t",
+        "Pred": "t.id = mi_idx.movie_id",
+        "ProbeKeys": "mi_idx_movie_id",
+        "BuildKeys": "t_id",
+        "NumTuplesLeft": 16,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 16,
+        "Projection": [
+            "mi_info",
+            "t_id",
+            "t_title",
+            "mi_idx_info",
+            "mi_idx_movie_id",
+            "mi_movie_id",
+            "mi_idx_features",
+            "t_features"
+        ],
+        "NumDimLeft": "6",
+        "NumDimRight": "12",
+        "NumDimOutput": "18",
+        "Filter": []
+    },
+    {
+        "ID": "4",
+        "Left": "3",
+        "Right": "t",
+        "Left_Table_Name": "movie_info_idx",
+        "Right_Table_Name": "title",
+        "Left_Alias": "mi_idx",
+        "Right_Alias": "t",
+        "Pred": "mi.movie_id = t.id",
+        "ProbeKeys": "mi_idx_movie_id",
+        "BuildKeys": "t_id",
+        "NumTuplesLeft": 16,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 16,
+        "Projection": [
+            "mi_info",
+            "t_id",
+            "t_title",
+            "mi_idx_info",
+            "mi_idx_movie_id",
+            "mi_movie_id",
+            "mi_idx_features",
+            "t_features"
+        ],
+        "NumDimLeft": "6",
+        "NumDimRight": "12",
+        "NumDimOutput": "18",
+        "Filter": []
+    },
+    {
+        "ID": "5",
+        "Left": "4",
+        "Right": "ci",
+        "Left_Table_Name": "movie_info_idx",
+        "Right_Table_Name": "cast_info",
+        "Left_Alias": "mi_idx",
+        "Right_Alias": "ci",
+        "Pred": "ci.movie_id = t.id",
+        "ProbeKeys": "mi_idx_id",
+        "BuildKeys": "ci_movie_id",
+        "NumTuplesLeft": 16,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 20,
+        "Projection": [
+            "mi_info",
+            "t_id",
+            "t_title",
+            "mi_idx_info",
+            "ci_movie_id",
+            "ci_person_id",
+            "mi_idx_features",
+            "ci_features"
+        ],
+        "NumDimLeft": "10",
+        "NumDimRight": "7",
+        "NumDimOutput": "17",
+        "Filter": [
+            "(ci_note) IN ('(writer)', '(head writer)', '(written by)', '(story)', '(story editor)')"
+        ]
+    },
+    {
+        "ID": "6",
+        "Left": "5",
+        "Right": "n",
+        "Left_Table_Name": "movie_info_idx",
+        "Right_Table_Name": "name",
+        "Left_Alias": "mi_idx",
+        "Right_Alias": "n",
+        "Pred": "n.id = ci.person_id",
+        "ProbeKeys": "mi_idx_person_id",
+        "BuildKeys": "n_id",
+        "NumTuplesLeft": 20,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 8,
+        "Projection": [
+            "mi_info",
+            "t_title",
+            "mi_idx_info",
+            "n_id",
+            "ci_person_id",
+            "mi_idx_features",
+            "n_features"
+        ],
+        "NumDimLeft": "6",
+        "NumDimRight": "9",
+        "NumDimOutput": "15",
+        "Filter": [
+            "(n_gender) = 'm'"
+        ]
+    }
+]

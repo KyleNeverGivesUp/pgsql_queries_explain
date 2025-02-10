@@ -1,0 +1,240 @@
+[
+    {
+        "ID": "0",
+        "Left": "mc",
+        "Right": "cn",
+        "Left_Table_Name": "movie_companies",
+        "Right_Table_Name": "company_name",
+        "Left_Alias": "mc",
+        "Right_Alias": "cn",
+        "Pred": "mc.company_id = cn.id",
+        "ProbeKeys": "mc_company_id",
+        "BuildKeys": "cn_id",
+        "NumTuplesLeft": 1087137,
+        "NumTuplesRight": 815,
+        "NumTuplesOutput": 6412,
+        "Projection": [
+            "mc_company_type_id",
+            "cn_id",
+            "mc_movie_id",
+            "mc_company_id",
+            "mc_features",
+            "cn_features"
+        ],
+        "NumDimLeft": "5",
+        "NumDimRight": "1",
+        "NumDimOutput": "6",
+        "Filter": [
+            "(cn_country_code) = '[ru]'"
+        ]
+    },
+    {
+        "ID": "1",
+        "Left": "0",
+        "Right": "t",
+        "Left_Table_Name": "movie_companies",
+        "Right_Table_Name": "title",
+        "Left_Alias": "mc",
+        "Right_Alias": "t",
+        "Pred": "t.id = mc.movie_id",
+        "ProbeKeys": "mc_movie_id",
+        "BuildKeys": "t_id",
+        "NumTuplesLeft": 6412,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 1004,
+        "Projection": [
+            "mc_company_type_id",
+            "t_title",
+            "t_id",
+            "mc_movie_id",
+            "mc_features",
+            "t_features"
+        ],
+        "NumDimLeft": "4",
+        "NumDimRight": "12",
+        "NumDimOutput": "16",
+        "Filter": [
+            "t_production_year > 2010"
+        ]
+    },
+    {
+        "ID": "2",
+        "Left": "1",
+        "Right": "ci",
+        "Left_Table_Name": "movie_companies",
+        "Right_Table_Name": "cast_info",
+        "Left_Alias": "mc",
+        "Right_Alias": "ci",
+        "Pred": "ci.movie_id = mc.movie_id",
+        "ProbeKeys": "mc_movie_id",
+        "BuildKeys": "ci_movie_id",
+        "NumTuplesLeft": 1004,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 1497,
+        "Projection": [
+            "t_title",
+            "ci_person_role_id",
+            "ci_role_id",
+            "mc_movie_id",
+            "mc_company_type_id",
+            "ci_movie_id",
+            "mc_features",
+            "ci_features"
+        ],
+        "NumDimLeft": "6",
+        "NumDimRight": "7",
+        "NumDimOutput": "13",
+        "Filter": [
+            "(ci_note) LIKE '%(producer)%'"
+        ]
+    },
+    {
+        "ID": "3",
+        "Left": "2",
+        "Right": "ci",
+        "Left_Table_Name": "movie_companies",
+        "Right_Table_Name": "cast_info",
+        "Left_Alias": "mc",
+        "Right_Alias": "ci",
+        "Pred": "t.id = ci.movie_id",
+        "ProbeKeys": "mc_id",
+        "BuildKeys": "ci_movie_id",
+        "NumTuplesLeft": 1004,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 1497,
+        "Projection": [
+            "t_title",
+            "ci_person_role_id",
+            "t_id",
+            "ci_role_id",
+            "mc_movie_id",
+            "mc_company_type_id",
+            "ci_movie_id",
+            "mc_features",
+            "ci_features"
+        ],
+        "NumDimLeft": "6",
+        "NumDimRight": "7",
+        "NumDimOutput": "13",
+        "Filter": [
+            "(ci_note) LIKE '%(producer)%'"
+        ]
+    },
+    {
+        "ID": "4",
+        "Left": "3",
+        "Right": "rt",
+        "Left_Table_Name": "movie_companies",
+        "Right_Table_Name": "role_type",
+        "Left_Alias": "mc",
+        "Right_Alias": "rt",
+        "Pred": "t.id = ci.movie_id",
+        "ProbeKeys": "mc_movie_id",
+        "BuildKeys": "rt_",
+        "NumTuplesLeft": 1497,
+        "NumTuplesRight": 4,
+        "NumTuplesOutput": 8,
+        "Projection": [
+            "t_title",
+            "ci_person_role_id",
+            "t_id",
+            "mc_company_type_id",
+            "ci_movie_id",
+            "mc_features",
+            "rt_features"
+        ],
+        "NumDimLeft": "8",
+        "NumDimRight": "1",
+        "NumDimOutput": "9",
+        "Filter": [
+            "(rt_role) = 'actor'"
+        ]
+    },
+    {
+        "ID": "5",
+        "Left": "4",
+        "Right": "rt",
+        "Left_Table_Name": "movie_companies",
+        "Right_Table_Name": "role_type",
+        "Left_Alias": "mc",
+        "Right_Alias": "rt",
+        "Pred": "ci.role_id = rt.id",
+        "ProbeKeys": "mc_role_id",
+        "BuildKeys": "rt_id",
+        "NumTuplesLeft": 1497,
+        "NumTuplesRight": 4,
+        "NumTuplesOutput": 8,
+        "Projection": [
+            "t_title",
+            "ci_person_role_id",
+            "t_id",
+            "rt_id",
+            "ci_role_id",
+            "mc_company_type_id",
+            "ci_movie_id",
+            "mc_features",
+            "rt_features"
+        ],
+        "NumDimLeft": "8",
+        "NumDimRight": "1",
+        "NumDimOutput": "9",
+        "Filter": [
+            "(rt_role) = 'actor'"
+        ]
+    },
+    {
+        "ID": "6",
+        "Left": "5",
+        "Right": "chn",
+        "Left_Table_Name": "movie_companies",
+        "Right_Table_Name": "char_name",
+        "Left_Alias": "mc",
+        "Right_Alias": "chn",
+        "Pred": "chn.id = ci.person_role_id",
+        "ProbeKeys": "mc_person_role_id",
+        "BuildKeys": "chn_id",
+        "NumTuplesLeft": 8,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 4,
+        "Projection": [
+            "t_title",
+            "chn_name",
+            "ci_person_role_id",
+            "chn_id",
+            "mc_company_type_id",
+            "mc_features",
+            "chn_features"
+        ],
+        "NumDimLeft": "7",
+        "NumDimRight": "7",
+        "NumDimOutput": "14",
+        "Filter": []
+    },
+    {
+        "ID": "7",
+        "Left": "6",
+        "Right": "ct",
+        "Left_Table_Name": "movie_companies",
+        "Right_Table_Name": "company_type",
+        "Left_Alias": "mc",
+        "Right_Alias": "ct",
+        "Pred": "ct.id = mc.company_type_id",
+        "ProbeKeys": "mc_company_type_id",
+        "BuildKeys": "ct_id",
+        "NumTuplesLeft": 4,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 4,
+        "Projection": [
+            "mc_company_type_id",
+            "chn_name",
+            "ct_id",
+            "t_title",
+            "mc_features",
+            "ct_features"
+        ],
+        "NumDimLeft": "5",
+        "NumDimRight": "1",
+        "NumDimOutput": "6",
+        "Filter": []
+    }
+]

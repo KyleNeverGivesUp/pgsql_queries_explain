@@ -1,0 +1,179 @@
+[
+    {
+        "ID": "0",
+        "Left": "mc",
+        "Right": "cn",
+        "Left_Table_Name": "movie_companies",
+        "Right_Table_Name": "company_name",
+        "Left_Alias": "mc",
+        "Right_Alias": "cn",
+        "Pred": "mc.company_id = cn.id",
+        "ProbeKeys": "mc_company_id",
+        "BuildKeys": "cn_id",
+        "NumTuplesLeft": 11108,
+        "NumTuplesRight": 4055,
+        "NumTuplesOutput": 326,
+        "Projection": [
+            "cn_id",
+            "mc_company_id",
+            "mc_movie_id",
+            "mc_features",
+            "cn_features"
+        ],
+        "NumDimLeft": "5",
+        "NumDimRight": "1",
+        "NumDimOutput": "6",
+        "Filter": [
+            "((mc_note) LIKE '%(Japan)%') AND ((mc_note) !LIKE '%(USA)%')",
+            "(cn_country_code) = '[jp]'"
+        ]
+    },
+    {
+        "ID": "1",
+        "Left": "0",
+        "Right": "t",
+        "Left_Table_Name": "movie_companies",
+        "Right_Table_Name": "title",
+        "Left_Alias": "mc",
+        "Right_Alias": "t",
+        "Pred": "t.id = mc.movie_id",
+        "ProbeKeys": "mc_movie_id",
+        "BuildKeys": "t_id",
+        "NumTuplesLeft": 326,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 326,
+        "Projection": [
+            "t_title",
+            "t_id",
+            "mc_movie_id",
+            "mc_features",
+            "t_features"
+        ],
+        "NumDimLeft": "3",
+        "NumDimRight": "12",
+        "NumDimOutput": "15",
+        "Filter": [
+            "((mc_note) LIKE '%(Japan)%') AND ((mc_note) !LIKE '%(USA)%')"
+        ]
+    },
+    {
+        "ID": "2",
+        "Left": "1",
+        "Right": "ci",
+        "Left_Table_Name": "movie_companies",
+        "Right_Table_Name": "cast_info",
+        "Left_Alias": "mc",
+        "Right_Alias": "ci",
+        "Pred": "ci.movie_id = t.id",
+        "ProbeKeys": "mc_id",
+        "BuildKeys": "ci_movie_id",
+        "NumTuplesLeft": 326,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 27,
+        "Projection": [
+            "ci_movie_id",
+            "ci_role_id",
+            "t_title",
+            "ci_person_id",
+            "t_id",
+            "mc_features",
+            "ci_features"
+        ],
+        "NumDimLeft": "5",
+        "NumDimRight": "7",
+        "NumDimOutput": "12",
+        "Filter": [
+            "((mc_note) LIKE '%(Japan)%') AND ((mc_note) !LIKE '%(USA)%')",
+            "(ci_note) = '(voice: English version)'"
+        ]
+    },
+    {
+        "ID": "3",
+        "Left": "2",
+        "Right": "rt",
+        "Left_Table_Name": "movie_companies",
+        "Right_Table_Name": "role_type",
+        "Left_Alias": "mc",
+        "Right_Alias": "rt",
+        "Pred": "rt.id = ci.role_id",
+        "ProbeKeys": "mc_role_id",
+        "BuildKeys": "rt_id",
+        "NumTuplesLeft": 27,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "t_title",
+            "rt_id",
+            "ci_person_id",
+            "ci_role_id",
+            "mc_features",
+            "rt_features"
+        ],
+        "NumDimLeft": "5",
+        "NumDimRight": "1",
+        "NumDimOutput": "6",
+        "Filter": [
+            "((mc_note) LIKE '%(Japan)%') AND ((mc_note) !LIKE '%(USA)%')",
+            "(rt_role) = 'actress'"
+        ]
+    },
+    {
+        "ID": "4",
+        "Left": "3",
+        "Right": "an1",
+        "Left_Table_Name": "movie_companies",
+        "Right_Table_Name": "aka_name",
+        "Left_Alias": "mc",
+        "Right_Alias": "an1",
+        "Pred": "an1.person_id = ci.person_id",
+        "ProbeKeys": "mc_person_id",
+        "BuildKeys": "an1_person_id",
+        "NumTuplesLeft": 1,
+        "NumTuplesRight": 2,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "an1_name",
+            "t_title",
+            "an1_person_id",
+            "ci_person_id",
+            "mc_features",
+            "an1_features"
+        ],
+        "NumDimLeft": "2",
+        "NumDimRight": "8",
+        "NumDimOutput": "10",
+        "Filter": [
+            "((mc_note) LIKE '%(Japan)%') AND ((mc_note) !LIKE '%(USA)%')"
+        ]
+    },
+    {
+        "ID": "5",
+        "Left": "4",
+        "Right": "n1",
+        "Left_Table_Name": "movie_companies",
+        "Right_Table_Name": "name",
+        "Left_Alias": "mc",
+        "Right_Alias": "n1",
+        "Pred": "n1.id = an1.person_id",
+        "ProbeKeys": "mc_person_id",
+        "BuildKeys": "n1_id",
+        "NumTuplesLeft": 1,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "an1_name",
+            "an1_person_id",
+            "t_title",
+            "n1_id",
+            "mc_features",
+            "n1_features"
+        ],
+        "NumDimLeft": "6",
+        "NumDimRight": "9",
+        "NumDimOutput": "15",
+        "Filter": [
+            "((mc_note) LIKE '%(Japan)%') AND ((mc_note) !LIKE '%(USA)%')",
+            "((n1_name) LIKE '%Yo%') AND ((n1_name) !LIKE '%Yu%')"
+        ]
+    }
+]

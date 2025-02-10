@@ -1,0 +1,150 @@
+[
+    {
+        "ID": "0",
+        "Left": "k",
+        "Right": "mk",
+        "Left_Table_Name": "keyword",
+        "Right_Table_Name": "movie_keyword",
+        "Left_Alias": "k",
+        "Right_Alias": "mk",
+        "Pred": "mk.keyword_id = k.id",
+        "ProbeKeys": "k_id",
+        "BuildKeys": "mk_keyword_id",
+        "NumTuplesLeft": 1,
+        "NumTuplesRight": 303,
+        "NumTuplesOutput": 34,
+        "Projection": [
+            "mk_keyword_id",
+            "k_id",
+            "mk_movie_id",
+            "k_features",
+            "mk_features"
+        ],
+        "NumDimLeft": "3",
+        "NumDimRight": "3",
+        "NumDimOutput": "6",
+        "Filter": [
+            "(k_keyword) = '10,000-mile-club'"
+        ]
+    },
+    {
+        "ID": "1",
+        "Left": "0",
+        "Right": "ml",
+        "Left_Table_Name": "keyword",
+        "Right_Table_Name": "movie_link",
+        "Left_Alias": "k",
+        "Right_Alias": "ml",
+        "Pred": "ml.movie_id = mk.movie_id",
+        "ProbeKeys": "k_movie_id",
+        "BuildKeys": "ml_movie_id",
+        "NumTuplesLeft": 34,
+        "NumTuplesRight": 5,
+        "NumTuplesOutput": 10,
+        "Projection": [
+            "ml_movie_id",
+            "ml_linked_movie_id",
+            "ml_link_type_id",
+            "mk_movie_id",
+            "k_features",
+            "ml_features"
+        ],
+        "NumDimLeft": "3",
+        "NumDimRight": "4",
+        "NumDimOutput": "7",
+        "Filter": [
+            "(k_keyword) = '10,000-mile-club'"
+        ]
+    },
+    {
+        "ID": "2",
+        "Left": "1",
+        "Right": "lt",
+        "Left_Table_Name": "keyword",
+        "Right_Table_Name": "link_type",
+        "Left_Alias": "k",
+        "Right_Alias": "lt",
+        "Pred": "lt.id = ml.link_type_id",
+        "ProbeKeys": "k_link_type_id",
+        "BuildKeys": "lt_id",
+        "NumTuplesLeft": 10,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 10,
+        "Projection": [
+            "lt_link",
+            "lt_id",
+            "ml_movie_id",
+            "ml_link_type_id",
+            "mk_movie_id",
+            "ml_linked_movie_id",
+            "k_features",
+            "lt_features"
+        ],
+        "NumDimLeft": "6",
+        "NumDimRight": "2",
+        "NumDimOutput": "8",
+        "Filter": [
+            "(k_keyword) = '10,000-mile-club'"
+        ]
+    },
+    {
+        "ID": "3",
+        "Left": "2",
+        "Right": "t1",
+        "Left_Table_Name": "keyword",
+        "Right_Table_Name": "title",
+        "Left_Alias": "k",
+        "Right_Alias": "t1",
+        "Pred": "t1.id = mk.movie_id",
+        "ProbeKeys": "k_movie_id",
+        "BuildKeys": "t1_id",
+        "NumTuplesLeft": 10,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 10,
+        "Projection": [
+            "lt_link",
+            "t1_title",
+            "t1_id",
+            "mk_movie_id",
+            "ml_linked_movie_id",
+            "k_features",
+            "t1_features"
+        ],
+        "NumDimLeft": "6",
+        "NumDimRight": "12",
+        "NumDimOutput": "18",
+        "Filter": [
+            "(k_keyword) = '10,000-mile-club'"
+        ]
+    },
+    {
+        "ID": "4",
+        "Left": "3",
+        "Right": "t2",
+        "Left_Table_Name": "keyword",
+        "Right_Table_Name": "title",
+        "Left_Alias": "k",
+        "Right_Alias": "t2",
+        "Pred": "t2.id = ml.linked_movie_id",
+        "ProbeKeys": "k_linked_movie_id",
+        "BuildKeys": "t2_id",
+        "NumTuplesLeft": 10,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 10,
+        "Projection": [
+            "lt_link",
+            "t1_title",
+            "t2_title",
+            "t2_id",
+            "ml_linked_movie_id",
+            "k_features",
+            "t2_features"
+        ],
+        "NumDimLeft": "5",
+        "NumDimRight": "12",
+        "NumDimOutput": "17",
+        "Filter": [
+            "(k_keyword) = '10,000-mile-club'"
+        ]
+    }
+]

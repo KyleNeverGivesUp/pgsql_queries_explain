@@ -1,0 +1,349 @@
+[
+    {
+        "ID": "0",
+        "Left": "k",
+        "Right": "mk",
+        "Left_Table_Name": "keyword",
+        "Right_Table_Name": "movie_keyword",
+        "Left_Alias": "k",
+        "Right_Alias": "mk",
+        "Pred": "mk.keyword_id = k.id",
+        "ProbeKeys": "k_id",
+        "BuildKeys": "mk_keyword_id",
+        "NumTuplesLeft": 2,
+        "NumTuplesRight": 303,
+        "NumTuplesOutput": 70,
+        "Projection": [
+            "k_id",
+            "mk_keyword_id",
+            "mk_movie_id",
+            "k_features",
+            "mk_features"
+        ],
+        "NumDimLeft": "3",
+        "NumDimRight": "3",
+        "NumDimOutput": "6",
+        "Filter": [
+            "(k_keyword) IN ('murder', 'blood', 'gore', 'death', 'female-nudity')"
+        ]
+    },
+    {
+        "ID": "1",
+        "Left": "0",
+        "Right": "mi_idx",
+        "Left_Table_Name": "keyword",
+        "Right_Table_Name": "movie_info_idx",
+        "Left_Alias": "k",
+        "Right_Alias": "mi_idx",
+        "Pred": "mi_idx.movie_id = mk.movie_id",
+        "ProbeKeys": "k_movie_id",
+        "BuildKeys": "mi_idx_movie_id",
+        "NumTuplesLeft": 70,
+        "NumTuplesRight": 3,
+        "NumTuplesOutput": 212,
+        "Projection": [
+            "mi_idx_info",
+            "mi_idx_info_type_id",
+            "mk_movie_id",
+            "mi_idx_movie_id",
+            "k_features",
+            "mi_idx_features"
+        ],
+        "NumDimLeft": "3",
+        "NumDimRight": "5",
+        "NumDimOutput": "8",
+        "Filter": [
+            "(k_keyword) IN ('murder', 'blood', 'gore', 'death', 'female-nudity')"
+        ]
+    },
+    {
+        "ID": "2",
+        "Left": "1",
+        "Right": "it2",
+        "Left_Table_Name": "keyword",
+        "Right_Table_Name": "info_type",
+        "Left_Alias": "k",
+        "Right_Alias": "it2",
+        "Pred": "mi_idx.info_type_id = it2.id",
+        "ProbeKeys": "k_info_type_id",
+        "BuildKeys": "it2_id",
+        "NumTuplesLeft": 212,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 2,
+        "Projection": [
+            "mi_idx_info",
+            "it2_id",
+            "mk_movie_id",
+            "mi_idx_info_type_id",
+            "mi_idx_movie_id",
+            "k_features",
+            "it2_features"
+        ],
+        "NumDimLeft": "6",
+        "NumDimRight": "1",
+        "NumDimOutput": "7",
+        "Filter": [
+            "(k_keyword) IN ('murder', 'blood', 'gore', 'death', 'female-nudity')",
+            "(it2_info) = 'votes'"
+        ]
+    },
+    {
+        "ID": "3",
+        "Left": "2",
+        "Right": "t",
+        "Left_Table_Name": "keyword",
+        "Right_Table_Name": "title",
+        "Left_Alias": "k",
+        "Right_Alias": "t",
+        "Pred": "t.id = mk.movie_id",
+        "ProbeKeys": "k_movie_id",
+        "BuildKeys": "t_id",
+        "NumTuplesLeft": 2,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "mi_idx_info",
+            "t_id",
+            "t_title",
+            "mk_movie_id",
+            "mi_idx_movie_id",
+            "k_features",
+            "t_features"
+        ],
+        "NumDimLeft": "5",
+        "NumDimRight": "12",
+        "NumDimOutput": "17",
+        "Filter": [
+            "(k_keyword) IN ('murder', 'blood', 'gore', 'death', 'female-nudity')",
+            "(t_production_year > 2010) AND ((t_title) LIKE 'Vampire%')"
+        ]
+    },
+    {
+        "ID": "4",
+        "Left": "3",
+        "Right": "t",
+        "Left_Table_Name": "keyword",
+        "Right_Table_Name": "title",
+        "Left_Alias": "k",
+        "Right_Alias": "t",
+        "Pred": "mi_idx.movie_id = t.id",
+        "ProbeKeys": "k_movie_id",
+        "BuildKeys": "t_id",
+        "NumTuplesLeft": 2,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "mi_idx_info",
+            "t_id",
+            "t_title",
+            "mk_movie_id",
+            "mi_idx_movie_id",
+            "k_features",
+            "t_features"
+        ],
+        "NumDimLeft": "5",
+        "NumDimRight": "12",
+        "NumDimOutput": "17",
+        "Filter": [
+            "(k_keyword) IN ('murder', 'blood', 'gore', 'death', 'female-nudity')",
+            "(t_production_year > 2010) AND ((t_title) LIKE 'Vampire%')"
+        ]
+    },
+    {
+        "ID": "5",
+        "Left": "4",
+        "Right": "ci",
+        "Left_Table_Name": "keyword",
+        "Right_Table_Name": "cast_info",
+        "Left_Alias": "k",
+        "Right_Alias": "ci",
+        "Pred": "ci.movie_id = mk.movie_id",
+        "ProbeKeys": "k_movie_id",
+        "BuildKeys": "ci_movie_id",
+        "NumTuplesLeft": 1,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "mi_idx_info",
+            "t_id",
+            "t_title",
+            "ci_movie_id",
+            "mk_movie_id",
+            "ci_person_id",
+            "mi_idx_movie_id",
+            "k_features",
+            "ci_features"
+        ],
+        "NumDimLeft": "5",
+        "NumDimRight": "7",
+        "NumDimOutput": "12",
+        "Filter": [
+            "(k_keyword) IN ('murder', 'blood', 'gore', 'death', 'female-nudity')",
+            "(ci_note) IN ('(writer)', '(head writer)', '(written by)', '(story)', '(story editor)')"
+        ]
+    },
+    {
+        "ID": "6",
+        "Left": "5",
+        "Right": "ci",
+        "Left_Table_Name": "keyword",
+        "Right_Table_Name": "cast_info",
+        "Left_Alias": "k",
+        "Right_Alias": "ci",
+        "Pred": "t.id = ci.movie_id",
+        "ProbeKeys": "k_id",
+        "BuildKeys": "ci_movie_id",
+        "NumTuplesLeft": 1,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "mi_idx_info",
+            "t_id",
+            "t_title",
+            "ci_movie_id",
+            "mk_movie_id",
+            "ci_person_id",
+            "mi_idx_movie_id",
+            "k_features",
+            "ci_features"
+        ],
+        "NumDimLeft": "5",
+        "NumDimRight": "7",
+        "NumDimOutput": "12",
+        "Filter": [
+            "(k_keyword) IN ('murder', 'blood', 'gore', 'death', 'female-nudity')",
+            "(ci_note) IN ('(writer)', '(head writer)', '(written by)', '(story)', '(story editor)')"
+        ]
+    },
+    {
+        "ID": "7",
+        "Left": "6",
+        "Right": "mi",
+        "Left_Table_Name": "keyword",
+        "Right_Table_Name": "movie_info",
+        "Left_Alias": "k",
+        "Right_Alias": "mi",
+        "Pred": "mi.movie_id = mk.movie_id",
+        "ProbeKeys": "k_movie_id",
+        "BuildKeys": "mi_movie_id",
+        "NumTuplesLeft": 1,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "mi_movie_id",
+            "mi_idx_info",
+            "mi_info_type_id",
+            "t_title",
+            "ci_person_id",
+            "mk_movie_id",
+            "mi_info",
+            "k_features",
+            "mi_features"
+        ],
+        "NumDimLeft": "11",
+        "NumDimRight": "5",
+        "NumDimOutput": "16",
+        "Filter": [
+            "(k_keyword) IN ('murder', 'blood', 'gore', 'death', 'female-nudity')",
+            "(mi_info) = 'Horror'"
+        ]
+    },
+    {
+        "ID": "8",
+        "Left": "7",
+        "Right": "mi",
+        "Left_Table_Name": "keyword",
+        "Right_Table_Name": "movie_info",
+        "Left_Alias": "k",
+        "Right_Alias": "mi",
+        "Pred": "t.id = mi.movie_id",
+        "ProbeKeys": "k_id",
+        "BuildKeys": "mi_movie_id",
+        "NumTuplesLeft": 1,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "mi_movie_id",
+            "mi_idx_info",
+            "mi_info_type_id",
+            "t_id",
+            "t_title",
+            "ci_person_id",
+            "mk_movie_id",
+            "mi_info",
+            "k_features",
+            "mi_features"
+        ],
+        "NumDimLeft": "11",
+        "NumDimRight": "5",
+        "NumDimOutput": "16",
+        "Filter": [
+            "(k_keyword) IN ('murder', 'blood', 'gore', 'death', 'female-nudity')",
+            "(mi_info) = 'Horror'"
+        ]
+    },
+    {
+        "ID": "9",
+        "Left": "8",
+        "Right": "it1",
+        "Left_Table_Name": "keyword",
+        "Right_Table_Name": "info_type",
+        "Left_Alias": "k",
+        "Right_Alias": "it1",
+        "Pred": "it1.id = mi.info_type_id",
+        "ProbeKeys": "k_info_type_id",
+        "BuildKeys": "it1_id",
+        "NumTuplesLeft": 1,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "mi_idx_info",
+            "mi_info_type_id",
+            "t_title",
+            "it1_id",
+            "ci_person_id",
+            "mi_info",
+            "k_features",
+            "it1_features"
+        ],
+        "NumDimLeft": "9",
+        "NumDimRight": "2",
+        "NumDimOutput": "11",
+        "Filter": [
+            "(k_keyword) IN ('murder', 'blood', 'gore', 'death', 'female-nudity')",
+            "(it1_info) = 'genres'"
+        ]
+    },
+    {
+        "ID": "10",
+        "Left": "9",
+        "Right": "n",
+        "Left_Table_Name": "keyword",
+        "Right_Table_Name": "name",
+        "Left_Alias": "k",
+        "Right_Alias": "n",
+        "Pred": "n.id = ci.person_id",
+        "ProbeKeys": "k_person_id",
+        "BuildKeys": "n_id",
+        "NumTuplesLeft": 1,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "mi_idx_info",
+            "n_name",
+            "t_title",
+            "n_id",
+            "ci_person_id",
+            "mi_info",
+            "k_features",
+            "n_features"
+        ],
+        "NumDimLeft": "6",
+        "NumDimRight": "9",
+        "NumDimOutput": "15",
+        "Filter": [
+            "(k_keyword) IN ('murder', 'blood', 'gore', 'death', 'female-nudity')",
+            "(n_gender) = 'm'"
+        ]
+    }
+]

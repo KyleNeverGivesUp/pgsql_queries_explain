@@ -1,0 +1,118 @@
+[
+    {
+        "ID": "0",
+        "Left": "mc",
+        "Right": "ct",
+        "Left_Table_Name": "movie_companies",
+        "Right_Table_Name": "company_type",
+        "Left_Alias": "mc",
+        "Right_Alias": "ct",
+        "Pred": "mc.company_type_id = ct.id",
+        "ProbeKeys": "mc_company_type_id",
+        "BuildKeys": "ct_id",
+        "NumTuplesLeft": 2213,
+        "NumTuplesRight": 4,
+        "NumTuplesOutput": 12,
+        "Projection": [
+            "mc_movie_id",
+            "ct_id",
+            "mc_company_type_id",
+            "mc_features",
+            "ct_features"
+        ],
+        "NumDimLeft": "5",
+        "NumDimRight": "1",
+        "NumDimOutput": "6",
+        "Filter": [
+            "((mc_note) LIKE '%(theatrical)%') AND ((mc_note) LIKE '%(France)%')",
+            "(ct_kind) = 'production companies'"
+        ]
+    },
+    {
+        "ID": "1",
+        "Left": "0",
+        "Right": "t",
+        "Left_Table_Name": "movie_companies",
+        "Right_Table_Name": "title",
+        "Left_Alias": "mc",
+        "Right_Alias": "t",
+        "Pred": "t.id = mc.movie_id",
+        "ProbeKeys": "mc_movie_id",
+        "BuildKeys": "t_id",
+        "NumTuplesLeft": 12,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 5,
+        "Projection": [
+            "mc_movie_id",
+            "t_title",
+            "t_id",
+            "mc_features",
+            "t_features"
+        ],
+        "NumDimLeft": "3",
+        "NumDimRight": "12",
+        "NumDimOutput": "15",
+        "Filter": [
+            "((mc_note) LIKE '%(theatrical)%') AND ((mc_note) LIKE '%(France)%')",
+            "t_production_year > 2005"
+        ]
+    },
+    {
+        "ID": "2",
+        "Left": "1",
+        "Right": "mi",
+        "Left_Table_Name": "movie_companies",
+        "Right_Table_Name": "movie_info",
+        "Left_Alias": "mc",
+        "Right_Alias": "mi",
+        "Pred": "mi.movie_id = t.id",
+        "ProbeKeys": "mc_id",
+        "BuildKeys": "mi_movie_id",
+        "NumTuplesLeft": 5,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "mi_info_type_id",
+            "t_title",
+            "mi_movie_id",
+            "t_id",
+            "mc_features",
+            "mi_features"
+        ],
+        "NumDimLeft": "5",
+        "NumDimRight": "5",
+        "NumDimOutput": "10",
+        "Filter": [
+            "((mc_note) LIKE '%(theatrical)%') AND ((mc_note) LIKE '%(France)%')",
+            "(mi_info) IN ('Sweden', 'Norway', 'Germany', 'Denmark', 'Swedish', 'Denish', 'Norwegian', 'German')"
+        ]
+    },
+    {
+        "ID": "3",
+        "Left": "2",
+        "Right": "it",
+        "Left_Table_Name": "movie_companies",
+        "Right_Table_Name": "info_type",
+        "Left_Alias": "mc",
+        "Right_Alias": "it",
+        "Pred": "it.id = mi.info_type_id",
+        "ProbeKeys": "mc_info_type_id",
+        "BuildKeys": "it_id",
+        "NumTuplesLeft": 1,
+        "NumTuplesRight": 1,
+        "NumTuplesOutput": 1,
+        "Projection": [
+            "mi_info_type_id",
+            "t_title",
+            "it_id",
+            "mc_features",
+            "it_features"
+        ],
+        "NumDimLeft": "4",
+        "NumDimRight": "1",
+        "NumDimOutput": "5",
+        "Filter": [
+            "((mc_note) LIKE '%(theatrical)%') AND ((mc_note) LIKE '%(France)%')"
+        ]
+    }
+]
