@@ -10,8 +10,8 @@
       "Total Cost": 16671.30,
       "Plan Rows": 1,
       "Plan Width": 96,
-      "Actual Startup Time": 153.132,
-      "Actual Total Time": 177.932,
+      "Actual Startup Time": 150.494,
+      "Actual Total Time": 174.707,
       "Actual Rows": 1,
       "Actual Loops": 1,
       "Output": ["min((cn.name)::text)", "min((mi_idx.info)::text)", "min((t.title)::text)"],
@@ -26,8 +26,8 @@
           "Total Cost": 16671.29,
           "Plan Rows": 1,
           "Plan Width": 42,
-          "Actual Startup Time": 13.517,
-          "Actual Total Time": 177.810,
+          "Actual Startup Time": 12.486,
+          "Actual Total Time": 174.582,
           "Actual Rows": 397,
           "Actual Loops": 1,
           "Output": ["cn.name", "mi_idx.info", "t.title"],
@@ -43,8 +43,8 @@
               "Total Cost": 16671.10,
               "Plan Rows": 1,
               "Plan Width": 46,
-              "Actual Startup Time": 13.510,
-              "Actual Total Time": 177.378,
+              "Actual Startup Time": 12.478,
+              "Actual Total Time": 174.153,
               "Actual Rows": 397,
               "Actual Loops": 1,
               "Output": ["cn.name", "mi.info_type_id", "mi_idx.info", "t.title"],
@@ -61,8 +61,8 @@
                   "Total Cost": 16669.58,
                   "Plan Rows": 1,
                   "Plan Width": 54,
-                  "Actual Startup Time": 2.312,
-                  "Actual Total Time": 121.619,
+                  "Actual Startup Time": 1.689,
+                  "Actual Total Time": 117.647,
                   "Actual Rows": 5674,
                   "Actual Loops": 1,
                   "Output": ["cn.name", "mc.movie_id", "mi_idx.info", "mi_idx.movie_id", "t.title", "t.id"],
@@ -80,8 +80,8 @@
                       "Total Cost": 15669.48,
                       "Plan Rows": 1,
                       "Plan Width": 54,
-                      "Actual Startup Time": 1.840,
-                      "Actual Total Time": 127.528,
+                      "Actual Startup Time": 2.470,
+                      "Actual Total Time": 125.035,
                       "Actual Rows": 1891,
                       "Actual Loops": 3,
                       "Output": ["cn.name", "mc.movie_id", "mi_idx.info", "mi_idx.movie_id", "t.title", "t.id"],
@@ -89,16 +89,16 @@
                       "Workers": [
                         {
                           "Worker Number": 0,
-                          "Actual Startup Time": 0.950,
-                          "Actual Total Time": 144.284,
-                          "Actual Rows": 2174,
+                          "Actual Startup Time": 1.301,
+                          "Actual Total Time": 140.884,
+                          "Actual Rows": 1914,
                           "Actual Loops": 1
                         },
                         {
                           "Worker Number": 1,
-                          "Actual Startup Time": 2.785,
-                          "Actual Total Time": 142.746,
-                          "Actual Rows": 2056,
+                          "Actual Startup Time": 4.746,
+                          "Actual Total Time": 141.947,
+                          "Actual Rows": 1908,
                           "Actual Loops": 1
                         }
                       ],
@@ -113,8 +113,8 @@
                           "Total Cost": 15669.03,
                           "Plan Rows": 1,
                           "Plan Width": 39,
-                          "Actual Startup Time": 1.771,
-                          "Actual Total Time": 120.660,
+                          "Actual Startup Time": 2.428,
+                          "Actual Total Time": 118.421,
                           "Actual Rows": 2203,
                           "Actual Loops": 3,
                           "Output": ["mc.movie_id", "mc.company_id", "mi_idx.info", "mi_idx.movie_id", "t.title", "t.id"],
@@ -124,16 +124,16 @@
                           "Workers": [
                             {
                               "Worker Number": 0,
-                              "Actual Startup Time": 0.853,
-                              "Actual Total Time": 135.979,
-                              "Actual Rows": 2525,
+                              "Actual Startup Time": 1.259,
+                              "Actual Total Time": 133.648,
+                              "Actual Rows": 2273,
                               "Actual Loops": 1
                             },
                             {
                               "Worker Number": 1,
-                              "Actual Startup Time": 2.684,
-                              "Actual Total Time": 135.047,
-                              "Actual Rows": 2395,
+                              "Actual Startup Time": 4.671,
+                              "Actual Total Time": 134.578,
+                              "Actual Rows": 2259,
                               "Actual Loops": 1
                             }
                           ],
@@ -148,8 +148,8 @@
                               "Total Cost": 15666.36,
                               "Plan Rows": 5,
                               "Plan Width": 18,
-                              "Actual Startup Time": 0.434,
-                              "Actual Total Time": 89.640,
+                              "Actual Startup Time": 0.463,
+                              "Actual Total Time": 88.388,
                               "Actual Rows": 8078,
                               "Actual Loops": 3,
                               "Output": ["mc.movie_id", "mc.company_id", "mi_idx.info", "mi_idx.movie_id"],
@@ -158,16 +158,16 @@
                               "Workers": [
                                 {
                                   "Worker Number": 0,
-                                  "Actual Startup Time": 0.467,
-                                  "Actual Total Time": 100.381,
-                                  "Actual Rows": 8540,
+                                  "Actual Startup Time": 0.491,
+                                  "Actual Total Time": 98.955,
+                                  "Actual Rows": 8802,
                                   "Actual Loops": 1
                                 },
                                 {
                                   "Worker Number": 1,
-                                  "Actual Startup Time": 0.730,
-                                  "Actual Total Time": 99.093,
-                                  "Actual Rows": 8844,
+                                  "Actual Startup Time": 0.837,
+                                  "Actual Total Time": 99.203,
+                                  "Actual Rows": 8531,
                                   "Actual Loops": 1
                                 }
                               ],
@@ -182,8 +182,8 @@
                                   "Total Cost": 15644.81,
                                   "Plan Rows": 996,
                                   "Plan Width": 22,
-                                  "Actual Startup Time": 0.367,
-                                  "Actual Total Time": 87.002,
+                                  "Actual Startup Time": 0.326,
+                                  "Actual Total Time": 85.777,
                                   "Actual Rows": 21569,
                                   "Actual Loops": 3,
                                   "Output": ["mi_idx.info", "mi_idx.movie_id", "mc.movie_id", "mc.company_type_id", "mc.company_id"],
@@ -191,16 +191,16 @@
                                   "Workers": [
                                     {
                                       "Worker Number": 0,
-                                      "Actual Startup Time": 0.418,
-                                      "Actual Total Time": 97.591,
-                                      "Actual Rows": 22885,
+                                      "Actual Startup Time": 0.446,
+                                      "Actual Total Time": 96.196,
+                                      "Actual Rows": 23039,
                                       "Actual Loops": 1
                                     },
                                     {
                                       "Worker Number": 1,
-                                      "Actual Startup Time": 0.606,
-                                      "Actual Total Time": 96.139,
-                                      "Actual Rows": 24465,
+                                      "Actual Startup Time": 0.488,
+                                      "Actual Total Time": 96.402,
+                                      "Actual Rows": 22964,
                                       "Actual Loops": 1
                                     }
                                   ],
@@ -215,8 +215,8 @@
                                       "Total Cost": 15183.97,
                                       "Plan Rows": 191,
                                       "Plan Width": 10,
-                                      "Actual Startup Time": 0.300,
-                                      "Actual Total Time": 60.718,
+                                      "Actual Startup Time": 0.260,
+                                      "Actual Total Time": 60.028,
                                       "Actual Rows": 5283,
                                       "Actual Loops": 3,
                                       "Output": ["mi_idx.info", "mi_idx.movie_id"],
@@ -225,16 +225,16 @@
                                       "Workers": [
                                         {
                                           "Worker Number": 0,
-                                          "Actual Startup Time": 0.345,
-                                          "Actual Total Time": 67.432,
-                                          "Actual Rows": 5864,
+                                          "Actual Startup Time": 0.364,
+                                          "Actual Total Time": 67.378,
+                                          "Actual Rows": 5895,
                                           "Actual Loops": 1
                                         },
                                         {
                                           "Worker Number": 1,
-                                          "Actual Startup Time": 0.489,
-                                          "Actual Total Time": 66.404,
-                                          "Actual Rows": 5827,
+                                          "Actual Startup Time": 0.378,
+                                          "Actual Total Time": 66.650,
+                                          "Actual Rows": 5847,
                                           "Actual Loops": 1
                                         }
                                       ],
@@ -251,8 +251,8 @@
                                           "Total Cost": 15122.68,
                                           "Plan Rows": 21613,
                                           "Plan Width": 14,
-                                          "Actual Startup Time": 0.037,
-                                          "Actual Total Time": 58.580,
+                                          "Actual Startup Time": 0.025,
+                                          "Actual Total Time": 57.933,
                                           "Actual Rows": 17543,
                                           "Actual Loops": 3,
                                           "Output": ["mi_idx.id", "mi_idx.movie_id", "mi_idx.info_type_id", "mi_idx.info", "mi_idx.note"],
@@ -261,16 +261,16 @@
                                           "Workers": [
                                             {
                                               "Worker Number": 0,
-                                              "Actual Startup Time": 0.028,
-                                              "Actual Total Time": 65.088,
-                                              "Actual Rows": 19158,
+                                              "Actual Startup Time": 0.022,
+                                              "Actual Total Time": 65.098,
+                                              "Actual Rows": 19444,
                                               "Actual Loops": 1
                                             },
                                             {
                                               "Worker Number": 1,
-                                              "Actual Startup Time": 0.055,
-                                              "Actual Total Time": 63.873,
-                                              "Actual Rows": 19015,
+                                              "Actual Startup Time": 0.036,
+                                              "Actual Total Time": 64.185,
+                                              "Actual Rows": 18993,
                                               "Actual Loops": 1
                                             }
                                           ]
@@ -284,8 +284,8 @@
                                           "Total Cost": 2.41,
                                           "Plan Rows": 1,
                                           "Plan Width": 4,
-                                          "Actual Startup Time": 0.052,
-                                          "Actual Total Time": 0.054,
+                                          "Actual Startup Time": 0.037,
+                                          "Actual Total Time": 0.038,
                                           "Actual Rows": 1,
                                           "Actual Loops": 3,
                                           "Output": ["it2.id"],
@@ -297,15 +297,15 @@
                                           "Workers": [
                                             {
                                               "Worker Number": 0,
-                                              "Actual Startup Time": 0.042,
-                                              "Actual Total Time": 0.044,
+                                              "Actual Startup Time": 0.030,
+                                              "Actual Total Time": 0.031,
                                               "Actual Rows": 1,
                                               "Actual Loops": 1
                                             },
                                             {
                                               "Worker Number": 1,
-                                              "Actual Startup Time": 0.087,
-                                              "Actual Total Time": 0.087,
+                                              "Actual Startup Time": 0.066,
+                                              "Actual Total Time": 0.067,
                                               "Actual Rows": 1,
                                               "Actual Loops": 1
                                             }
@@ -323,8 +323,8 @@
                                               "Total Cost": 2.41,
                                               "Plan Rows": 1,
                                               "Plan Width": 4,
-                                              "Actual Startup Time": 0.044,
-                                              "Actual Total Time": 0.047,
+                                              "Actual Startup Time": 0.031,
+                                              "Actual Total Time": 0.033,
                                               "Actual Rows": 1,
                                               "Actual Loops": 3,
                                               "Output": ["it2.id"],
@@ -333,15 +333,15 @@
                                               "Workers": [
                                                 {
                                                   "Worker Number": 0,
-                                                  "Actual Startup Time": 0.037,
-                                                  "Actual Total Time": 0.039,
+                                                  "Actual Startup Time": 0.026,
+                                                  "Actual Total Time": 0.027,
                                                   "Actual Rows": 1,
                                                   "Actual Loops": 1
                                                 },
                                                 {
                                                   "Worker Number": 1,
-                                                  "Actual Startup Time": 0.075,
-                                                  "Actual Total Time": 0.079,
+                                                  "Actual Startup Time": 0.056,
+                                                  "Actual Total Time": 0.060,
                                                   "Actual Rows": 1,
                                                   "Actual Loops": 1
                                                 }
@@ -378,14 +378,14 @@
                                           "Actual Startup Time": 0.003,
                                           "Actual Total Time": 0.004,
                                           "Actual Rows": 4,
-                                          "Actual Loops": 5864
+                                          "Actual Loops": 5895
                                         },
                                         {
                                           "Worker Number": 1,
                                           "Actual Startup Time": 0.003,
                                           "Actual Total Time": 0.004,
                                           "Actual Rows": 4,
-                                          "Actual Loops": 5827
+                                          "Actual Loops": 5847
                                         }
                                       ]
                                     }
@@ -400,8 +400,8 @@
                                   "Total Cost": 18.88,
                                   "Plan Rows": 4,
                                   "Plan Width": 4,
-                                  "Actual Startup Time": 0.025,
-                                  "Actual Total Time": 0.026,
+                                  "Actual Startup Time": 0.019,
+                                  "Actual Total Time": 0.020,
                                   "Actual Rows": 1,
                                   "Actual Loops": 3,
                                   "Output": ["ct.id"],
@@ -413,15 +413,15 @@
                                   "Workers": [
                                     {
                                       "Worker Number": 0,
-                                      "Actual Startup Time": 0.022,
-                                      "Actual Total Time": 0.022,
+                                      "Actual Startup Time": 0.017,
+                                      "Actual Total Time": 0.017,
                                       "Actual Rows": 1,
                                       "Actual Loops": 1
                                     },
                                     {
                                       "Worker Number": 1,
-                                      "Actual Startup Time": 0.042,
-                                      "Actual Total Time": 0.043,
+                                      "Actual Startup Time": 0.034,
+                                      "Actual Total Time": 0.035,
                                       "Actual Rows": 1,
                                       "Actual Loops": 1
                                     }
@@ -439,8 +439,8 @@
                                       "Total Cost": 18.88,
                                       "Plan Rows": 4,
                                       "Plan Width": 4,
-                                      "Actual Startup Time": 0.018,
-                                      "Actual Total Time": 0.019,
+                                      "Actual Startup Time": 0.014,
+                                      "Actual Total Time": 0.015,
                                       "Actual Rows": 1,
                                       "Actual Loops": 3,
                                       "Output": ["ct.id"],
@@ -449,15 +449,15 @@
                                       "Workers": [
                                         {
                                           "Worker Number": 0,
-                                          "Actual Startup Time": 0.017,
-                                          "Actual Total Time": 0.018,
+                                          "Actual Startup Time": 0.013,
+                                          "Actual Total Time": 0.014,
                                           "Actual Rows": 1,
                                           "Actual Loops": 1
                                         },
                                         {
                                           "Worker Number": 1,
-                                          "Actual Startup Time": 0.032,
-                                          "Actual Total Time": 0.034,
+                                          "Actual Startup Time": 0.026,
+                                          "Actual Total Time": 0.027,
                                           "Actual Rows": 1,
                                           "Actual Loops": 1
                                         }
@@ -481,8 +481,8 @@
                               "Total Cost": 0.52,
                               "Plan Rows": 1,
                               "Plan Width": 21,
-                              "Actual Startup Time": 0.004,
-                              "Actual Total Time": 0.004,
+                              "Actual Startup Time": 0.003,
+                              "Actual Total Time": 0.003,
                               "Actual Rows": 0,
                               "Actual Loops": 24233,
                               "Output": ["t.id", "t.title", "t.imdb_index", "t.kind_id", "t.production_year", "t.imdb_id", "t.phonetic_code", "t.episode_of_id", "t.season_nr", "t.episode_nr", "t.series_years", "t.md5sum"],
@@ -496,14 +496,14 @@
                                   "Actual Startup Time": 0.004,
                                   "Actual Total Time": 0.004,
                                   "Actual Rows": 0,
-                                  "Actual Loops": 8540
+                                  "Actual Loops": 8802
                                 },
                                 {
                                   "Worker Number": 1,
                                   "Actual Startup Time": 0.004,
                                   "Actual Total Time": 0.004,
                                   "Actual Rows": 0,
-                                  "Actual Loops": 8844
+                                  "Actual Loops": 8531
                                 }
                               ]
                             }
@@ -538,14 +538,14 @@
                               "Actual Startup Time": 0.003,
                               "Actual Total Time": 0.003,
                               "Actual Rows": 1,
-                              "Actual Loops": 2525
+                              "Actual Loops": 2273
                             },
                             {
                               "Worker Number": 1,
                               "Actual Startup Time": 0.003,
                               "Actual Total Time": 0.003,
                               "Actual Rows": 1,
-                              "Actual Loops": 2395
+                              "Actual Loops": 2259
                             }
                           ]
                         }
@@ -607,9 +607,9 @@
         }
       ]
     },
-    "Planning Time": 9.952,
+    "Planning Time": 9.545,
     "Triggers": [
     ],
-    "Execution Time": 178.046
+    "Execution Time": 174.809
   }
 ]
