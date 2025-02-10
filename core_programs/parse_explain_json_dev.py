@@ -366,15 +366,16 @@ if __name__ == "__main__":
 
     args = sys.argv
     file_name = args[0]
-    script_dir = Path(__file__).parent
-    print(script_dir)
+    # script_dir =
+    # print(script_dir)
     # file_name = "21c_explain_verbose_analyze_format_json_cleansed"
-    file_path = script_dir / file_name
+    # file_path = script_dir / file_name
+    # print(file_path)
     res = []
     backup = []
     table = {}
     try:
-        explain_json = load_json_from_file(file_path)
+        explain_json = load_json_from_file(file_name)
 
     except FileNotFoundError:
         print("File not found")
