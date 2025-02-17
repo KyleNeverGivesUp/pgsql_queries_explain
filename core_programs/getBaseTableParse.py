@@ -1,5 +1,4 @@
 import json
-# from collections import defaultdict
 
 input_data = '''
 [
@@ -716,18 +715,6 @@ if __name__ == "__main__":
 
         # Get the filter clause from input data
         filter_conditions = filter_clauses.get(alias, [])
-        # filter_clause = f'.filter({" AND ".join(filter_conditions)})' if filter_conditions else ""
-        #
-        # # Generate C++ code snippet
-        # code = f"""
-        #     auto {alias}_a = PlanBuilder(planNodeIdGenerator, pool_.get())
-        #                     .values({{tableName2RowVector["{table}"]}})
-        #                     {filter_clause}
-        #                     .project({{{','.join(f'"{proj}"' for proj in projections_with_features)}}});
-        #     tabel2Columns["{alias}"] = {{{','.join(f'"{proj}"' for proj in projections_with_features_noas)}}};
-        #     sources["{alias}"] = {alias}_a;
-        #     """
-        # Generate filter_clause，if filter_conditions is "" then ""
         filter_clause = f'.filter({" AND ".join(filter_conditions)})' if filter_conditions else ""
 
         # Construct lines
