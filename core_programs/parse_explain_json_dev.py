@@ -359,7 +359,6 @@ def main_func(node, joins, backup, join_id_counter, table):
                     )
                     joins.append(join_info)
 
-
 if __name__ == "__main__":
 
     args = sys.argv
