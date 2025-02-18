@@ -114,7 +114,6 @@ def load_json_from_file(file_path):
     except Exception as e:
         print(f"Exception: {e}")
         # lines = file.readlines()
-        # print(lines)
     # # Remove the first line and combine the rest
     # json_lines = ''.join(lines[2:-2]).strip()
     # # print(json_lines)
