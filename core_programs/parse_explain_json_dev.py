@@ -366,7 +366,6 @@ if __name__ == "__main__":
     # script_dir =
     # print(script_dir)
     # file_name = "21c_explain_verbose_analyze_format_json_cleansed"
-    # file_path = script_dir / file_name
     res = []
     backup = []
     table = {}
