@@ -363,6 +363,7 @@ if __name__ == "__main__":
 
     args = sys.argv
     file_name = args[1]
+    # script_dir =
     # file_name = "21c_explain_verbose_analyze_format_json_cleansed"
     res = []
     backup = []
