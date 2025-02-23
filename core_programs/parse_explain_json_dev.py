@@ -4,7 +4,7 @@ Feb 3: Update code for transform filter clause from special format to generic.
        Update NumTuplesOutput from actual rows to plan rows.
 
 Feb 9: Update with probKey, buildKey, Filter "." -> "_".
-       Fixed "+" json carriage return characters.
+    Fixed "+" json carriage return characters.
 """
 
 import sys
@@ -327,7 +327,6 @@ def main_func(node, joins, backup, join_id_counter, table):
                 # print("predicate:", pred)
                 probKey, buildKey, = get_join_keys(left_table_alias, right_table_alias, pred)
 
-
                 # print("buildKey", buildKey)
                 num_tuples_output = node.get("Plan Rows", 0)
                 projection_cols = get_proj_cols(node)
@@ -362,10 +361,10 @@ def main_func(node, joins, backup, join_id_counter, table):
 if __name__ == "__main__":
 
     args = sys.argv
-    file_name = args[1]
+    # file_name = args[1]
     # script_dir =
-    # print(script_dir)
-    # file_name = "21c_explain_verbose_analyze_format_json_cleansed"
+
+    file_name = "../cleansed_json_files/29a_explain_verbose_analyze_format_json_cleansed"
     # file_path = script_dir / file_name
     # print(file_path)
     res = []
