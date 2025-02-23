@@ -363,7 +363,7 @@ if __name__ == "__main__":
     args = sys.argv
     # file_name = args[1]
     # script_dir =
-    # print(script_dir)
+
     file_name = "../cleansed_json_files/29a_explain_verbose_analyze_format_json_cleansed"
     # file_path = script_dir / file_name
     # print(file_path)
