@@ -266,7 +266,7 @@ def restore_backup_pred(predicate, backup_pred, table):
 def get_join_keys(left_table_alias, right_table_alias, pred):
     left_join_key = ""
     right_join_key = ""
-
+    # print(left_table_alias, right_table_alias)
     pattern = re.compile("\.")
     pred_dict = { i:j for i, j in [pattern.split(item.strip()) for item in pred.split("=")] }
     if left_table_alias in pred_dict:
