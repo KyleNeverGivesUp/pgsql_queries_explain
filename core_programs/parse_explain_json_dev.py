@@ -218,7 +218,7 @@ def get_pred_cond(node,join_type):
                             # print(conds)
                             break
                     else:
-
+                        # print(f"No {key} loop in plans len ==1, dive into sub_plans")
                         sub_plans0 = plan0.get("Plans")
                         if sub_plans0:
                             sub_cond = get_pred_cond(plan0, key)
