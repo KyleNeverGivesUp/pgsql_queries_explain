@@ -379,6 +379,6 @@ if __name__ == "__main__":
     else:
         main_func(explain_json[0], res, backup, 0, table)
 
-    # print(f"Totally {len(res)} times join:")
+    print(f"Totally {len(res)} times join:")
     joins_dict = [asdict(join) for join in res]
     print(json.dumps(joins_dict, indent=4))
