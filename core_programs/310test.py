@@ -6,7 +6,7 @@ def Mystery(n):
             print(f"i'm j: {j}")
 
 
-            print(f"==============")
+
             print(f"==============")
             print(f"==============")
             print(f"==============")
