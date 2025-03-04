@@ -286,6 +286,12 @@ def get_join_keys(left_table_alias, right_table_alias, pred):
     # Jan/31 added table_alias
     return left_table_alias+"."+left_join_key, right_table_alias+"."+right_join_key
 
+
+def extract_pred_right_value(pred):
+    match = re.search(r"=\s*([\w]+)\.", pred)
+    return match.group(1) if match else None
+
+
 def main_func(node, joins, backup, join_id_counter, table):
     # join_node_types = ["Hash Join", "Nested Loop", "Merge Join", "Memoize"]
     for key, value in node.items():
@@ -335,16 +341,21 @@ def main_func(node, joins, backup, join_id_counter, table):
                 projection_cols = list(set(col.replace(".","_") for col in projection_cols))
                 # Add xx_features into projections
                 projection_cols.extend([left_table_alias+"_features", right_table_alias+"_features"])
+
+                # 解析 Pred 右边的部分
+                pred_right_value = extract_pred_right_value(pred)
+
                 if left_table_node and right_table_node:
                     join_info = join_info_class(
                         ID  = str(len(joins)),
                         Left = str(len(joins)-1) if len(joins) != 0 else left_table_alias,
                         Right = right_table_alias,
-                        Left_Table_Name = left_table_name,
-                        Left_Alias = left_table_alias,
+                        #### Feb 25  Updated by Kanchan requested, as the output is duplicate
+                        Left_Table_Name = left_table_name if str(len(joins)) == 0 else "",
+                        Left_Alias = left_table_alias if str(len(joins)) == 0 else "",
                         Right_Table_Name = right_table_name,
                         Right_Alias = right_table_alias,
-                        Pred = pred,
+                        Pred = pred.replace(".","_"),
                         ProbeKeys = probKey.replace(".", "_"),
                         BuildKeys = buildKey.replace(".", "_"),
                         NumTuplesLeft = left_num_tuples,
@@ -355,8 +366,11 @@ def main_func(node, joins, backup, join_id_counter, table):
                         NumDimRight = str(right_proj_cols),
                         NumDimOutput = str(left_proj_cols + right_proj_cols),
                         Filter = filter_clause
+
                     )
                     joins.append(join_info)
+                    # if pred_right_value != right_table_alias:
+                    #     joins.append(join_info)
 
 if __name__ == "__main__":
 
