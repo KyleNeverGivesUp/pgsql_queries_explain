@@ -7,7 +7,7 @@ def Mystery(n):
             # print(f"==============")
             # print(f"==============")
             # print(f"==============")
-            sum=sum+1
+            # sum=sum+1
     return sum
 if "__main__" == __name__:
     print(Mystery(3))
