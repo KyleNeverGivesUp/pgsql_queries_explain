@@ -4,7 +4,7 @@ def Mystery(n):
         # for j in range(1,i+1):
             # print(f"i'm i: {i}")
             # print(f"i'm j: {j}")
-            # print(f"==============")
+            print(f"==============")
             print(f"==============")
             print(f"==============")
             sum=sum+1
