@@ -343,7 +343,7 @@ def main_func(node, joins, backup, join_id_counter, table):
                 projection_cols.extend([left_table_alias+"_features", right_table_alias+"_features"])
 
                 # 解析 Pred 右边的部分
-                pred_right_value = extract_pred_right_value(pred)
+                # pred_right_value = extract_pred_right_value(pred)
 
                 if left_table_node and right_table_node:
                     join_info = join_info_class(
