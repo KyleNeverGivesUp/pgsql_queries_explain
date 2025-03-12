@@ -2,7 +2,7 @@ def Mystery(n):
     sum=0
     for i in range(1,n+1):
         for j in range(1,i+1):
-            print(f"i'm i: {i}")
+            # print(f"i'm i: {i}")
             print(f"i'm j: {j}")
             print(f"==============")
             print(f"==============")
