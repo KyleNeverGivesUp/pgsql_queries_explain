@@ -350,7 +350,7 @@ def main_func(node, joins, backup, join_id_counter, table):
                         ID  = str(len(joins)),
                         Left = str(len(joins)-1) if len(joins) != 0 else left_table_alias,
                         Right = right_table_alias,
-                        #### Feb 25  Updated by Kanchan requested, as the output is duplicate
+                        ### Feb 25  Updated by Kanchan requested, as the output is duplicate
                         Left_Table_Name = left_table_name if str(len(joins)) == 0 else "",
                         Left_Alias = left_table_alias if str(len(joins)) == 0 else "",
                         Right_Table_Name = right_table_name,
